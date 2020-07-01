@@ -22,6 +22,9 @@ def get_current_time():
 
 	time = ''
 	
+	# Check if time is passed in manually:
+	# - If yes, use that time
+	# - If no, generate the current time
 	if len(sys.argv) == 3:
 		time = sys.argv[-1]
 	else:
@@ -95,8 +98,7 @@ if __name__== '__main__':
 
 		if currentArgument in ('-u', '--update'):
 			current_time = get_current_time()
-			print(current_time)
-			quit()
+
 			update_time(current_time)
 
 		elif currentArgument in ('-r', '--reset'):
