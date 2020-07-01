@@ -1,10 +1,5 @@
 from datetime import datetime
-from matplotlib import cm
 
-import matplotlib.pyplot as plt
-import numpy as np
-
-import math
 import getopt, sys
 
 FILE = 'working_hours.txt'
@@ -23,7 +18,26 @@ def reset_file():
 
 	return
 
-def update_time():
+def get_current_time():
+
+	time = ''
+	
+	if len(sys.argv) == 3:
+		time = sys.argv[-1]
+	else:
+		current_dt = datetime.now()
+
+		str_hour = str(current_dt.hour)
+		str_min = str(current_dt.minute)
+
+		if current_dt.minute < 10:
+			str_min = '0' + str_min
+
+		time = str_hour + ':' + str_min
+	
+	return time
+
+def update_time(current_time):
 
 	day_number = datetime.today().weekday()
 
@@ -35,8 +49,6 @@ def update_time():
 	# Remove the newline string
 	daily_hours = file.readlines()
 	current_day = daily_hours[day_number].rstrip()
-
-	current_time = str(datetime.now().hour) + ':' + str(datetime.now().minute)
 
 	# 3. Add in the current time to the string (add the extra '-')
 	# NOTE: If the last operation was a ',', then there should only be start time
@@ -82,7 +94,10 @@ if __name__== '__main__':
 	for currentArgument, currentValue in arguments:
 
 		if currentArgument in ('-u', '--update'):
-			update_time()
+			current_time = get_current_time()
+			print(current_time)
+			quit()
+			update_time(current_time)
 
 		elif currentArgument in ('-r', '--reset'):
 			reset_file()
