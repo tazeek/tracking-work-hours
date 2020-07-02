@@ -2,7 +2,7 @@ from datetime import datetime
 
 import getopt, sys
 
-FILE = 'working_hours.txt'
+FILE = 'folder/working_hours.txt'
 
 def reset_file():
 
