@@ -1,0 +1,8 @@
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Tracking hours folder
+folder/
+
+# For Macbook
+.DS_Store
