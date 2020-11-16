@@ -97,7 +97,7 @@ class Tracker:
 
 			covered_today = self._max_minutes_daily
 
-	return covered_today
+		return covered_today
 
 	def _find_average_time_to_cover(self):
 
