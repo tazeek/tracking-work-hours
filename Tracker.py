@@ -25,7 +25,7 @@ class Tracker:
 		
 
 	def _get_total_time_covered(self):
-		return self._before_noon_minutes + self._after_noon_minutes
+		return self._before_noon_minutes_covered + self._after_noon_minutes_covered
 
 	def _get_current_time(self):
 		return str(datetime.now().hour) + ':' + str(datetime.now().minute)
@@ -49,6 +49,9 @@ class Tracker:
 		start_time_hour = int(start_time.split(':')[0])
 		end_time_hour = int(end_time.split(':')[0])
 		mid_day_time = time(12,00)
+
+		before_noon_minutes = 0
+		after_noon_minutes = 0
 
 		time_in_same_period = self._convert_duration_to_minutes(start_time,end_time)
 
@@ -132,7 +135,7 @@ class Tracker:
 				day = line_array[0]
 				day_coverage_array = line_array[1:]
 
-				total_minutes_before_noon, total_minutes_after_noon = self._perform_daily_time_analysis(day_coverage)
+				total_minutes_before_noon, total_minutes_after_noon = self._perform_daily_time_analysis(day_coverage_array)
 
 				self._before_noon_minutes_covered += total_minutes_before_noon
 				self._after_noon_minutes_covered += total_minutes_after_noon
