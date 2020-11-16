@@ -15,10 +15,13 @@ class Tracker:
 
 		self._before_noon_minutes_covered = 0
 		self._after_noon_minutes_covered = 0
+		self._remaining_today = 0
+		self._remaining_week = 0
 
 		self._days_information_array = []
 
 		self._day_number = self._get_day_number()
+		
 
 	def _get_total_time_covered(self):
 		return self._before_noon_minutes + self._after_noon_minutes
@@ -30,9 +33,7 @@ class Tracker:
 		return datetime.today().weekday()
 
 	def _get_hours_minutes(self,total_minutes):
-		hours, minutes = divmod(total_minutes, self._total_minutes_hour)
-
-		return hours, minutes
+		return divmod(total_minutes, self._total_minutes_hour)
 
 	def _convert_duration_to_minutes(self,start_time, end_time):
 
@@ -48,7 +49,7 @@ class Tracker:
 		end_time_hour = int(end_time.split(':')[0])
 		mid_day_time = time(12,00)
 
-		time_in_same_period = convert_duration_to_minutes(start_time,end_time)
+		time_in_same_period = self._convert_duration_to_minutes(start_time,end_time)
 
 		# If the end duration is not after noon, then
 		# the first duration is for sure not after noon
@@ -57,8 +58,8 @@ class Tracker:
 			if time(start_time_hour,00) >= mid_day_time:
 				after_noon_minutes = time_in_same_period
 			else:
-				before_noon_minutes += convert_duration_to_minutes(start_time,'12:00')
-				after_noon_minutes += convert_duration_to_minutes('12:00',end_time)
+				before_noon_minutes += self._convert_duration_to_minutes(start_time,'12:00')
+				after_noon_minutes += self._convert_duration_to_minutes('12:00',end_time)
 		else:
 			before_noon_minutes = time_in_same_period
 
@@ -135,23 +136,21 @@ class Tracker:
 				self._before_noon_minutes_covered += total_minutes_before_noon
 				self._after_noon_minutes_covered += total_minutes_after_noon
 
-				today_coverage = total_minutes_before_noon + total_minutes_after_noon
+				total_minutes_day = total_minutes_before_noon + total_minutes_after_noon
 
 				self._days_information_array.append({
 					'day': day,
-					'minutes_covered': today_coverage,
+					'minutes_covered': total_minutes_day,
 					'coverage': day_coverage_array
 				})
 
 				if index == self._day_number:
 
-					remaining_today = self._max_minutes_daily - today_coverage
+					self._remaining_today = self._max_minutes_daily - total_minutes_day
 
 			total_covered = self._get_total_time_covered()
 
 			if total_covered < self._max_minutes_weekly:
-				remaining_weekly = self._max_minutes_weekly - total_covered
-			else:
-				total_covered = self._max_minutes_weekly
+				self._remaining_week = self._max_minutes_weekly - total_covered
 
-		return (remaining_today, remaining_weekly)
+		return None
