@@ -117,6 +117,9 @@ class Tracker:
 
 	def get_remaining_time(self):
 
+		remaining_today = 0
+		remaining_weekly = 0
+
 		# One line = Day, Time gap #1, Time gap #2, ..., Time gap n
 		with open(self._file_name) as file:
 
@@ -151,8 +154,4 @@ class Tracker:
 			else:
 				total_covered = self._max_minutes_weekly
 
-			total_covered = total_covered if total_covered <= self._max_minutes_weekly else self._max_minutes_weekly
-
-			return (remaining_today, remaining_weekly)
-
-
+		return (remaining_today, remaining_weekly)
