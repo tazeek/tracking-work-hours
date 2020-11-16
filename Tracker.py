@@ -13,8 +13,11 @@ class Tracker:
 		self._max_minutes_weekly = self._num_working_days * self._max_minutes_daily
 		self._overtime_hours = self._total_minutes_hour * (self._daily_hours_cover + 1)
 
-		self._before_noon_minutes = 0
-		self._after_noon_minutes = 0
+		self._before_noon_minutes_covered = 0
+		self._after_noon_minutes_covered = 0
+
+	def _get_total_time_covered(self):
+		return self._before_noon_minutes + self._after_noon_minutes
 
 	def _get_current_time(self):
 		return str(datetime.now().hour) + ':' + str(datetime.now().minute)
@@ -70,7 +73,25 @@ class Tracker:
 			end_time = end_time if end_time != '' else self._get_current_time()
 
 			before_noon_minutes, after_noon_minutes = self._analyze_times_different_period(start_time, end_time)
-			self._before_noon_minutes += before_noon_minutes
-			self._after_noon_minutes += after_noon_minutes
+			self._before_noon_minutes_covered += before_noon_minutes
+			self._after_noon_minutes_covered += after_noon_minutes
 
 		return None
+
+	def _find_average_time_to_cover(self, days_array):
+
+		day_number = self._get_day_number()
+
+		total_time_exclude_today = self._max_minutes_weekly - (self._get_total_time_covered - days_array[day_number]['minutes_covered'])
+		days_remaining = self._num_working_days - day_number
+
+		# Find the average and increment it with the remainder as well
+		# REASON: Better to cover more minutes than not to
+		avg_mins, remainder = divmod(total_time_exclude_today, (days_remaining))
+		total_avg = avg_mins + remainder
+
+		avg_hour, avg_mins = divmod(total_avg, self._total_minutes_hour)
+
+		avg_time_remaining = str(avg_hour) + 'h ' + str(avg_mins) + 'm'
+
+		return total_avg, avg_time_remaining
