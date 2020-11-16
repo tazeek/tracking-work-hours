@@ -78,6 +78,21 @@ class Tracker:
 
 		return None
 
+	def _find_time_covered_today(self,remaining_today):
+
+		covered_today = 0
+
+		if remaining_today > 0:
+
+			covered_today = self._max_minutes_daily - remaining_today
+			self._finishing_time_today = datetime.now() + timedelta(minutes = remaining_today)
+
+		else:
+
+			covered_today = self._max_minutes_daily
+
+	return covered_today
+
 	def _find_average_time_to_cover(self, days_array):
 
 		day_number = self._get_day_number()
@@ -95,3 +110,51 @@ class Tracker:
 		avg_time_remaining = str(avg_hour) + 'h ' + str(avg_mins) + 'm'
 
 		return total_avg, avg_time_remaining
+
+	def perform_stats(self):
+
+		days_array = []
+
+		time_analysis_dict = {
+			'before_noon': 0,
+			'after_noon': 0
+		}
+
+		# One line = Day, Time gap #1, Time gap #2, ..., Time gap n
+		with open(self._file_name) as file:
+
+			for index, line in enumerate(file):
+
+				line_array = line.replace('\x00','').rstrip().split(',')
+
+				day = line_array[0]
+				day_coverage_array = line_array[1:]
+
+				total_minutes_before_noon, total_minutes_after_noon = perform_time_analysis(day_coverage)
+				minutes_covered = total_minutes_before_noon + total_minutes_after_noon
+
+				time_analysis_dict['before_noon'] += total_minutes_before_noon
+				time_analysis_dict['after_noon'] += total_minutes_after_noon
+
+				days_array.append({
+					'day': day,
+					'minutes_covered': minutes_covered,
+					'coverage': day_coverage
+				})
+
+				if index == day_number:
+
+					remaining_today = self._max_minutes_daily - minutes_covered
+
+				total_covered += minutes_covered
+
+			if total_covered < self._max_minutes_weekly:
+				remaining_weekly = self._max_minutes_weekly- total_covered
+			else:
+				total_covered = self._max_minutes_weekly
+
+			total_covered = total_covered if total_covered <= self._max_minutes_weekly else self._max_minutes_weekly
+
+			return (total_covered, days_array, remaining_today, remaining_weekly, time_analysis_dict)
+
+
