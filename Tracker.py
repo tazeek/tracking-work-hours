@@ -21,6 +21,7 @@ class Tracker:
 		self._days_information_array = []
 
 		self._day_number = self._get_day_number()
+		self._file_name = 'folder/working_hours.txt'
 		
 
 	def _get_total_time_covered(self):
@@ -116,7 +117,7 @@ class Tracker:
 
 		return total_avg, avg_time_remaining
 
-	def get_remaining_time(self):
+	def update_time_calculations(self):
 
 		remaining_today = 0
 		remaining_weekly = 0
@@ -131,7 +132,7 @@ class Tracker:
 				day = line_array[0]
 				day_coverage_array = line_array[1:]
 
-				total_minutes_before_noon, total_minutes_after_noon = perform_time_analysis(day_coverage)
+				total_minutes_before_noon, total_minutes_after_noon = self._perform_daily_time_analysis(day_coverage)
 
 				self._before_noon_minutes_covered += total_minutes_before_noon
 				self._after_noon_minutes_covered += total_minutes_after_noon
