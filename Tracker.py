@@ -107,9 +107,10 @@ class Tracker:
 
 		return total_minutes_before_noon, total_minutes_after_noon
 
-	def _find_time_covered_today(self,remaining_today):
+	def find_time_covered_today(self):
 
 		covered_today = 0
+		remaining_today = self._remaining_today
 
 		if remaining_today > 0:
 
@@ -120,7 +121,7 @@ class Tracker:
 
 			covered_today = self._max_minutes_daily
 
-		return covered_today
+		return covered_today, remaining_today
 
 	def find_average_time_to_cover(self):
 
