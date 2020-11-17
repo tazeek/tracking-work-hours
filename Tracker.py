@@ -79,7 +79,10 @@ class Tracker:
 
 		return before_noon_minutes, after_noon_minutes
 
-	def _perform_daily_time_analysis(self,times):
+	def _perform_noon_time_comparisons(self,times):
+
+		total_minutes_before_noon = 0
+		total_minutes_after_noon = 0
 
 		for hours in times:
 
@@ -93,9 +96,10 @@ class Tracker:
 
 			before_noon_minutes, after_noon_minutes = self._analyze_times_different_period(start_time, end_time)
 
-			return before_noon_minutes, after_noon_minutes
+			total_minutes_before_noon += before_noon_minutes
+			total_minutes_after_noon += after_noon_minutes
 
-		return None
+		return total_minutes_before_noon, total_minutes_after_noon
 
 	def _find_time_covered_today(self,remaining_today):
 
@@ -145,7 +149,7 @@ class Tracker:
 				day = line_array[0]
 				day_coverage_array = line_array[1:]
 
-				total_minutes_before_noon, total_minutes_after_noon = self._perform_daily_time_analysis(day_coverage_array)
+				total_minutes_before_noon, total_minutes_after_noon = self._perform_noon_time_comparisons(day_coverage_array)
 
 				self._before_noon_minutes_covered += total_minutes_before_noon
 				self._after_noon_minutes_covered += total_minutes_after_noon
