@@ -35,16 +35,22 @@ class Tracker:
 	def get_days_stats(self):
 		return self._days_information_array
 
-	def _get_current_time(self):
-		return str(datetime.now().hour) + ':' + str(datetime.now().minute)
+	def get_after_noon_minutes(self):
+		return self._after_noon_minutes_covered
 
-	def _get_day_number(self):
-		return datetime.today().weekday()
+	def get_before_noon_minutes(self):
+		return self._before_noon_minutes_covered
 
 	def get_hours_minutes(self,total_minutes):
 		hours, minutes = divmod(total_minutes, self._total_minutes_hour)
 
 		return str(hours) + 'h ' + str(minutes) + 'm'
+
+	def _get_current_time(self):
+		return str(datetime.now().hour) + ':' + str(datetime.now().minute)
+
+	def _get_day_number(self):
+		return datetime.today().weekday()
 
 	def _convert_duration_to_minutes(self,start_time, end_time):
 
