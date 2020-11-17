@@ -116,7 +116,7 @@ class Tracker:
 
 		return covered_today
 
-	def _find_average_time_to_cover(self):
+	def find_average_time_to_cover(self):
 
 		today_stats = self._days_information_array[self._day_number]
 
@@ -130,9 +130,9 @@ class Tracker:
 
 		avg_hour, avg_mins = divmod(total_avg, self._total_minutes_hour)
 
-		avg_time_remaining = str(avg_hour) + 'h ' + str(avg_mins) + 'm'
+		avg_time_str_format = str(avg_hour) + 'h ' + str(avg_mins) + 'm'
 
-		return total_avg, avg_time_remaining
+		return total_avg, avg_time_str_format
 
 	def update_time_calculations(self):
 
