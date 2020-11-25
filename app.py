@@ -1,3 +1,5 @@
+from Tracker import Tracker
+
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -6,6 +8,9 @@ import plotly.graph_objs as go
 import pandas as pd
 
 app = dash.Dash()
+
+tracker_obj = Tracker()
+tracker_obj.update_time_calculations()
 
 df = pd.read_csv(
     'https://gist.githubusercontent.com/chriddyp/' +
