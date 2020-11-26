@@ -71,6 +71,9 @@ weekly_hours_fig.update_layout(
     )
 )
 
+total_covered = tracker_obj.get_total_time_covered()
+remaining_weekly = tracker_obj.get_remaining_weekly() 
+
 app.layout = html.Div([
     dcc.Graph(id='overall-week-hours',figure=weekly_hours_fig)
 ])
