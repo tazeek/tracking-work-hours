@@ -85,7 +85,18 @@ total_calculation_df = pd.DataFrame([
         'amount': remaining_weekly,
         'amount_hrs': tracker_obj.get_hours_minutes(remaining_weekly)
     }
-]) 
+])
+
+overall_hours_pie_fig = go.Figure(go.Pie(
+    name="",
+    values = total_calculation_df['amount'],
+    labels = total_calculation_df['category'],
+    customdata = total_calculation_df['amount_hrs'],
+    hovertemplate = "Category: %{label} <br>Total(minutes): %{value} </br>Total(hours): %{customdata}"
+
+))
+
+overall_hours_pie_fig.update_layout(title_text='Overall weekly hours calculation: Remaining vs Covered') 
 
 app.layout = html.Div([
     dcc.Graph(id='overall-week-hours',figure=weekly_hours_fig)
