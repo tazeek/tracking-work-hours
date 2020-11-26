@@ -72,7 +72,20 @@ weekly_hours_fig.update_layout(
 )
 
 total_covered = tracker_obj.get_total_time_covered()
-remaining_weekly = tracker_obj.get_remaining_weekly() 
+remaining_weekly = tracker_obj.get_remaining_weekly()
+
+total_calculation_df = pd.DataFrame([
+    {
+        'category': 'covered', 
+        'amount': total_covered, 
+        'amount_hrs': tracker_obj.get_hours_minutes(total_covered)
+    },
+    {
+        'category': 'remaining', 
+        'amount': remaining_weekly,
+        'amount_hrs': tracker_obj.get_hours_minutes(remaining_weekly)
+    }
+]) 
 
 app.layout = html.Div([
     dcc.Graph(id='overall-week-hours',figure=weekly_hours_fig)
