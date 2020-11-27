@@ -98,8 +98,9 @@ overall_hours_pie_fig = go.Figure(go.Pie(
 
 overall_hours_pie_fig.update_layout(title_text='Overall weekly hours calculation: Remaining vs Covered') 
 
-app.layout = html.Div([
-    dcc.Graph(id='overall-week-hours',figure=weekly_hours_fig)
+app.layout = html.Div(children=[
+    dcc.Graph(id='overall-week-hours',figure=weekly_hours_fig),
+    dcc.Graph(id='total-hours-pie',figure=overall_hours_pie_fig)
 ])
 
 if __name__ == '__main__':
