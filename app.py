@@ -111,8 +111,8 @@ time_analysis_fig = go.Figure(go.Bar(
     x=time_analysis_df['category'],
     y=time_analysis_df['minutes'],
     hovertemplate = "Total(minutes): %{y}"
-    )
-)
+    
+))
 
 # Hours should be 50-50 coverage
 time_analysis_fig.add_shape(
@@ -123,10 +123,10 @@ time_analysis_fig.add_shape(
         y0=1200, # Half of 40 hours is 20 hours (1200 minutes)
         y1=1200,
         line=dict(
-        color="#FECB52",
-        width=2,
-        dash="dot"
-    ),
+            color="#FECB52",
+            width=2,
+            dash="dot"
+        ),
 )) 
 
 app.layout = html.Div(children=[
