@@ -1,9 +1,14 @@
+from Tracker import Tracker
+
 import plotly.graph_objs as go
 import pandas as pd
 
 class WeeklyTab:
 
-	def __init__(self, tracker_obj):
+	def __init__(self):
+
+		tracker_obj = Tracker()
+		tracker_obj.update_time_calculations()
 
 		self._tracker_obj = tracker_obj
 
