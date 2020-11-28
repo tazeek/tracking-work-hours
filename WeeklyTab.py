@@ -9,6 +9,8 @@ class WeeklyTab:
 
 	def generate_weekly_hours(self):
 
+		tracker_obj = self._tracker_obj
+
 		daily_max_minutes = tracker_obj.get_max_minutes_daily()
 		weekly_stats_df = pd.DataFrame(tracker_obj.get_days_stats())
 		avg_minutes, avg_str_display = tracker_obj.find_average_time_to_cover()
@@ -69,3 +71,34 @@ class WeeklyTab:
 		)
 
 		return weekly_hours_fig
+
+	def generate_overall_hours(self):
+
+		tracker_obj = self._tracker_obj
+
+		total_covered = tracker_obj.get_total_time_covered()
+		remaining_weekly = tracker_obj.get_remaining_weekly()
+
+		total_calculation_df = pd.DataFrame([
+		    {
+		        'category': 'covered', 
+		        'amount': total_covered, 
+		        'amount_hrs': tracker_obj.get_hours_minutes(total_covered)
+		    },
+		    {
+		        'category': 'remaining', 
+		        'amount': remaining_weekly,
+		        'amount_hrs': tracker_obj.get_hours_minutes(remaining_weekly)
+		    }
+		])
+
+		overall_hours_pie_fig = go.Figure(go.Pie(
+		    name="",
+		    values = total_calculation_df['amount'],
+		    labels = total_calculation_df['category'],
+		    customdata = total_calculation_df['amount_hrs'],
+		    hovertemplate = "Category: %{label} <br>Total(minutes): %{value} </br>Total(hours): %{customdata}"
+
+		))
+
+		return overall_hours_pie_fig
