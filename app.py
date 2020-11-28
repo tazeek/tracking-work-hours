@@ -131,7 +131,8 @@ time_analysis_fig.add_shape(
 
 app.layout = html.Div(children=[
     dcc.Graph(id='overall-week-hours',figure=weekly_hours_fig),
-    dcc.Graph(id='total-hours-pie',figure=overall_hours_pie_fig)
+    dcc.Graph(id='total-hours-pie',figure=overall_hours_pie_fig),
+    dcc.Graph(id='time-analysis',figure=time_analysis_fig)
 ])
 
 if __name__ == '__main__':
