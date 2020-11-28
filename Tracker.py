@@ -50,7 +50,13 @@ class Tracker:
 		return str(datetime.now().hour) + ':' + str(datetime.now().minute)
 
 	def _get_day_number(self):
-		return datetime.today().weekday()
+		day_number = datetime.today().weekday()
+
+		# Only weekdays should be counted
+		# The last weekday number is 4 (Friday)
+		day_number = day_number if day_number < 4 else 4
+
+		return day_number
 
 	def _convert_duration_to_minutes(self,start_time, end_time):
 
