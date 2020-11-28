@@ -17,11 +17,11 @@ class WeeklyTab:
 
 		weekly_hours_fig = go.Figure(
 		    go.Bar(
-		        x=days_df['minutes_covered'],
-		        y=days_df['day'],
+		        x=weekly_stats_df['minutes_covered'],
+		        y=weekly_stats_df['day'],
 		        orientation='h',
 		        name="",
-		        customdata=days_df['coverage'],
+		        customdata=weekly_stats_df['coverage'],
 		        hovertemplate="Total: %{x}<br>Coverage: %{customdata}"
 		    )
 		)

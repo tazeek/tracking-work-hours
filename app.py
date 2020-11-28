@@ -1,4 +1,5 @@
 from Tracker import Tracker
+from WeeklyTab import WeeklyTab
 
 import dash
 import dash_core_components as dcc
@@ -11,6 +12,8 @@ app = dash.Dash()
 
 tracker_obj = Tracker()
 tracker_obj.update_time_calculations()
+
+weekly_stats_obj = WeeklyTab(tracker_obj)
 
 daily_max_minutes = tracker_obj.get_max_minutes_daily()
 days_df = pd.DataFrame(tracker_obj.get_days_stats())
@@ -130,7 +133,7 @@ time_analysis_fig.add_shape(
 )) 
 
 app.layout = html.Div(children=[
-    dcc.Graph(id='overall-week-hours',figure=weekly_hours_fig),
+    dcc.Graph(id='overall-week-hours',figure=weekly_stats_obj.generate_weekly_hours()),
     dcc.Graph(id='total-hours-pie',figure=overall_hours_pie_fig),
     dcc.Graph(id='time-analysis',figure=time_analysis_fig)
 ])
