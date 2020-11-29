@@ -1,12 +1,6 @@
-from Tracker import Tracker
-
 class TodayTab:
 
-	def __init__(self):
-
-
-		tracker_obj = Tracker()
-		tracker_obj.update_time_calculations()
+	def __init__(self, tracker_obj):
 
 		self._tracker_obj = tracker_obj
 
