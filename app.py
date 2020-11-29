@@ -11,13 +11,13 @@ def initialize_app(app):
 	tracker_obj = Tracker()
 	tracker_obj.update_time_calculations()
 
-    weekly_stats_obj = WeeklyTab()
-    today_stats_obj = TodayTab(tracker_obj)
+	weekly_stats_obj = WeeklyTab(tracker_obj)
+	today_stats_obj = TodayTab(tracker_obj)
 
-    app.layout = html.Div(children=[
-        dcc.Graph(id='overall-week-hours',figure=weekly_stats_obj.generate_weekly_hours()),
-        dcc.Graph(id='total-hours-pie',figure=weekly_stats_obj.generate_overall_hours()),
-        dcc.Graph(id='time-analysis',figure=weekly_stats_obj.generate_noon_comparisons())
+	app.layout = html.Div(children=[
+		dcc.Graph(id='overall-week-hours',figure=weekly_stats_obj.generate_weekly_hours()),
+		dcc.Graph(id='total-hours-pie',figure=weekly_stats_obj.generate_overall_hours()),
+		dcc.Graph(id='time-analysis',figure=weekly_stats_obj.generate_noon_comparisons())
     ])
 
 if __name__ == '__main__':
