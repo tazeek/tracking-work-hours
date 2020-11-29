@@ -1,3 +1,5 @@
+import plotly.graph_objs as go
+
 class TodayTab:
 
 	def __init__(self, tracker_obj):
