@@ -17,13 +17,13 @@ def initialize_app(app):
 	today_stats_obj = TodayTab(tracker_obj)
 	
 	app.layout = html.Div([
-    	dcc.Tabs([
-    		dcc.Tab(label='Weekly Stats', children=[
+    	dcc.Tabs(id='tabs-list', value='week-tab', children= [
+    		dcc.Tab(label='Weekly Stats', value='week-tab', children=[
     			dcc.Graph(id='overall-week-hours',figure=weekly_stats_obj.generate_weekly_hours()),
     			dcc.Graph(id='total-hours-pie',figure=weekly_stats_obj.generate_overall_hours()),
     			dcc.Graph(id='time-analysis',figure=weekly_stats_obj.generate_noon_comparisons())
     		]),
-    		dcc.Tab(label='Today Stats', children=[
+    		dcc.Tab(label='Today Stats', value='today-tab', children=[
     			dcc.Graph(id='today-remaining-hours',figure=today_stats_obj.generate_today_remaining_figure())
     		])
     	])
