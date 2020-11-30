@@ -20,11 +20,14 @@ def initialize_app(app):
 
     return None
 
-tracker_obj = Tracker()
-tracker_obj.update_time_calculations()
+def load_stats_objects():
 
-weekly_stats_obj = WeeklyTab(tracker_obj)
-today_stats_obj = TodayTab(tracker_obj)
+    tracker_obj = Tracker()
+    tracker_obj.update_time_calculations()
+
+    return WeeklyTab(tracker_obj), TodayTab(tracker_obj)
+
+weekly_stats_obj, today_stats_obj = load_stats_objects()
 
 app = dash.Dash()
 initialize_app(app)
