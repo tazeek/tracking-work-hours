@@ -2,6 +2,8 @@ from WeeklyTab import WeeklyTab
 from TodayTab import TodayTab
 from Tracker import Tracker
 
+from dash.dependencies import Input, Output
+
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
