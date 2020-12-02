@@ -17,7 +17,6 @@ class Tracker:
 		self._after_noon_minutes_covered = 0
 		self._remaining_today = 0
 		self._remaining_week = 0
-		self._finishing_time_today = ''
 
 		self._days_information_array = []
 
