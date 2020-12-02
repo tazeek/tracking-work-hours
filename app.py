@@ -1,5 +1,4 @@
 from WeeklyTab import WeeklyTab
-from TodayTab import TodayTab
 from Tracker import Tracker
 
 from dash.dependencies import Input, Output
@@ -14,8 +13,7 @@ def initialize_app(app):
         html.H1(children='Time Tracking Hour Analyzer'),
         html.H4(children='Finishing time: ' + tracker_obj.get_finishing_time_today()),
         dcc.Tabs(id='tabs', value='overall', children=[
-            dcc.Tab(label='Weekly Stats', value='overall'),
-            dcc.Tab(label='Today Stats', value='today')
+            dcc.Tab(label='Weekly Stats', value='overall')
         ]),
         html.Div(id='data-graphs')
     ])
@@ -27,9 +25,9 @@ def load_stats_objects():
     tracker_obj = Tracker()
     tracker_obj.update_time_calculations()
 
-    return WeeklyTab(tracker_obj), TodayTab(tracker_obj), tracker_obj
+    return WeeklyTab(tracker_obj), tracker_obj
 
-weekly_stats_obj, today_stats_obj, tracker_obj = load_stats_objects()
+weekly_stats_obj, tracker_obj = load_stats_objects()
 
 app = dash.Dash()
 initialize_app(app)
@@ -39,16 +37,12 @@ initialize_app(app)
     [Input('tabs','value')]
 )
 def create_graphs_tabs(stat_name):
-    
-    if stat_name == 'overall':
 
-        return [
-            dcc.Graph(id='overall-week-hours',figure=weekly_stats_obj.generate_weekly_hours()),
-            dcc.Graph(id='total-hours-pie',figure=weekly_stats_obj.generate_overall_hours()),
-            dcc.Graph(id='time-analysis',figure=weekly_stats_obj.generate_noon_comparisons())
-        ]
-
-    return [dcc.Graph(id='today-remaining-hours',figure=today_stats_obj.generate_today_remaining_figure())]
+    return [
+        dcc.Graph(id='overall-week-hours',figure=weekly_stats_obj.generate_weekly_hours()),
+        dcc.Graph(id='total-hours-pie',figure=weekly_stats_obj.generate_overall_hours()),
+        dcc.Graph(id='time-analysis',figure=weekly_stats_obj.generate_noon_comparisons())
+    ]
 
 
 if __name__ == '__main__':
