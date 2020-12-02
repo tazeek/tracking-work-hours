@@ -123,8 +123,9 @@ class Tracker:
 		if remaining_today > 0:
 
 			finishing_time_today = datetime.now() + timedelta(minutes = remaining_today)
+			finishing_time_today = finishing_time_today.time().strftime("%H:%M")
 
-		return remaining_today
+		return finishing_time_today
 
 	def find_average_time_to_cover(self):
 
