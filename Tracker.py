@@ -113,21 +113,18 @@ class Tracker:
 
 		return total_minutes_before_noon, total_minutes_after_noon
 
-	def find_time_covered_today(self):
+	def get_finishing_time_today(self):
 
-		covered_today = 0
 		remaining_today = self._remaining_today
+
+		finishing_time_today = '8 hours has been finished. Leave!!'
 
 		if remaining_today > 0:
 
-			covered_today = self._max_minutes_daily - remaining_today
-			self._finishing_time_today = datetime.now() + timedelta(minutes = remaining_today)
+			finishing_time_today = datetime.now() + timedelta(minutes = remaining_today)
+			finishing_time_today = finishing_time_today.time().strftime("%H:%M")
 
-		else:
-
-			covered_today = self._max_minutes_daily
-
-		return covered_today, remaining_today
+		return finishing_time_today
 
 	def find_average_time_to_cover(self):
 
