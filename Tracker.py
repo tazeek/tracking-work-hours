@@ -48,7 +48,7 @@ class Tracker:
 
 	def get_finishing_time_today(self):
 
-		return self._finishing_time_today
+		return self._finishing_time_today.time().strftime("%H:%M")
 
 	def _get_current_time(self):
 		return str(datetime.now().hour) + ':' + str(datetime.now().minute)
