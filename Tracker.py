@@ -46,6 +46,16 @@ class Tracker:
 
 		return str(hours) + 'h ' + str(minutes) + 'm'
 
+	def get_finishing_time_today(self):
+
+		minutes_remaining_today = self._remaining_today
+
+		if minutes_remaining_today <= 0:
+
+			return '8 hours already completed!'
+
+		finishing_time = datetime.datetime.now() + datetime.timedelta(minutes = minutes_remaining_today)
+
 	def _get_current_time(self):
 		return str(datetime.now().hour) + ':' + str(datetime.now().minute)
 
