@@ -61,7 +61,7 @@ class WeeklyTab:
 		    xaxis_title='Minutes covered',
 		    yaxis_title='Day',
 		    yaxis=dict(autorange="reversed"),
-		    width=1000,
+		    width=800,
 		    height=600,
 		    xaxis=dict(
 		        range=[0,600],
@@ -101,7 +101,11 @@ class WeeklyTab:
 
 		))
 
-		overall_hours_pie_fig.update_layout(title_text='Overall weekly hours calculation: Remaining vs Covered')
+		overall_hours_pie_fig.update_layout(
+			title_text='Weekly hours comparison: Remaining vs Covered',
+			width=500,
+			height=500
+		)
 
 		return overall_hours_pie_fig
 
@@ -138,5 +142,13 @@ class WeeklyTab:
 		            dash="dot"
 		        ),
 		))
+
+		time_analysis_fig.update_layout(
+		    title_text='Time analysis (Before noon vs After noon)',
+		    xaxis_title='Category',
+		    yaxis_title='Total minutes covered',
+		    width=500,
+		    height=600
+		)
 
 		return time_analysis_fig 
