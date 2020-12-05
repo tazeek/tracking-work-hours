@@ -11,10 +11,25 @@ def initialize_app(app):
     
     app.layout = html.Div([
         html.H1(children='Time Tracking Hour Analyzer'),
+        
         html.H4(children='Finishing time: ' + tracker_obj.get_finishing_time_today()),
-        dcc.Graph(id='overall-week-hours',figure=weekly_stats_obj.generate_weekly_hours()),
-        dcc.Graph(id='total-hours-pie',figure=weekly_stats_obj.generate_overall_hours()),
-        dcc.Graph(id='time-analysis',figure=weekly_stats_obj.generate_noon_comparisons())
+
+        html.Div(children=[
+
+            dcc.Graph(
+                id='overall-week-hours', 
+                style={'display': 'inline-block'}, 
+                figure=weekly_stats_obj.generate_weekly_hours()
+            ),
+
+            dcc.Graph(
+                id='time-analysis',
+                style={'display': 'inline-block'},
+                figure=weekly_stats_obj.generate_noon_comparisons()
+            )
+        ])
+
+        dcc.Graph(id='total-hours-pie',figure=weekly_stats_obj.generate_overall_hours())
     ])
 
     return None
