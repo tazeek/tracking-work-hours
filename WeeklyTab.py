@@ -61,7 +61,7 @@ class WeeklyTab:
 		    xaxis_title='Minutes covered',
 		    yaxis_title='Day',
 		    yaxis=dict(autorange="reversed"),
-		    width=800,
+		    width=750,
 		    height=600,
 		    xaxis=dict(
 		        range=[0,600],
@@ -147,7 +147,7 @@ class WeeklyTab:
 		    title_text='Time analysis (Before noon vs After noon)',
 		    xaxis_title='Category',
 		    yaxis_title='Total minutes covered',
-		    width=500,
+		    width=450,
 		    height=600
 		)
 
