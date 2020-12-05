@@ -11,7 +11,7 @@ def initialize_app(app):
     
     app.layout = html.Div([
         html.H1(children='Time Tracking Hour Analyzer'),
-        
+
         html.H4(children='Finishing time: ' + tracker_obj.get_finishing_time_today()),
 
         html.Div(children=[
@@ -27,7 +27,7 @@ def initialize_app(app):
                 style={'display': 'inline-block'},
                 figure=weekly_stats_obj.generate_noon_comparisons()
             )
-        ])
+        ]),
 
         dcc.Graph(id='total-hours-pie',figure=weekly_stats_obj.generate_overall_hours())
     ])
