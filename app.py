@@ -42,6 +42,11 @@ def initialize_app():
             figure=weekly_stats_obj.generate_overall_hours(),
             style={'margin':'auto','width': "50%"}
         )
+
+        dcc.Interval(
+            id='interval-component',
+            interval = 5 * 60 * 1000 # 1000 = 1 second
+        )
     ])
 
     return None
