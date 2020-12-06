@@ -8,6 +8,11 @@ import dash_core_components as dcc
 import dash_html_components as html
 
 def initialize_app():
+
+    tracker_obj = Tracker()
+    tracker_obj.update_time_calculations()
+
+    weekly_stats_obj = WeeklyTab(tracker_obj)
     
     return html.Div([
         html.H1(children='Time Tracking Hour Analyzer', style={'textAlign': 'center'}),
@@ -41,18 +46,9 @@ def initialize_app():
 
     return None
 
-def load_stats_objects():
-
-    tracker_obj = Tracker()
-    tracker_obj.update_time_calculations()
-
-    return WeeklyTab(tracker_obj), tracker_obj
-
-weekly_stats_obj, tracker_obj = load_stats_objects()
-
-app = dash.Dash()
-
 if __name__ == '__main__':
+
+    app = dash.Dash()
 
     app.layout = initialize_app
     
