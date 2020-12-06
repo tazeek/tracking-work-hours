@@ -145,10 +145,13 @@ class WeeklyTab:
 
 		time_analysis_fig.update_layout(
 		    title_text='Time analysis (Before noon vs After noon)',
+		    title_x=0.5,
 		    xaxis_title='Category',
 		    yaxis_title='Total minutes covered',
 		    width=450,
 		    height=600
 		)
+
+		time_analysis_fig.update_yaxes(side='right')
 
 		return time_analysis_fig 
