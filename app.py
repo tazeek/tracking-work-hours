@@ -32,7 +32,11 @@ def initialize_app(app):
             )
         ]),
 
-        dcc.Graph(id='total-hours-pie',figure=weekly_stats_obj.generate_overall_hours())
+        dcc.Graph(
+            id='total-hours-pie',
+            figure=weekly_stats_obj.generate_overall_hours(),
+            style={'margin':'auto','width': "50%"}
+        )
     ])
 
     return None
