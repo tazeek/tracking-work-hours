@@ -7,9 +7,9 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 
-def initialize_app(app):
+def initialize_app():
     
-    app.layout = html.Div([
+    return html.Div([
         html.H1(children='Time Tracking Hour Analyzer', style={'textAlign': 'center'}),
 
         html.H4(
@@ -51,9 +51,9 @@ def load_stats_objects():
 weekly_stats_obj, tracker_obj = load_stats_objects()
 
 app = dash.Dash()
-initialize_app(app)
-
 
 if __name__ == '__main__':
+
+    app.layout = initialize_app
     
     app.run_server(debug=True)
