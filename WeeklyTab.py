@@ -60,7 +60,6 @@ class WeeklyTab:
 		    title_text='Weekly hours calculation (Individual Days)',
 		    title_x=0.5,
 		    xaxis_title='Minutes covered',
-		    yaxis_title='Day',
 		    yaxis=dict(autorange="reversed"),
 		    width=750,
 		    height=600,
