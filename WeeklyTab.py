@@ -58,6 +58,7 @@ class WeeklyTab:
 
 		weekly_hours_fig.update_layout(
 		    title_text='Weekly hours calculation (Individual Days)',
+		    title_x=0.5,
 		    xaxis_title='Minutes covered',
 		    yaxis_title='Day',
 		    yaxis=dict(autorange="reversed"),
