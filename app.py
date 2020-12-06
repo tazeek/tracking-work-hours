@@ -10,9 +10,12 @@ import dash_html_components as html
 def initialize_app(app):
     
     app.layout = html.Div([
-        html.H1(children='Time Tracking Hour Analyzer'),
+        html.H1(children='Time Tracking Hour Analyzer', style={'textAlign': 'center'}),
 
-        html.H4(children='Finishing time: ' + tracker_obj.get_finishing_time_today()),
+        html.H4(
+            children='Finishing time: ' + tracker_obj.get_finishing_time_today(), 
+            style={'textAlign': 'center'}
+        ),
 
         html.Div(children=[
 
