@@ -10,9 +10,9 @@ import dash_html_components as html
 tracker_obj = Tracker()
 tracker_obj.update_time_calculations()
 
-def initialize_app():
+weekly_stats_obj = WeeklyTab(tracker_obj)
 
-    weekly_stats_obj = WeeklyTab(tracker_obj)
+def initialize_app():
     
     return html.Div([
         html.H1(children='Time Tracking Hour Analyzer', style={'textAlign': 'center'}),
@@ -51,7 +51,7 @@ def initialize_app():
 
         dcc.Interval(
             id='interval-component',
-            interval = 60 * 1000 # 1000 = 1 second
+            interval = 5 * 60 * 1000 # 1000 = 1 second
         )
     ])
 
@@ -61,12 +61,24 @@ app = dash.Dash()
 app.layout = initialize_app
 
 @app.callback(
-    Output('live-update-text','children'),
-    [Input('interval-component','n_intervals')]
+    [
+        Output('live-update-text','children'),
+        Output('total-hours-pie','figure'),
+        Output('time-analysis','figure'),
+        Output('overall-week-hours','figure')
+    ],
+    [
+        Input('interval-component','n_intervals')
+    ]
 )
-def update_live_text_display(n):
+def update_live_intervals(n):
 
-    return 'Last updated: ' + tracker_obj.get_current_time()
+    return [
+    'Last updated: ' + tracker_obj.get_current_time(),
+    weekly_stats_obj.generate_overall_hours(),
+    weekly_stats_obj.generate_noon_comparisons(),
+    weekly_stats_obj.generate_weekly_hours()
+    ]
 
 if __name__ == '__main__':
     
