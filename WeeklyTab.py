@@ -102,9 +102,8 @@ class WeeklyTab:
 		))
 
 		overall_hours_pie_fig.update_layout(
-			title_text='Weekly hours comparison: Remaining vs Covered',
-			width=500,
-			height=500
+			title_text='Remaining hours vs Covered hours',
+			title_x=0.7
 		)
 
 		return overall_hours_pie_fig
