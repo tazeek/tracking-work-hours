@@ -18,6 +18,11 @@ def initialize_app():
         html.H1(children='Time Tracking Hour Analyzer', style={'textAlign': 'center'}),
 
         html.H4(
+            children='Last updated: ' + tracker_obj.get_current_time(), 
+            style={'textAlign': 'center'}
+        ),
+
+        html.H4(
             children='Finishing time: ' + tracker_obj.get_finishing_time_today(), 
             style={'textAlign': 'center'}
         ),
@@ -41,7 +46,7 @@ def initialize_app():
             id='total-hours-pie',
             figure=weekly_stats_obj.generate_overall_hours(),
             style={'margin':'auto','width': "50%"}
-        )
+        ),
 
         dcc.Interval(
             id='interval-component',
