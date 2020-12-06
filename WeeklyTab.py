@@ -57,7 +57,7 @@ class WeeklyTab:
 		)
 
 		weekly_hours_fig.update_layout(
-		    title_text='Weekly hours calculation (Individual Days)',
+		    title_text='Minutes covered (Day by day)',
 		    title_x=0.5,
 		    xaxis_title='Minutes covered',
 		    yaxis=dict(autorange="reversed"),
@@ -144,10 +144,8 @@ class WeeklyTab:
 		))
 
 		time_analysis_fig.update_layout(
-		    title_text='Time analysis (Before noon vs After noon)',
+		    title_text='Minutes covered (Before noon vs After noon)',
 		    title_x=0.5,
-		    xaxis_title='Category',
-		    yaxis_title='Total minutes covered',
 		    width=450,
 		    height=600
 		)
