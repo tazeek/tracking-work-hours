@@ -46,7 +46,7 @@ class Tracker:
 
 		return str(hours) + 'h ' + str(minutes) + 'm'
 
-	def _get_current_time(self):
+	def get_current_time(self):
 		return str(datetime.now().hour) + ':' + str(datetime.now().minute)
 
 	def _get_day_number(self):
@@ -104,7 +104,7 @@ class Tracker:
 			# 1. 1400-1800 (240 minutes)
 			 # 2. 0800- (Current time)
 			(start_time, end_time) = hours.split('-')
-			end_time = end_time if end_time != '' else self._get_current_time()
+			end_time = end_time if end_time != '' else self.get_current_time()
 
 			before_noon_minutes, after_noon_minutes = self._analyze_times_different_period(start_time, end_time)
 
