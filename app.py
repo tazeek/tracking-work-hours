@@ -37,16 +37,15 @@ def initialize_app():
             ),
 
             dcc.Graph(
-                id='time-analysis',
+                id='total-hours-pie',
                 style={'display': 'inline-block'},
-                figure=weekly_stats_obj.generate_noon_comparisons()
+                figure=weekly_stats_obj.generate_overall_hours()
             )
         ]),
 
         dcc.Graph(
-            id='total-hours-pie',
-            figure=weekly_stats_obj.generate_overall_hours(),
-            style={'margin':'auto','width': "50%"}
+            id='time-analysis',
+            figure=weekly_stats_obj.generate_noon_comparisons()
         ),
 
         dcc.Interval(
