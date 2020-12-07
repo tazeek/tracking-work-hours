@@ -59,6 +59,21 @@ class Tracker:
 		return day_number
 
 	def _convert_duration_to_minutes(self,start_time, end_time):
+		"""Convert duration between two timeframes into minutes
+
+		Parameters
+		----------
+			str
+				String indicating the start time of coverage
+			str
+				String indicating the end time of coverage
+
+		Returns
+		-----------
+			int
+				Minutes between two timeframes
+
+		"""
 
 		FMT = '%H:%M'
 
@@ -67,6 +82,23 @@ class Tracker:
 		return diff.seconds/60
 
 	def _analyze_times_different_period(self, start_time, end_time):
+		"""Find the amount of time covered (before and after noon) between two times
+
+		Parameters
+		----------
+			str
+				String indicating the start time of coverage
+			str
+				String indicating the end time of coverage
+
+		Returns
+		----------
+			int
+				Amount of time before noon
+			int
+				Amount of time after noon
+
+		"""
 
 		start_time_hour = int(start_time.split(':')[0])
 		end_time_hour = int(end_time.split(':')[0])
@@ -92,6 +124,21 @@ class Tracker:
 		return before_noon_minutes, after_noon_minutes
 
 	def _perform_noon_time_comparisons(self,times):
+		"""Find the total amount of time covered before and after noon
+		
+		Parameter
+		---------
+			str
+				Coverage of the day (ex. '8:00-11:39,11:45-12:45')
+
+		Return
+		---------
+
+			int
+				Total number of minutes covered before noon
+			int
+				Total number of minutes covered after noon
+		"""
 
 		total_minutes_before_noon = 0
 		total_minutes_after_noon = 0
@@ -114,6 +161,7 @@ class Tracker:
 		return total_minutes_before_noon, total_minutes_after_noon
 
 	def get_finishing_time_today(self):
+		"""Get the time to finish 8 hours for today"""
 
 		remaining_today = self._remaining_today
 
@@ -127,6 +175,7 @@ class Tracker:
 		return finishing_time_today
 
 	def find_average_time_to_cover(self):
+		"""Find the average time needed to cover on a daily basis"""
 
 		today_stats = self._days_information_array[self._day_number]
 
@@ -145,6 +194,7 @@ class Tracker:
 		return total_avg, avg_time_str_format
 
 	def update_time_calculations(self):
+		"""Calculate the total time covered and coverage, day by day """
 
 		remaining_today = 0
 		remaining_weekly = 0

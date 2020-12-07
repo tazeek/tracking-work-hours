@@ -8,6 +8,7 @@ class WeeklyTab:
 		self._tracker_obj = tracker_obj
 
 	def generate_weekly_hours(self):
+		"""Generate bar chart for displaying the coverage of the week"""
 
 		tracker_obj = self._tracker_obj
 
@@ -73,6 +74,7 @@ class WeeklyTab:
 		return weekly_hours_fig
 
 	def generate_overall_hours(self):
+		"""Generate pie chart showing the total covered and remaining hours"""
 
 		tracker_obj = self._tracker_obj
 
@@ -109,6 +111,7 @@ class WeeklyTab:
 		return overall_hours_pie_fig
 
 	def generate_noon_comparisons(self):
+		"""Generate bar chart to show the comparison between noon times (before and after)"""
 
 		tracker_obj = self._tracker_obj
 
