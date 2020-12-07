@@ -59,6 +59,21 @@ class Tracker:
 		return day_number
 
 	def _convert_duration_to_minutes(self,start_time, end_time):
+		"""Convert duration between two timeframes into minutes
+
+		Parameters
+		----------
+			str
+				String indicating the start time of coverage
+			str
+				String indicating the end time of coverage
+
+		Returns
+		-----------
+			int
+				Minutes between two timeframes
+
+		"""
 
 		FMT = '%H:%M'
 
