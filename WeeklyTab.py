@@ -105,7 +105,9 @@ class WeeklyTab:
 
 		overall_hours_pie_fig.update_layout(
 			title_text='Remaining hours vs Covered hours',
-			title_x=0.7
+			title_x=0.5,
+			width=400,
+			height=600
 		)
 
 		return overall_hours_pie_fig
