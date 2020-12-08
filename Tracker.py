@@ -199,6 +199,8 @@ class Tracker:
 
 				self._days_information_array.append({
 					'day': day,
+					'minutes_before_noon': total_minutes_before_noon,
+					'minutes_after_noon': total_minutes_after_noon,
 					'minutes_covered': total_minutes_day,
 					'coverage': day_coverage_array
 				})
