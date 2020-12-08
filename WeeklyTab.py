@@ -14,7 +14,6 @@ class WeeklyTab:
 
 		daily_max_minutes = tracker_obj.get_max_minutes_daily()
 		weekly_stats_df = pd.DataFrame(tracker_obj.get_days_stats())
-		avg_minutes, avg_str_display = tracker_obj.find_average_time_to_cover()
 
 		weekly_hours_fig = go.Figure(
 		    go.Bar(
@@ -36,21 +35,6 @@ class WeeklyTab:
 		        y1=4.5,
 		        line=dict(
 		            color="Red",
-		            width=2,
-		            dash="dot"
-		        )
-		    )
-		)
-
-		weekly_hours_fig.add_shape(
-		    dict(
-		        type="line",
-		        x0=avg_minutes,
-		        x1=avg_minutes,
-		        y0=-0.5,
-		        y1=4.5,
-		        line=dict(
-		            color="#FECB52",
 		            width=2,
 		            dash="dot"
 		        )
