@@ -174,25 +174,6 @@ class Tracker:
 
 		return finishing_time_today
 
-	def find_average_time_to_cover(self):
-		"""Find the average time needed to cover on a daily basis"""
-
-		today_stats = self._days_information_array[self._day_number]
-
-		total_time_exclude_today = self._max_minutes_weekly - (self.get_total_time_covered() - today_stats['minutes_covered'])
-		days_remaining = self._num_working_days - self._day_number
-
-		# Find the average and increment it with the remainder as well
-		# REASON: Better to cover more minutes than not to
-		avg_mins, remainder = divmod(total_time_exclude_today, (days_remaining))
-		total_avg = avg_mins + remainder
-
-		avg_hour, avg_mins = divmod(total_avg, self._total_minutes_hour)
-
-		avg_time_str_format = str(avg_hour) + 'h ' + str(avg_mins) + 'm'
-
-		return total_avg, avg_time_str_format
-
 	def update_time_calculations(self):
 		"""Calculate the total time covered and coverage, day by day """
 
