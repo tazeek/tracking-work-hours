@@ -66,6 +66,8 @@ app.layout = initialize_app
 )
 def update_live_intervals(n):
 
+    tracker_obj.perform_live_update()
+    
     return [
     'Last updated: ' + tracker_obj.get_current_time(),
     weekly_stats_obj.generate_overall_hours(),
