@@ -178,8 +178,10 @@ class Tracker:
 		today_dict = self._days_information_array[self._day_number]
 		total_minutes_before_noon, total_minutes_after_noon = self._perform_noon_time_comparisons(today_dict['coverage'])
 
-		day_total = total_minutes_before_noon + total_minutes_after_noon
-		self._remaining_today = self._max_minutes_daily - day_total
+		self._remaining_today = self._max_minutes_daily - (total_minutes_before_noon + total_minutes_after_noon)
+
+		today_dict['minutes_before_noon'] = total_minutes_before_noon
+		today_dict['minutes_after_noon'] = total_minutes_after_noon
 
 		self._days_information_array[self._day_number] = today_dict
 
