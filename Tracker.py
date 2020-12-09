@@ -13,10 +13,10 @@ class Tracker:
 		self._max_minutes_weekly = self._num_working_days * self._max_minutes_daily
 		self._overtime_hours = self._total_minutes_hour * (self._daily_hours_cover + 1)
 
-		self._before_noon_minutes_covered = 0
-		self._after_noon_minutes_covered = 0
 		self._remaining_today = 0
 		self._remaining_week = 0
+
+		self._total_time_covered = 0
 
 		self._days_information_array = []
 
@@ -27,7 +27,7 @@ class Tracker:
 		return self._max_minutes_daily
 
 	def get_total_time_covered(self):
-		return self._before_noon_minutes_covered + self._after_noon_minutes_covered
+		return self._total_time_covered
 
 	def get_remaining_weekly(self):
 		return self._remaining_week
@@ -186,16 +186,12 @@ class Tracker:
 
 				total_minutes_before_noon, total_minutes_after_noon = self._perform_noon_time_comparisons(day_coverage_array)
 
-				self._before_noon_minutes_covered += total_minutes_before_noon
-				self._after_noon_minutes_covered += total_minutes_after_noon
-
-				total_minutes_day = total_minutes_before_noon + total_minutes_after_noon
+				self._total_time_covered += total_minutes_before_noon + total_minutes_after_noon
 
 				self._days_information_array.append({
 					'day': day,
 					'minutes_before_noon': total_minutes_before_noon,
 					'minutes_after_noon': total_minutes_after_noon,
-					'minutes_covered': total_minutes_day,
 					'coverage': day_coverage_array
 				})
 
@@ -203,9 +199,7 @@ class Tracker:
 
 					self._remaining_today = self._max_minutes_daily - total_minutes_day
 
-			total_covered = self.get_total_time_covered()
-
-			if total_covered < self._max_minutes_weekly:
-				self._remaining_week = self._max_minutes_weekly - total_covered
+			if self._total_time_covered < self._max_minutes_weekly:
+				self._remaining_week = self._max_minutes_weekly - self._total_time_covered
 
 		return None
