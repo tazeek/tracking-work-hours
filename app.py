@@ -43,11 +43,6 @@ def initialize_app():
             )
         ]),
 
-        dcc.Graph(
-            id='time-analysis',
-            figure=weekly_stats_obj.generate_noon_comparisons()
-        ),
-
         dcc.Interval(
             id='interval-component',
             interval = 5 * 60 * 1000 # 1000 = 1 second
@@ -63,7 +58,6 @@ app.layout = initialize_app
     [
         Output('live-update-text','children'),
         Output('total-hours-pie','figure'),
-        Output('time-analysis','figure'),
         Output('overall-week-hours','figure')
     ],
     [
@@ -75,7 +69,6 @@ def update_live_intervals(n):
     return [
     'Last updated: ' + tracker_obj.get_current_time(),
     weekly_stats_obj.generate_overall_hours(),
-    weekly_stats_obj.generate_noon_comparisons(),
     weekly_stats_obj.generate_weekly_hours()
     ]
 
