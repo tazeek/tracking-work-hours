@@ -16,8 +16,6 @@ class Tracker:
 		self._remaining_today = 0
 		self._remaining_week = 0
 
-		self._total_time_covered = 0
-
 		self._days_information_array = []
 
 		self._day_number = self._get_day_number()
@@ -27,7 +25,13 @@ class Tracker:
 		return self._max_minutes_daily
 
 	def get_total_time_covered(self):
-		return self._total_time_covered
+
+		total = 0
+
+		for days in self._days_information_array:
+			total += days['minutes_before_noon'] + days['minutes_after_noon']
+
+		return total
 
 	def get_remaining_weekly(self):
 		return self._remaining_week
@@ -171,8 +175,7 @@ class Tracker:
 	def update_time_calculations(self):
 		"""Calculate the total time covered and coverage, day by day """
 
-		remaining_today = 0
-		remaining_weekly = 0
+		overall_total = 0
 
 		# One line = Day, Time gap #1, Time gap #2, ..., Time gap n
 		with open(self._file_name) as file:
@@ -187,7 +190,7 @@ class Tracker:
 				total_minutes_before_noon, total_minutes_after_noon = self._perform_noon_time_comparisons(day_coverage_array)
 				day_total = total_minutes_before_noon + total_minutes_after_noon
 
-				self._total_time_covered += day_total
+				overall_total += day_total
 
 				self._days_information_array.append({
 					'day': day,
@@ -200,7 +203,7 @@ class Tracker:
 
 					self._remaining_today = self._max_minutes_daily - day_total
 
-			if self._total_time_covered < self._max_minutes_weekly:
-				self._remaining_week = self._max_minutes_weekly - self._total_time_covered
+			if overall_total < self._max_minutes_weekly:
+				self._remaining_week = self._max_minutes_weekly - overall_total
 
 		return None
