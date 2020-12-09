@@ -17,13 +17,26 @@ class WeeklyTab:
 
 		weekly_hours_fig = go.Figure(
 		    go.Bar(
-		        x=weekly_stats_df['minutes_covered'],
+		        x=weekly_stats_df['minutes_before_noon'],
 		        y=weekly_stats_df['day'],
 		        orientation='h',
-		        name="",
+		        name="Before noon (Total Minutes)",
 		        customdata=weekly_stats_df['coverage'],
-		        hovertemplate="Total: %{x}<br>Coverage: %{customdata}"
+		        hovertemplate="Total: %{x}",
+		        marker=dict(color='rgba(246, 78, 139, 0.6)')
 		    )
+		)
+
+		weekly_hours_fig.add_trace(
+			go.Bar(
+				x=weekly_stats_df['minutes_after_noon'],
+				y=weekly_stats_df['day'],
+				orientation='h',
+				name="After noon (Total Minutes)",
+				customdata=weekly_stats_df['coverage'],
+				hovertemplate="Total: %{x}",
+				marker=dict(color='rgba(58, 71, 80, 0.6)')
+			)
 		)
 
 		weekly_hours_fig.add_shape(
