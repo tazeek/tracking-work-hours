@@ -46,7 +46,7 @@ def initialize_app():
 
         dcc.Interval(
             id='interval-component',
-            interval = 5 * 60 * 1000 # 1000 = 1 second
+            interval = 2 * 60 * 1000 # 1000 = 1 second
         )
     ])
 
@@ -58,7 +58,7 @@ app.layout = initialize_app
 @app.callback(
     [
         Output('live-update-text','children'),
-        Output('finishing-time','children')
+        Output('finishing-time','children'),
         Output('total-hours-pie','figure'),
         Output('overall-week-hours','figure')
     ],
