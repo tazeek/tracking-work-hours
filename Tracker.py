@@ -185,8 +185,9 @@ class Tracker:
 				day_coverage_array = line_array[1:]
 
 				total_minutes_before_noon, total_minutes_after_noon = self._perform_noon_time_comparisons(day_coverage_array)
+				day_total = total_minutes_before_noon + total_minutes_after_noon
 
-				self._total_time_covered += total_minutes_before_noon + total_minutes_after_noon
+				self._total_time_covered += day_total
 
 				self._days_information_array.append({
 					'day': day,
@@ -197,7 +198,7 @@ class Tracker:
 
 				if index == self._day_number:
 
-					self._remaining_today = self._max_minutes_daily - total_minutes_day
+					self._remaining_today = self._max_minutes_daily - day_total
 
 			if self._total_time_covered < self._max_minutes_weekly:
 				self._remaining_week = self._max_minutes_weekly - self._total_time_covered
