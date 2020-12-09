@@ -172,7 +172,7 @@ class Tracker:
 
 		return finishing_time_today
 
-	def live_update(self):
+	def perform_live_update(self):
 		"""Perform live updates for chart"""
 		print(self._day_number)
 		print("\n\n")
