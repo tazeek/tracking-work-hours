@@ -35,12 +35,6 @@ class Tracker:
 	def get_days_stats(self):
 		return self._days_information_array
 
-	def get_after_noon_minutes(self):
-		return self._after_noon_minutes_covered
-
-	def get_before_noon_minutes(self):
-		return self._before_noon_minutes_covered
-
 	def get_hours_minutes(self,total_minutes):
 		hours, minutes = divmod(total_minutes, self._total_minutes_hour)
 
@@ -199,6 +193,8 @@ class Tracker:
 
 				self._days_information_array.append({
 					'day': day,
+					'minutes_before_noon': total_minutes_before_noon,
+					'minutes_after_noon': total_minutes_after_noon,
 					'minutes_covered': total_minutes_day,
 					'coverage': day_coverage_array
 				})
