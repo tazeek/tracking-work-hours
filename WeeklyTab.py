@@ -65,7 +65,8 @@ class WeeklyTab:
 		        range=[0,600],
 		        tick0=0,
 		        dtick=60
-		    )
+		    ),
+		    barmode='stack'
 		)
 
 		return weekly_hours_fig
