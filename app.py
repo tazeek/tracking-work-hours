@@ -24,6 +24,7 @@ def initialize_app():
         ),
 
         html.H4(
+            id='finishing-time',
             children='Finishing time: ' + tracker_obj.get_finishing_time_today(), 
             style={'textAlign': 'center'}
         ),
@@ -45,7 +46,7 @@ def initialize_app():
 
         dcc.Interval(
             id='interval-component',
-            interval = 5 * 60 * 1000 # 1000 = 1 second
+            interval = 2 * 60 * 1000 # 1000 = 1 second
         )
     ])
 
@@ -57,6 +58,7 @@ app.layout = initialize_app
 @app.callback(
     [
         Output('live-update-text','children'),
+        Output('finishing-time','children'),
         Output('total-hours-pie','figure'),
         Output('overall-week-hours','figure')
     ],
@@ -66,8 +68,11 @@ app.layout = initialize_app
 )
 def update_live_intervals(n):
 
+    tracker_obj.perform_live_update()
+
     return [
     'Last updated: ' + tracker_obj.get_current_time(),
+    'Finishing time: ' + tracker_obj.get_finishing_time_today(),
     weekly_stats_obj.generate_overall_hours(),
     weekly_stats_obj.generate_weekly_hours()
     ]

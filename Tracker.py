@@ -13,8 +13,6 @@ class Tracker:
 		self._max_minutes_weekly = self._num_working_days * self._max_minutes_daily
 		self._overtime_hours = self._total_minutes_hour * (self._daily_hours_cover + 1)
 
-		self._before_noon_minutes_covered = 0
-		self._after_noon_minutes_covered = 0
 		self._remaining_today = 0
 		self._remaining_week = 0
 
@@ -27,7 +25,13 @@ class Tracker:
 		return self._max_minutes_daily
 
 	def get_total_time_covered(self):
-		return self._before_noon_minutes_covered + self._after_noon_minutes_covered
+
+		total = 0
+
+		for days in self._days_information_array:
+			total += days['minutes_before_noon'] + days['minutes_after_noon']
+
+		return total
 
 	def get_remaining_weekly(self):
 		return self._remaining_week
@@ -168,11 +172,25 @@ class Tracker:
 
 		return finishing_time_today
 
+	def perform_live_update(self):
+		"""Perform live updates for chart"""
+
+		today_dict = self._days_information_array[self._day_number]
+		total_minutes_before_noon, total_minutes_after_noon = self._perform_noon_time_comparisons(today_dict['coverage'])
+
+		self._remaining_today = self._max_minutes_daily - (total_minutes_before_noon + total_minutes_after_noon)
+
+		today_dict['minutes_before_noon'] = total_minutes_before_noon
+		today_dict['minutes_after_noon'] = total_minutes_after_noon
+
+		self._days_information_array[self._day_number] = today_dict
+
+		return None
+
 	def update_time_calculations(self):
 		"""Calculate the total time covered and coverage, day by day """
 
-		remaining_today = 0
-		remaining_weekly = 0
+		overall_total = 0
 
 		# One line = Day, Time gap #1, Time gap #2, ..., Time gap n
 		with open(self._file_name) as file:
@@ -185,27 +203,22 @@ class Tracker:
 				day_coverage_array = line_array[1:]
 
 				total_minutes_before_noon, total_minutes_after_noon = self._perform_noon_time_comparisons(day_coverage_array)
+				day_total = total_minutes_before_noon + total_minutes_after_noon
 
-				self._before_noon_minutes_covered += total_minutes_before_noon
-				self._after_noon_minutes_covered += total_minutes_after_noon
-
-				total_minutes_day = total_minutes_before_noon + total_minutes_after_noon
+				overall_total += day_total
 
 				self._days_information_array.append({
 					'day': day,
 					'minutes_before_noon': total_minutes_before_noon,
 					'minutes_after_noon': total_minutes_after_noon,
-					'minutes_covered': total_minutes_day,
 					'coverage': day_coverage_array
 				})
 
 				if index == self._day_number:
 
-					self._remaining_today = self._max_minutes_daily - total_minutes_day
+					self._remaining_today = self._max_minutes_daily - day_total
 
-			total_covered = self.get_total_time_covered()
-
-			if total_covered < self._max_minutes_weekly:
-				self._remaining_week = self._max_minutes_weekly - total_covered
+			if overall_total < self._max_minutes_weekly:
+				self._remaining_week = self._max_minutes_weekly - overall_total
 
 		return None
