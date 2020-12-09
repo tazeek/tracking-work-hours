@@ -172,6 +172,24 @@ class Tracker:
 
 		return finishing_time_today
 
+	def live_update(self):
+		"""Perform live updates for chart"""
+		print(self._day_number)
+		print("\n\n")
+
+		today_dict = self._days_information_array[self._day_number]
+		total_minutes_before_noon, total_minutes_after_noon = self._perform_noon_time_comparisons(today_dict['coverage'])
+
+		print(today_dict)
+		print("\n\n")
+
+		day_total = total_minutes_before_noon + total_minutes_after_noon
+		self._remaining_today = self._max_minutes_daily - day_total
+
+		self._days_information_array[self._day_number] = today_dict
+
+		return None
+
 	def update_time_calculations(self):
 		"""Calculate the total time covered and coverage, day by day """
 
