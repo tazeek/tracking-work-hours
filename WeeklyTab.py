@@ -5,7 +5,7 @@ import pandas as pd
 
 class WeeklyTab:
 
-	def __init__(self, tracker_obj):
+	def __init__(self):
 
 		self._tracker_obj = Tracker()
 		self._tracker_obj.update_time_calculations()
@@ -15,6 +15,9 @@ class WeeklyTab:
 
 	def get_current_time(self):
 		return self._tracker_obj.get_current_time()
+
+	def perform_live_update(self):
+		return self._tracker_obj.perform_live_update()
 
 	def generate_weekly_hours(self):
 		"""Generate bar chart for displaying the coverage of the week"""

@@ -6,7 +6,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 
-weekly_stats_obj = WeeklyTab(tracker_obj)
+weekly_stats_obj = WeeklyTab()
 
 def initialize_app():
     
@@ -21,7 +21,7 @@ def initialize_app():
 
         html.H4(
             id='finishing-time',
-            children='Finishing time: ' + weekly_stats_obj.get_finishing_time_today(), 
+            children='Finishing time: ' + weekly_stats_obj.get_finishing_time(), 
             style={'textAlign': 'center'}
         ),
 
@@ -64,11 +64,11 @@ app.layout = initialize_app
 )
 def update_live_intervals(n):
 
-    tracker_obj.perform_live_update()
+    weekly_stats_obj.perform_live_update()
 
     return [
     'Last updated: ' + weekly_stats_obj.get_current_time(),
-    'Finishing time: ' + weekly_stats_obj.get_finishing_time_today(),
+    'Finishing time: ' + weekly_stats_obj.get_finishing_time(),
     weekly_stats_obj.generate_overall_hours(),
     weekly_stats_obj.generate_weekly_hours()
     ]
