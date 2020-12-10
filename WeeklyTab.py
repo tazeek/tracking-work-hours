@@ -1,3 +1,5 @@
+from Tracker import Tracker
+
 import plotly.graph_objs as go
 import pandas as pd
 
@@ -5,7 +7,14 @@ class WeeklyTab:
 
 	def __init__(self, tracker_obj):
 
-		self._tracker_obj = tracker_obj
+		self._tracker_obj = Tracker()
+		self._tracker_obj.update_time_calculations()
+
+	def get_finishing_time(self):
+		return self._tracker_obj.get_finishing_time_today()
+
+	def get_current_time(self):
+		return self._tracker_obj.get_current_time()
 
 	def generate_weekly_hours(self):
 		"""Generate bar chart for displaying the coverage of the week"""
