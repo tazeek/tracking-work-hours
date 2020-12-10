@@ -30,13 +30,15 @@ def initialize_app():
             dcc.Graph(
                 id='overall-week-hours', 
                 style={'display': 'inline-block'}, 
-                figure=weekly_stats_obj.generate_weekly_hours()
+                figure=weekly_stats_obj.generate_weekly_hours(),
+                animate=True
             ),
 
             dcc.Graph(
                 id='total-hours-pie',
                 style={'display': 'inline-block'},
-                figure=weekly_stats_obj.generate_overall_hours()
+                figure=weekly_stats_obj.generate_overall_hours(),
+                animate=True
             )
         ]),
 
