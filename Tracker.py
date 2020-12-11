@@ -45,7 +45,18 @@ class Tracker:
 		return str(hours) + 'h ' + str(minutes) + 'm'
 
 	def get_current_time(self):
-		return str(datetime.now().hour) + ':' + str(datetime.now().minute)
+
+		current_time = datetime.now()
+
+		hour = str(current_time.hour)
+		minute = ''
+
+		if current_time.minute < 10:
+			minute = '0'
+
+		minute += str(current_time.minute)
+
+		return hour + ':' + minute
 
 	def _get_day_number(self):
 		day_number = datetime.today().weekday()
