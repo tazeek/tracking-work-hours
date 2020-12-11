@@ -88,8 +88,7 @@ class WeeklyTab:
 
 		tracker_obj = self._tracker_obj
 
-		total_covered = tracker_obj.get_total_time_covered()
-		remaining_weekly = tracker_obj.get_remaining_weekly()
+		total_covered, total_remaining = tracker_obj.get_total_and_remaining()
 
 		total_calculation_df = pd.DataFrame([
 		    {
@@ -99,8 +98,8 @@ class WeeklyTab:
 		    },
 		    {
 		        'category': 'remaining', 
-		        'amount': remaining_weekly,
-		        'amount_hrs': tracker_obj.get_hours_minutes(remaining_weekly)
+		        'amount': total_remaining,
+		        'amount_hrs': tracker_obj.get_hours_minutes(total_remaining)
 		    }
 		])
 
