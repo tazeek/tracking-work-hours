@@ -42,7 +42,7 @@ class Tracker:
 	def get_hours_minutes(self,total_minutes):
 		hours, minutes = divmod(total_minutes, self._total_minutes_hour)
 
-		return str(hours) + 'h ' + str(minutes) + 'm'
+		return str(int(hours)) + 'h ' + str(int(minutes)) + 'm'
 
 	def get_current_time(self):
 
