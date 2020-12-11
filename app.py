@@ -1,5 +1,4 @@
 from WeeklyTab import WeeklyTab
-from Tracker import Tracker
 
 from dash.dependencies import Input, Output
 
@@ -7,10 +6,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 
-tracker_obj = Tracker()
-tracker_obj.update_time_calculations()
-
-weekly_stats_obj = WeeklyTab(tracker_obj)
+weekly_stats_obj = WeeklyTab()
 
 def initialize_app():
     
@@ -19,13 +15,13 @@ def initialize_app():
 
         html.H4(
             id='live-update-text',
-            children='Last updated: ' + tracker_obj.get_current_time(), 
+            children='Last updated: ' + weekly_stats_obj.get_current_time(), 
             style={'textAlign': 'center'}
         ),
 
         html.H4(
             id='finishing-time',
-            children='Finishing time: ' + tracker_obj.get_finishing_time_today(), 
+            children='Finishing time: ' + weekly_stats_obj.get_finishing_time(), 
             style={'textAlign': 'center'}
         ),
 
@@ -34,13 +30,15 @@ def initialize_app():
             dcc.Graph(
                 id='overall-week-hours', 
                 style={'display': 'inline-block'}, 
-                figure=weekly_stats_obj.generate_weekly_hours()
+                figure=weekly_stats_obj.generate_weekly_hours(),
+                animate=True
             ),
 
             dcc.Graph(
                 id='total-hours-pie',
                 style={'display': 'inline-block'},
-                figure=weekly_stats_obj.generate_overall_hours()
+                figure=weekly_stats_obj.generate_overall_hours(),
+                animate=True
             )
         ]),
 
@@ -68,11 +66,11 @@ app.layout = initialize_app
 )
 def update_live_intervals(n):
 
-    tracker_obj.perform_live_update()
+    weekly_stats_obj.perform_live_update()
 
     return [
-    'Last updated: ' + tracker_obj.get_current_time(),
-    'Finishing time: ' + tracker_obj.get_finishing_time_today(),
+    'Last updated: ' + weekly_stats_obj.get_current_time(),
+    'Finishing time: ' + weekly_stats_obj.get_finishing_time(),
     weekly_stats_obj.generate_overall_hours(),
     weekly_stats_obj.generate_weekly_hours()
     ]

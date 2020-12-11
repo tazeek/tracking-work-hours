@@ -1,11 +1,23 @@
+from Tracker import Tracker
+
 import plotly.graph_objs as go
 import pandas as pd
 
 class WeeklyTab:
 
-	def __init__(self, tracker_obj):
+	def __init__(self):
 
-		self._tracker_obj = tracker_obj
+		self._tracker_obj = Tracker()
+		self._tracker_obj.update_time_calculations()
+
+	def get_finishing_time(self):
+		return self._tracker_obj.get_finishing_time_today()
+
+	def get_current_time(self):
+		return self._tracker_obj.get_current_time()
+
+	def perform_live_update(self):
+		return self._tracker_obj.perform_live_update()
 
 	def generate_weekly_hours(self):
 		"""Generate bar chart for displaying the coverage of the week"""
@@ -76,8 +88,7 @@ class WeeklyTab:
 
 		tracker_obj = self._tracker_obj
 
-		total_covered = tracker_obj.get_total_time_covered()
-		remaining_weekly = tracker_obj.get_remaining_weekly()
+		total_covered, total_remaining = tracker_obj.get_total_and_remaining()
 
 		total_calculation_df = pd.DataFrame([
 		    {
@@ -87,8 +98,8 @@ class WeeklyTab:
 		    },
 		    {
 		        'category': 'remaining', 
-		        'amount': remaining_weekly,
-		        'amount_hrs': tracker_obj.get_hours_minutes(remaining_weekly)
+		        'amount': total_remaining,
+		        'amount_hrs': tracker_obj.get_hours_minutes(total_remaining)
 		    }
 		])
 
@@ -102,8 +113,6 @@ class WeeklyTab:
 		))
 
 		overall_hours_pie_fig.update_layout(
-			title_text='Remaining hours vs Covered hours',
-			title_x=0.5,
 			width=400,
 			height=600
 		)

@@ -14,7 +14,6 @@ class Tracker:
 		self._overtime_hours = self._total_minutes_hour * (self._daily_hours_cover + 1)
 
 		self._remaining_today = 0
-		self._remaining_week = 0
 
 		self._days_information_array = []
 
@@ -24,17 +23,18 @@ class Tracker:
 	def get_max_minutes_daily(self):
 		return self._max_minutes_daily
 
-	def get_total_time_covered(self):
+	def get_total_and_remaining(self):
+		"""Find the total time covered and the total time remaining"""
 
-		total = 0
+		total_covered = 0
 
 		for days in self._days_information_array:
-			total += days['minutes_before_noon'] + days['minutes_after_noon']
+			total_covered += days['minutes_before_noon'] + days['minutes_after_noon']
 
-		return total
+		total_remaining = self._max_minutes_weekly - total_covered
+		total_remaining = 0 if total_remaining < 0 else total_remaining
 
-	def get_remaining_weekly(self):
-		return self._remaining_week
+		return total_covered, total_remaining
 
 	def get_days_stats(self):
 		return self._days_information_array
@@ -42,10 +42,21 @@ class Tracker:
 	def get_hours_minutes(self,total_minutes):
 		hours, minutes = divmod(total_minutes, self._total_minutes_hour)
 
-		return str(hours) + 'h ' + str(minutes) + 'm'
+		return str(int(hours)) + 'h ' + str(int(minutes)) + 'm'
 
 	def get_current_time(self):
-		return str(datetime.now().hour) + ':' + str(datetime.now().minute)
+
+		current_time = datetime.now()
+
+		hour = str(current_time.hour)
+		minute = ''
+
+		if current_time.minute < 10:
+			minute = '0'
+
+		minute += str(current_time.minute)
+
+		return hour + ':' + minute
 
 	def _get_day_number(self):
 		day_number = datetime.today().weekday()
@@ -190,8 +201,6 @@ class Tracker:
 	def update_time_calculations(self):
 		"""Calculate the total time covered and coverage, day by day """
 
-		overall_total = 0
-
 		# One line = Day, Time gap #1, Time gap #2, ..., Time gap n
 		with open(self._file_name) as file:
 
@@ -205,8 +214,6 @@ class Tracker:
 				total_minutes_before_noon, total_minutes_after_noon = self._perform_noon_time_comparisons(day_coverage_array)
 				day_total = total_minutes_before_noon + total_minutes_after_noon
 
-				overall_total += day_total
-
 				self._days_information_array.append({
 					'day': day,
 					'minutes_before_noon': total_minutes_before_noon,
@@ -217,8 +224,5 @@ class Tracker:
 				if index == self._day_number:
 
 					self._remaining_today = self._max_minutes_daily - day_total
-
-			if overall_total < self._max_minutes_weekly:
-				self._remaining_week = self._max_minutes_weekly - overall_total
 
 		return None
