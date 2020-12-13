@@ -36,7 +36,8 @@ class WeeklyTab:
 		        customdata=weekly_stats_df['coverage'],
 		        marker=dict(color='rgba(246, 78, 139, 0.6)'),
 		        texttemplate="%{x}",
-		        textposition="inside"
+		        textposition="inside",
+		        hoverinfo='none'
 		    )
 		)
 
@@ -49,7 +50,8 @@ class WeeklyTab:
 				customdata=weekly_stats_df['coverage'],
 				marker=dict(color='rgba(58, 71, 80, 0.6)'),
 				texttemplate="%{x}",
-				textposition="inside"
+				textposition="inside",
+				hoverinfo='none'
 			)
 		)
 
