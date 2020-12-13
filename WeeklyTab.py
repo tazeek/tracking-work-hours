@@ -24,7 +24,6 @@ class WeeklyTab:
 
 		tracker_obj = self._tracker_obj
 
-		daily_max_minutes = tracker_obj.get_max_minutes_daily()
 		weekly_stats_df = pd.DataFrame(tracker_obj.get_days_stats())
 
 		weekly_hours_fig = go.Figure(
@@ -34,8 +33,11 @@ class WeeklyTab:
 		        orientation='h',
 		        name="Before noon (Total Minutes)",
 		        customdata=weekly_stats_df['coverage'],
-		        hovertemplate="Total: %{x}",
-		        marker=dict(color='rgba(246, 78, 139, 0.6)')
+		        marker=dict(color='rgba(246, 78, 139, 0.6)'),
+		        texttemplate="%{x}",
+		        textposition="inside",
+		        textfont_color='white',
+		        hoverinfo='none'
 		    )
 		)
 
@@ -46,24 +48,12 @@ class WeeklyTab:
 				orientation='h',
 				name="After noon (Total Minutes)",
 				customdata=weekly_stats_df['coverage'],
-				hovertemplate="Total: %{x}",
-				marker=dict(color='rgba(58, 71, 80, 0.6)')
+				marker=dict(color='rgba(58, 71, 80, 0.6)'),
+				texttemplate="%{x}",
+				textposition="inside",
+				textfont_color='white',
+				hoverinfo='none'
 			)
-		)
-
-		weekly_hours_fig.add_shape(
-		    dict(
-		        type="line",
-		        x0=daily_max_minutes,
-		        x1=daily_max_minutes,
-		        y0=-0.5,
-		        y1=4.5,
-		        line=dict(
-		            color="Red",
-		            width=2,
-		            dash="dot"
-		        )
-		    )
 		)
 
 		weekly_hours_fig.update_layout(
