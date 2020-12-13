@@ -27,19 +27,21 @@ def initialize_app():
 
         html.Div(children=[
 
-            dcc.Graph(
-                id='overall-week-hours', 
-                style={'display': 'inline-block'}, 
-                figure=weekly_stats_obj.generate_weekly_hours(),
-                animate=True
-            ),
+            html.Div(className='graph-displayer', children = [
+                dcc.Graph(
+                    id='overall-week-hours',
+                    figure=weekly_stats_obj.generate_weekly_hours(),
+                    animate=True
+                )
+            ]),
 
-            dcc.Graph(
-                id='total-hours-pie',
-                style={'display': 'inline-block'},
-                figure=weekly_stats_obj.generate_overall_hours(),
-                animate=True
-            )
+            html.Div(className='graph-displayer', children = [
+                dcc.Graph(
+                    id='total-hours-pie',
+                    figure=weekly_stats_obj.generate_overall_hours(),
+                    animate=True
+                )
+            ])
         ]),
 
         dcc.Interval(
