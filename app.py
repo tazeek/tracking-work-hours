@@ -31,6 +31,7 @@ def initialize_app():
                 dcc.Graph(
                     id='overall-week-hours',
                     figure=weekly_stats_obj.generate_weekly_hours(),
+                    config={'displayModeBar': False},
                     animate=True
                 )
             ]),
@@ -39,6 +40,7 @@ def initialize_app():
                 dcc.Graph(
                     id='total-hours-pie',
                     figure=weekly_stats_obj.generate_overall_hours(),
+                    config={'displayModeBar': False},
                     animate=True
                 )
             ])
