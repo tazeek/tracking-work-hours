@@ -59,9 +59,8 @@ class WeeklyTab:
 		        y0=-0.5,
 		        y1=4.5,
 		        line=dict(
-		            color="Red",
+		            color="rgb(210,89,89)",
 		            width=2,
-		            dash="dot"
 		        )
 		    )
 		)
