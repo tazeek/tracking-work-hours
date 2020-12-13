@@ -34,8 +34,9 @@ class WeeklyTab:
 		        orientation='h',
 		        name="Before noon (Total Minutes)",
 		        customdata=weekly_stats_df['coverage'],
-		        hovertemplate="Total: %{x}",
-		        marker=dict(color='rgba(246, 78, 139, 0.6)')
+		        marker=dict(color='rgba(246, 78, 139, 0.6)'),
+		        texttemplate="%{x}",
+		        textposition="inside"
 		    )
 		)
 
@@ -46,8 +47,9 @@ class WeeklyTab:
 				orientation='h',
 				name="After noon (Total Minutes)",
 				customdata=weekly_stats_df['coverage'],
-				hovertemplate="Total: %{x}",
-				marker=dict(color='rgba(58, 71, 80, 0.6)')
+				marker=dict(color='rgba(58, 71, 80, 0.6)'),
+				texttemplate="%{x}",
+				textposition="inside"
 			)
 		)
 
