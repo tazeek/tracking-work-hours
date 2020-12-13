@@ -50,7 +50,7 @@ def initialize_app():
 
     return None
 
-app = dash.Dash()
+app = dash.Dash(__name__)
 app.layout = initialize_app
 
 @app.callback(
