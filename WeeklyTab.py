@@ -2,6 +2,7 @@ from Tracker import Tracker
 
 import plotly.graph_objs as go
 import pandas as pd
+import dash_html_components as html
 
 class WeeklyTab:
 
@@ -118,7 +119,17 @@ class WeeklyTab:
 
 		weekly_stats = self._tracker_obj.get_days_stats()
 		df = pd.DataFrame(weekly_stats)
-		
+
 		print(df)
 
-		return 'Empty for now'
+		return html.Table([
+			html.Thead(
+				html.Tr([html.Th(col) for col in df.columns])
+			),
+
+			html.Tbody([
+				html.Tr([
+					html.Td(df.iloc[i][col]) for col in df.columns
+				]) for i in range(0, len(df))
+			])
+		])
