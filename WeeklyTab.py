@@ -4,6 +4,8 @@ import plotly.graph_objs as go
 import pandas as pd
 import dash_html_components as html
 
+import dash_table
+
 class WeeklyTab:
 
 	def __init__(self):
@@ -120,14 +122,13 @@ class WeeklyTab:
 		weekly_stats_df = pd.DataFrame(self._tracker_obj.get_days_stats())
 		columns_list = ['day','coverage']
 
-		return html.Table([
-			html.Thead(
-				html.Tr([html.Th(col) for col in columns_list])
-			),
-
-			html.Tbody([
-				html.Tr([
-					html.Td(weekly_stats_df.iloc[i][col]) for col in columns_list
-				]) for i in range(0, len(weekly_stats_df))
-			])
+		return html.Div([
+				dash_table.DataTable(
+				id='table',
+				columns =[{"name": i, "id": i} for i in columns_list],
+				data = weekly_stats_df.to_dict('records'),
+				style_cell=dict(textAlign='left'),
+				style_header=dict(backgroundColor="paleturquoise"),
+				style_data=dict(backgroundColor="lavender")
+			)
 		])
