@@ -120,6 +120,9 @@ class WeeklyTab:
 	def generate_weekly_coverage(self):
 
 		weekly_stats_df = pd.DataFrame(self._tracker_obj.get_days_stats())
+		#print(weekly_stats_df['coverage'])
+		weekly_stats_df['coverage'] = weekly_stats_df['coverage'].str.join(",") 
+
 		columns_list = ['day','coverage']
 
 		return html.Div([
