@@ -117,19 +117,17 @@ class WeeklyTab:
 
 	def generate_weekly_coverage(self):
 
-		weekly_stats = self._tracker_obj.get_days_stats()
-		df = pd.DataFrame(weekly_stats)
-
-		print(df)
+		weekly_stats_df = pd.DataFrame(self._tracker_obj.get_days_stats())
+		columns_list = ['day','coverage']
 
 		return html.Table([
 			html.Thead(
-				html.Tr([html.Th(col) for col in df.columns])
+				html.Tr([html.Th(col) for col in columns_list])
 			),
 
 			html.Tbody([
 				html.Tr([
-					html.Td(df.iloc[i][col]) for col in df.columns
-				]) for i in range(0, len(df))
+					html.Td(weekly_stats_df.iloc[i][col]) for col in columns_list
+				]) for i in range(0, len(weekly_stats_df))
 			])
 		])
