@@ -50,6 +50,8 @@ def initialize_app():
             ])
         ]),
 
+        html.H4(children='Weekly coverage'),
+
         dcc.Interval(
             id='interval-component',
             interval = 2 * 60 * 1000 # 1000 = 1 second
