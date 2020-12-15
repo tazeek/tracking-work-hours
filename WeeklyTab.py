@@ -113,3 +113,10 @@ class WeeklyTab:
 		)
 
 		return overall_hours_pie_fig
+
+	def generate_weekly_coverage(self):
+
+		weekly_stats = self._tracker_obj.get_days_stats()
+		print(weekly_stats)
+		
+		return 'Empty for now'

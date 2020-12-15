@@ -51,6 +51,7 @@ def initialize_app():
         ]),
 
         html.H4(children='Weekly coverage'),
+        weekly_stats_obj.generate_weekly_coverage(),
 
         dcc.Interval(
             id='interval-component',
