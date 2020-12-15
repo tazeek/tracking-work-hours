@@ -117,6 +117,8 @@ class WeeklyTab:
 	def generate_weekly_coverage(self):
 
 		weekly_stats = self._tracker_obj.get_days_stats()
-		print(weekly_stats)
+		df = pd.DataFrame(weekly_stats)
 		
+		print(df)
+
 		return 'Empty for now'
