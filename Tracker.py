@@ -229,3 +229,17 @@ class Tracker:
 					self._remaining_today = self._max_minutes_daily - day_total
 
 		return None
+
+	def reset_weekly_hours(self):
+
+		file = open(self._file_name, 'r+')
+		daily_hours = file.readlines()
+
+		days = [day.rstrip().split(',')[0] + '\n' for day in daily_hours]
+
+		file.seek(0)
+		file.writelines(days)
+		file.truncate()
+		file.close()
+
+		return None

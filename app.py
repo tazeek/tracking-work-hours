@@ -11,6 +11,9 @@ weekly_stats_obj = WeeklyTab()
 def initialize_app():
     
     return html.Div([
+
+        html.Div(id='hidden-div', style={'display':'none'}),
+
         html.H1(children='Time Tracking Hour Analyzer', style={'textAlign': 'center'}),
 
         html.H4(
@@ -30,6 +33,8 @@ def initialize_app():
             children='Last updated: ' + weekly_stats_obj.get_current_time(), 
             style={'textAlign': 'center'}
         ),
+
+        html.Button('Reset Hours', id='reset-hours'),
 
         html.Div(children=[
 
@@ -85,6 +90,15 @@ def update_live_intervals(n):
     weekly_stats_obj.generate_overall_hours(),
     weekly_stats_obj.generate_weekly_hours()
     ]
+
+@app.callback(Output('hidden-div','children'),[Input('reset-hours','n_clicks')])
+def reset_hours(n_clicks):
+    
+    if n_clicks is None:
+        return None
+
+    print('Fired!')
+    return weekly_stats_obj.reset_weekly_hours()
 
 if __name__ == '__main__':
     
