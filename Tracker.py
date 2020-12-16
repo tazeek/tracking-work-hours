@@ -23,6 +23,9 @@ class Tracker:
 	def get_max_minutes_daily(self):
 		return self._max_minutes_daily
 
+	def get_today_coverage(self):
+		return ','.join(self._days_information_array[self._day_number]['coverage'])
+
 	def get_total_and_remaining(self):
 		"""Find the total time covered and the total time remaining"""
 

@@ -2,6 +2,9 @@ from Tracker import Tracker
 
 import plotly.graph_objs as go
 import pandas as pd
+import dash_html_components as html
+
+import dash_table
 
 class WeeklyTab:
 
@@ -15,6 +18,9 @@ class WeeklyTab:
 
 	def get_current_time(self):
 		return self._tracker_obj.get_current_time()
+
+	def get_today_coverage(self):
+		return self._tracker_obj.get_today_coverage()
 
 	def perform_live_update(self):
 		return self._tracker_obj.perform_live_update()
@@ -110,3 +116,22 @@ class WeeklyTab:
 		)
 
 		return overall_hours_pie_fig
+
+	def generate_weekly_coverage(self):
+
+		weekly_stats_df = pd.DataFrame(self._tracker_obj.get_days_stats())
+		#print(weekly_stats_df['coverage'])
+		weekly_stats_df['coverage'] = weekly_stats_df['coverage'].str.join(",") 
+
+		columns_list = ['day','coverage']
+
+		return html.Div([
+				dash_table.DataTable(
+				id='table',
+				columns =[{"name": i, "id": i} for i in columns_list],
+				data = weekly_stats_df.to_dict('records'),
+				style_cell=dict(textAlign='center'),
+				style_header=dict(backgroundColor="paleturquoise"),
+				style_data=dict(backgroundColor="lavender")
+			)
+		])

@@ -14,14 +14,20 @@ def initialize_app():
         html.H1(children='Time Tracking Hour Analyzer', style={'textAlign': 'center'}),
 
         html.H4(
-            id='live-update-text',
-            children='Last updated: ' + weekly_stats_obj.get_current_time(), 
+            id='finishing-time',
+            children='Finishing time: ' + weekly_stats_obj.get_finishing_time(), 
             style={'textAlign': 'center'}
         ),
 
         html.H4(
-            id='finishing-time',
-            children='Finishing time: ' + weekly_stats_obj.get_finishing_time(), 
+            id='today-coverage',
+            children="Today's coverage: " + weekly_stats_obj.get_today_coverage(),
+            style={'textAlign': 'center'}
+        ),
+
+        html.H4(
+            id='live-update-text',
+            children='Last updated: ' + weekly_stats_obj.get_current_time(), 
             style={'textAlign': 'center'}
         ),
 
@@ -43,6 +49,9 @@ def initialize_app():
                 )
             ])
         ]),
+
+        html.H4(children='Weekly coverage'),
+        weekly_stats_obj.generate_weekly_coverage(),
 
         dcc.Interval(
             id='interval-component',
