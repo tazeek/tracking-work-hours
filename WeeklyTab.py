@@ -130,7 +130,7 @@ class WeeklyTab:
 				id='table',
 				columns =[{"name": i, "id": i} for i in columns_list],
 				data = weekly_stats_df.to_dict('records'),
-				style_cell=dict(textAlign='left'),
+				style_cell=dict(textAlign='center'),
 				style_header=dict(backgroundColor="paleturquoise"),
 				style_data=dict(backgroundColor="lavender")
 			)
