@@ -91,13 +91,14 @@ def update_live_intervals(n):
     weekly_stats_obj.generate_weekly_hours()
     ]
 
-@app.callback(
-    Output('hidden-div','children'),
-    [Input('reset-hours','n_clicks')]
-)
+@app.callback(Output('hidden-div','children'),[Input('reset-hours','n_clicks')])
 def reset_hours(n_clicks):
-    print('Reset!')
-    return 1
+    
+    if n_clicks is None:
+        return None
+
+    print('Fired!')
+    return weekly_stats_obj.reset_weekly_hours()
 
 if __name__ == '__main__':
     

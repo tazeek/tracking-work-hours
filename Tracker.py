@@ -237,8 +237,7 @@ class Tracker:
 
 		days = [day.rstrip().split(',')[0] + '\n' for day in daily_hours]
 
-		file.truncate(0)
-			.writelines(days)
-			.close()
+		file.writelines(days)
+		file.close()
 
 		return None
