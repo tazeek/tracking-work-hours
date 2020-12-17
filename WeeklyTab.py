@@ -115,9 +115,16 @@ class WeeklyTab:
 		    values = total_calculation_df['amount'],
 		    labels = total_calculation_df['category'],
 		    customdata = total_calculation_df['amount_hrs'],
-		    hovertemplate = "Category: %{label} <br>Total(minutes): %{value} </br>Total(hours): %{customdata}"
+		    hovertemplate = "</br>Total(hours): %{customdata}"
 
 		))
+
+		overall_hours_pie_fig.update_traces(
+			marker=dict(
+				colors=['hsl(136,29%,31%)','hsl(360,43%,43%)'], 
+				line=dict(color='#000000', width=1)
+			)
+		)
 
 		overall_hours_pie_fig.update_layout(
 			width=400,
