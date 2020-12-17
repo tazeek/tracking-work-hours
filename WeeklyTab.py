@@ -11,16 +11,15 @@ class WeeklyTab:
 	def __init__(self):
 
 		self._tracker_obj = Tracker()
-		self._tracker_obj.update_time_calculations()
 
 	def get_finishing_time(self):
-		return self._tracker_obj.get_finishing_time_today()
+		return f'Finishing time: {self._tracker_obj.get_finishing_time_today()}'
 
 	def get_current_time(self):
-		return self._tracker_obj.get_current_time()
+		return f'Last updated: {self._tracker_obj.get_current_time()}'
 
 	def get_today_coverage(self):
-		return self._tracker_obj.get_today_coverage()
+		return f'Today\'s coverage: {self._tracker_obj.get_today_coverage()}'
 
 	def perform_live_update(self):
 		return self._tracker_obj.perform_live_update()
@@ -42,7 +41,11 @@ class WeeklyTab:
 		        orientation='h',
 		        name="Before noon (Total Minutes)",
 		        customdata=weekly_stats_df['coverage'],
-		        marker=dict(color='rgba(246, 78, 139, 0.6)'),
+		        marker=dict(
+		        	color='hsl(24,46%,50%)',
+		        	opacity=0.75,
+		        	line=dict(color='hsl(24,46%,50%)',width=2)
+		        ),
 		        texttemplate="%{x}",
 		        textposition="inside",
 		        textfont_color='white',
@@ -57,7 +60,10 @@ class WeeklyTab:
 				orientation='h',
 				name="After noon (Total Minutes)",
 				customdata=weekly_stats_df['coverage'],
-				marker=dict(color='rgba(58, 71, 80, 0.6)'),
+				marker=dict(
+					color='hsl(354,74%,21%)',
+					opacity=0.75,
+					line=dict(color='hsl(354,74%,21%)',width=2)),
 				texttemplate="%{x}",
 				textposition="inside",
 				textfont_color='white',
@@ -67,7 +73,7 @@ class WeeklyTab:
 
 		weekly_hours_fig.update_layout(
 		    title_text='Minutes covered (Day by day)',
-		    title_x=0.5,
+		    title_x=0.4,
 		    xaxis_title='Minutes covered',
 		    yaxis=dict(autorange="reversed"),
 		    width=750,
@@ -75,7 +81,7 @@ class WeeklyTab:
 		    xaxis=dict(
 		        range=[0,600],
 		        tick0=0,
-		        dtick=60
+		        dtick=120
 		    ),
 		    barmode='stack',
 		    transition={'duration': 1000, 'easing': 'cubic-in-out'}
@@ -108,9 +114,16 @@ class WeeklyTab:
 		    values = total_calculation_df['amount'],
 		    labels = total_calculation_df['category'],
 		    customdata = total_calculation_df['amount_hrs'],
-		    hovertemplate = "Category: %{label} <br>Total(minutes): %{value} </br>Total(hours): %{customdata}"
+		    hovertemplate = "</br>Total(hours): %{customdata}"
 
 		))
+
+		overall_hours_pie_fig.update_traces(
+			marker=dict(
+				colors=['hsl(136,29%,31%)','hsl(360,43%,43%)'], 
+				line=dict(color='#000000', width=1)
+			)
+		)
 
 		overall_hours_pie_fig.update_layout(
 			width=400,
@@ -123,7 +136,6 @@ class WeeklyTab:
 	def generate_weekly_coverage(self):
 
 		weekly_stats_df = pd.DataFrame(self._tracker_obj.get_days_stats())
-		#print(weekly_stats_df['coverage'])
 		weekly_stats_df['coverage'] = weekly_stats_df['coverage'].str.join(",") 
 
 		columns_list = ['day','coverage']

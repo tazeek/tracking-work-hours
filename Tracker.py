@@ -8,10 +8,8 @@ class Tracker:
 		self._daily_hours_cover = 8
 		self._num_working_days = 5
 
-		self._total_target_hours = self._num_working_days * self._daily_hours_cover
 		self._max_minutes_daily = self._daily_hours_cover * self._total_minutes_hour
 		self._max_minutes_weekly = self._num_working_days * self._max_minutes_daily
-		self._overtime_hours = self._total_minutes_hour * (self._daily_hours_cover + 1)
 
 		self._remaining_today = 0
 
@@ -20,11 +18,21 @@ class Tracker:
 		self._day_number = self._get_day_number()
 		self._file_name = 'folder/working_hours.txt'
 
+		self._update_time_calculations()
+
 	def get_max_minutes_daily(self):
 		return self._max_minutes_daily
 
+	def get_days_stats(self):
+		return self._days_information_array
+
 	def get_today_coverage(self):
 		return ','.join(self._days_information_array[self._day_number]['coverage'])
+
+	def get_hours_minutes(self,total_minutes):
+		hours, minutes = divmod(total_minutes, self._total_minutes_hour)
+
+		return str(int(hours)) + 'h ' + str(int(minutes)) + 'm'
 
 	def get_total_and_remaining(self):
 		"""Find the total time covered and the total time remaining"""
@@ -39,14 +47,6 @@ class Tracker:
 
 		return total_covered, total_remaining
 
-	def get_days_stats(self):
-		return self._days_information_array
-
-	def get_hours_minutes(self,total_minutes):
-		hours, minutes = divmod(total_minutes, self._total_minutes_hour)
-
-		return str(int(hours)) + 'h ' + str(int(minutes)) + 'm'
-
 	def get_current_time(self):
 
 		current_time = datetime.now()
@@ -60,6 +60,35 @@ class Tracker:
 		minute += str(current_time.minute)
 
 		return hour + ':' + minute
+
+	def get_finishing_time_today(self):
+		"""Get the time to finish 8 hours for today"""
+
+		remaining_today = self._remaining_today
+
+		finishing_time_today = '8 hours has been finished. Leave!!'
+
+		if remaining_today > 0:
+
+			finishing_time_today = datetime.now() + timedelta(minutes = remaining_today)
+			finishing_time_today = finishing_time_today.time().strftime("%H:%M")
+
+		return finishing_time_today
+
+	def reset_weekly_hours(self):
+		"""Remove the coverage of the current week"""
+
+		file = open(self._file_name, 'r+')
+		daily_hours = file.readlines()
+
+		days = [day.rstrip().split(',')[0] + '\n' for day in daily_hours]
+
+		file.seek(0)
+		file.writelines(days)
+		file.truncate()
+		file.close()
+
+		return None
 
 	def _get_day_number(self):
 		day_number = datetime.today().weekday()
@@ -172,20 +201,6 @@ class Tracker:
 
 		return total_minutes_before_noon, total_minutes_after_noon
 
-	def get_finishing_time_today(self):
-		"""Get the time to finish 8 hours for today"""
-
-		remaining_today = self._remaining_today
-
-		finishing_time_today = '8 hours has been finished. Leave!!'
-
-		if remaining_today > 0:
-
-			finishing_time_today = datetime.now() + timedelta(minutes = remaining_today)
-			finishing_time_today = finishing_time_today.time().strftime("%H:%M")
-
-		return finishing_time_today
-
 	def perform_live_update(self):
 		"""Perform live updates for chart"""
 
@@ -201,7 +216,7 @@ class Tracker:
 
 		return None
 
-	def update_time_calculations(self):
+	def _update_time_calculations(self):
 		"""Calculate the total time covered and coverage, day by day """
 
 		# One line = Day, Time gap #1, Time gap #2, ..., Time gap n
@@ -227,19 +242,5 @@ class Tracker:
 				if index == self._day_number:
 
 					self._remaining_today = self._max_minutes_daily - day_total
-
-		return None
-
-	def reset_weekly_hours(self):
-
-		file = open(self._file_name, 'r+')
-		daily_hours = file.readlines()
-
-		days = [day.rstrip().split(',')[0] + '\n' for day in daily_hours]
-
-		file.seek(0)
-		file.writelines(days)
-		file.truncate()
-		file.close()
 
 		return None
