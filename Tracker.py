@@ -101,7 +101,9 @@ class Tracker:
 		
 		today_coverage += self._append_status_today_coverage(today_coverage)
 
-		print(today_coverage)
+		self._days_information_array[self._day_number]['coverage'] = today_coverage
+
+		return None
 
 	def _append_status_today_coverage(self,coverage):
 
