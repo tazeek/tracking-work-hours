@@ -11,7 +11,6 @@ class WeeklyTab:
 	def __init__(self):
 
 		self._tracker_obj = Tracker()
-		self._tracker_obj.update_time_calculations()
 
 	def get_finishing_time(self):
 		return self._tracker_obj.get_finishing_time_today()
