@@ -1,6 +1,7 @@
 from WeeklyTab import WeeklyTab
 
 from dash.dependencies import Input, Output
+from controller import register_callbacks
 
 import dash
 import dash_core_components as dcc
@@ -8,24 +9,15 @@ import dash_html_components as html
 
 weekly_stats_obj = WeeklyTab()
 
-def fetch_finishing_time_string():
-    return f'Finishing time: {weekly_stats_obj.get_finishing_time()}'
-
-def fetch_today_coverage_string():
-    return f'Today\'s coverage: {weekly_stats_obj.get_today_coverage()}'
-
-def fetch_last_updated_string():
-    return f'Last updated: {weekly_stats_obj.get_current_time()}'
-
 def initialize_app():
 
     overall_hours_fig = weekly_stats_obj.generate_weekly_hours()
     total_hours_fig = weekly_stats_obj.generate_overall_hours()
     weekly_coverage_table = weekly_stats_obj.generate_weekly_coverage()
 
-    finishing_time_str = fetch_finishing_time_string()
-    today_coverage_str = fetch_today_coverage_string()
-    last_updated_str = fetch_last_updated_string()
+    finishing_time_str = weekly_stats_obj.get_finishing_time()
+    today_coverage_str = weekly_stats_obj.get_today_coverage()
+    last_updated_str = weekly_stats_obj.get_current_time()
     
     return html.Div([
 
@@ -82,34 +74,7 @@ def initialize_app():
 
 app = dash.Dash(__name__)
 app.layout = initialize_app
-
-@app.callback(
-    [
-        Output('live-update-text','children'),
-        Output('total-hours-pie','figure'),
-        Output('overall-week-hours','figure')
-    ],
-    [
-        Input('interval-component','n_intervals')
-    ]
-)
-def update_live_intervals(n):
-
-    weekly_stats_obj.perform_live_update()
-
-    return [
-        fetch_last_updated_string(),
-        weekly_stats_obj.generate_overall_hours(),
-        weekly_stats_obj.generate_weekly_hours()
-    ]
-
-@app.callback(Output('hidden-div','children'),[Input('reset-hours','n_clicks')])
-def reset_hours(n_clicks):
-    
-    if n_clicks is None:
-        return None
-
-    return weekly_stats_obj.reset_weekly_hours()
+register_callbacks(app,weekly_stats_obj)
 
 if __name__ == '__main__':
     
