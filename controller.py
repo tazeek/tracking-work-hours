@@ -1,4 +1,5 @@
-from dash.dependencies import Output, Input
+from dash.dependencies import Output, Input, State
+from dash.exceptions import PreventUpdate
 
 def register_callbacks(app, weekly_stats_obj):
 
@@ -26,10 +27,20 @@ def register_callbacks(app, weekly_stats_obj):
 	def reset_hours(n_clicks):
 	    
 		if n_clicks is None:
-			return None
+			raise PreventUpdate
 
 		return weekly_stats_obj.reset_weekly_hours()
 
 	@app.callback(
-
+		Output('today-coverage','children'),
+		[Input('submit-val','n_clicks')],
+		[State('submit-val','value')]
 	)
+	def update_today_coverage(clicks, value):
+
+		if clicks is None:
+			raise PreventUpdate
+
+		print(value)
+
+		return None

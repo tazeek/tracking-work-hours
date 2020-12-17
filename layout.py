@@ -29,7 +29,7 @@ def generate_layout(weekly_stats_obj):
 				children=today_coverage_str
 			),
 
-			html.Button(children='Stop',value='stop', id='submit-val', n_clicks=0),
+			html.Button(children='Stop',value='stop', id='submit-val'),
 		]),
 
 		html.H4(
