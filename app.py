@@ -1,6 +1,5 @@
 from WeeklyTab import WeeklyTab
 
-from dash.dependencies import Input, Output
 from controller import register_callbacks
 
 import dash
