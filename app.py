@@ -56,7 +56,7 @@ def initialize_app():
                 dcc.Graph(
                     id='overall-week-hours',
                     figure=overall_hours_fig,
-                    config={'displayModeBar': False}
+                    config={'displayModeBar': False, 'staticPlot': True}
                 )
             ]),
 
