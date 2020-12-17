@@ -8,14 +8,24 @@ import dash_html_components as html
 
 weekly_stats_obj = WeeklyTab()
 
+def fetch_finishing_time_string():
+    return f'Finishing time: {weekly_stats_obj.get_finishing_time()}'
+
+def fetch_today_coverage_string():
+    return f'Today\'s coverage: {weekly_stats_obj.get_today_coverage()}'
+
+def fetch_last_updated_string():
+    return f'Last updated: {weekly_stats_obj.get_current_time()}'
+
 def initialize_app():
 
-    finishing_time = weekly_stats_obj.get_finishing_time()
-    today_coverage = weekly_stats_obj.get_today_coverage()
-    last_updated = weekly_stats_obj.get_current_time()
     overall_hours_fig = weekly_stats_obj.generate_weekly_hours()
     total_hours_fig = weekly_stats_obj.generate_overall_hours()
     weekly_coverage_table = weekly_stats_obj.generate_weekly_coverage()
+
+    finishing_time_str = fetch_finishing_time_string()
+    today_coverage_str = fetch_today_coverage_string()
+    last_updated_str = fetch_last_updated_string()
     
     return html.Div([
 
@@ -25,17 +35,17 @@ def initialize_app():
 
         html.H4(
             id='finishing-time',
-            children='Finishing time: ' + finishing_time
+            children=finishing_time_str
         ),
 
         html.H4(
             id='today-coverage',
-            children="Today's coverage: " + today_coverage
+            children=today_coverage_str
         ),
 
         html.H4(
             id='live-update-text',
-            children='Last updated: ' + last_updated
+            children=last_updated_str
         ),
 
         html.Button('Reset Hours', id='reset-hours'),
@@ -76,7 +86,6 @@ app.layout = initialize_app
 @app.callback(
     [
         Output('live-update-text','children'),
-        Output('finishing-time','children'),
         Output('total-hours-pie','figure'),
         Output('overall-week-hours','figure')
     ],
@@ -89,10 +98,9 @@ def update_live_intervals(n):
     weekly_stats_obj.perform_live_update()
 
     return [
-    'Last updated: ' + weekly_stats_obj.get_current_time(),
-    'Finishing time: ' + weekly_stats_obj.get_finishing_time(),
-    weekly_stats_obj.generate_overall_hours(),
-    weekly_stats_obj.generate_weekly_hours()
+        fetch_last_updated_string(),
+        weekly_stats_obj.generate_overall_hours(),
+        weekly_stats_obj.generate_weekly_hours()
     ]
 
 @app.callback(Output('hidden-div','children'),[Input('reset-hours','n_clicks')])
