@@ -22,10 +22,15 @@ def generate_layout(weekly_stats_obj):
 			children=finishing_time_str
 		),
 
-		html.H4(
-			id='today-coverage',
-			children=today_coverage_str
-		),
+		html.Div(children=[
+
+			html.H4(
+				id='today-coverage',
+				children=today_coverage_str
+			),
+
+			html.Button(children='Stop',value='stop', id='submit-val', n_clicks=0),
+		]),
 
 		html.H4(
 			id='live-update-text',
