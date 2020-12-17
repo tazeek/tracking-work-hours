@@ -93,7 +93,22 @@ class Tracker:
 	def update_today_coverage(self):
 
 		today_coverage = self.get_today_coverage()
+		
+		today_coverage += self._append_status_today_coverage(today_coverage)
+
 		print(today_coverage)
+
+	def _append_status_today_coverage(self,coverage):
+
+		last_operation = coverage[-1]
+		current_time = self.get_current_time()
+
+		if last_operation == ',':
+			current_time += '-'
+		elif last_operation != '-':
+			current_time = ',' + current_time + '-'
+
+		return current_time
 
 	def _get_day_number(self):
 		day_number = datetime.today().weekday()
