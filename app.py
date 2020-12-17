@@ -9,6 +9,13 @@ import dash_html_components as html
 weekly_stats_obj = WeeklyTab()
 
 def initialize_app():
+
+    finishing_time = weekly_stats_obj.get_finishing_time()
+    today_coverage = weekly_stats_obj.get_today_coverage()
+    last_updated = weekly_stats_obj.get_current_time()
+    overall_hours_fig = weekly_stats_obj.generate_weekly_hours()
+    total_hours_fig = weekly_stats_obj.generate_overall_hours()
+    weekly_coverage_table = weekly_stats_obj.generate_weekly_coverage()
     
     return html.Div([
 
@@ -18,17 +25,17 @@ def initialize_app():
 
         html.H4(
             id='finishing-time',
-            children='Finishing time: ' + weekly_stats_obj.get_finishing_time()
+            children='Finishing time: ' + finishing_time
         ),
 
         html.H4(
             id='today-coverage',
-            children="Today's coverage: " + weekly_stats_obj.get_today_coverage()
+            children="Today's coverage: " + today_coverage
         ),
 
         html.H4(
             id='live-update-text',
-            children='Last updated: ' + weekly_stats_obj.get_current_time()
+            children='Last updated: ' + last_updated
         ),
 
         html.Button('Reset Hours', id='reset-hours'),
@@ -38,7 +45,7 @@ def initialize_app():
             html.Div(className='graph-displayer', children = [
                 dcc.Graph(
                     id='overall-week-hours',
-                    figure=weekly_stats_obj.generate_weekly_hours(),
+                    figure=overall_hours_fig,
                     config={'displayModeBar': False}
                 )
             ]),
@@ -46,14 +53,14 @@ def initialize_app():
             html.Div(className='graph-displayer', children = [
                 dcc.Graph(
                     id='total-hours-pie',
-                    figure=weekly_stats_obj.generate_overall_hours(),
+                    figure=total_hours_fig,
                     config={'displayModeBar': False}
                 )
             ])
         ]),
 
         html.H4(children='Weekly coverage'),
-        weekly_stats_obj.generate_weekly_coverage(),
+        weekly_coverage_table,
 
         dcc.Interval(
             id='interval-component',
