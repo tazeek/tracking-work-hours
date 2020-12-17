@@ -51,8 +51,13 @@ class Tracker:
 
 		current_time = datetime.now()
 
-		hour = str(current_time.hour)
+		hour = ''
 		minute = ''
+
+		if current_time.hour < 10:
+			hour = '0'
+
+		hour += str(current_time.hour)
 
 		if current_time.minute < 10:
 			minute = '0'
