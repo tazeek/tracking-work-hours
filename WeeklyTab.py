@@ -42,7 +42,11 @@ class WeeklyTab:
 		        orientation='h',
 		        name="Before noon (Total Minutes)",
 		        customdata=weekly_stats_df['coverage'],
-		        marker=dict(color='hsl(24,46%,50%)',opacity=0.75),
+		        marker=dict(
+		        	color='hsl(24,46%,50%)',
+		        	opacity=0.75,
+		        	line=dict(color='hsl(24,46%,50%)',width=2)
+		        ),
 		        texttemplate="%{x}",
 		        textposition="inside",
 		        textfont_color='white',
@@ -57,7 +61,10 @@ class WeeklyTab:
 				orientation='h',
 				name="After noon (Total Minutes)",
 				customdata=weekly_stats_df['coverage'],
-				marker=dict(color='hsl(354,74%,21%)',opacity=0.75),
+				marker=dict(
+					color='hsl(354,74%,21%)',
+					opacity=0.75,
+					line=dict(color='hsl(354,74%,21%)',width=2)),
 				texttemplate="%{x}",
 				textposition="inside",
 				textfont_color='white',
