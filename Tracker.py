@@ -90,6 +90,11 @@ class Tracker:
 
 		return None
 
+	def update_today_coverage(self):
+
+		today_coverage = self.get_today_coverage()
+		print(today_coverage)
+
 	def _get_day_number(self):
 		day_number = datetime.today().weekday()
 

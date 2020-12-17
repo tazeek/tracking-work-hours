@@ -41,6 +41,6 @@ def register_callbacks(app, weekly_stats_obj):
 		if clicks is None:
 			raise PreventUpdate
 
-		print(value)
+		weekly_stats_obj.update_today_coverage()
 
-		return None
+		return weekly_stats_obj.get_today_coverage()

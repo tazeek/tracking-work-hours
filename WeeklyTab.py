@@ -27,6 +27,9 @@ class WeeklyTab:
 	def reset_weekly_hours(self):
 		return self._tracker_obj.reset_weekly_hours()
 
+	def update_today_coverage(self):
+		return self._tracker_obj.update_today_coverage()
+
 	def generate_weekly_hours(self):
 		"""Generate bar chart for displaying the coverage of the week"""
 
