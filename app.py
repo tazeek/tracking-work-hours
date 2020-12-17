@@ -94,7 +94,6 @@ def reset_hours(n_clicks):
     if n_clicks is None:
         return None
 
-    print('Fired!')
     return weekly_stats_obj.reset_weekly_hours()
 
 if __name__ == '__main__':
