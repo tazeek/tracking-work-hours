@@ -42,7 +42,7 @@ class WeeklyTab:
 		        orientation='h',
 		        name="Before noon (Total Minutes)",
 		        customdata=weekly_stats_df['coverage'],
-		        marker=dict(color='rgba(246, 78, 139, 0.6)'),
+		        marker=dict(color='hsl(24,46%,50%)',opacity=0.75),
 		        texttemplate="%{x}",
 		        textposition="inside",
 		        textfont_color='white',
@@ -57,7 +57,7 @@ class WeeklyTab:
 				orientation='h',
 				name="After noon (Total Minutes)",
 				customdata=weekly_stats_df['coverage'],
-				marker=dict(color='rgba(58, 71, 80, 0.6)'),
+				marker=dict(color='hsl(354,74%,21%)',opacity=0.75),
 				texttemplate="%{x}",
 				textposition="inside",
 				textfont_color='white',
@@ -67,7 +67,7 @@ class WeeklyTab:
 
 		weekly_hours_fig.update_layout(
 		    title_text='Minutes covered (Day by day)',
-		    title_x=0.5,
+		    title_x=0.4,
 		    xaxis_title='Minutes covered',
 		    yaxis=dict(autorange="reversed"),
 		    width=750,
@@ -75,7 +75,7 @@ class WeeklyTab:
 		    xaxis=dict(
 		        range=[0,600],
 		        tick0=0,
-		        dtick=60
+		        dtick=120
 		    ),
 		    barmode='stack',
 		    transition={'duration': 1000, 'easing': 'cubic-in-out'}
@@ -123,7 +123,6 @@ class WeeklyTab:
 	def generate_weekly_coverage(self):
 
 		weekly_stats_df = pd.DataFrame(self._tracker_obj.get_days_stats())
-		#print(weekly_stats_df['coverage'])
 		weekly_stats_df['coverage'] = weekly_stats_df['coverage'].str.join(",") 
 
 		columns_list = ['day','coverage']
