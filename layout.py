@@ -10,6 +10,8 @@ def generate_layout(weekly_stats_obj):
 	finishing_time_str = weekly_stats_obj.get_finishing_time()
 	today_coverage_str = weekly_stats_obj.get_today_coverage()
 	last_updated_str = weekly_stats_obj.get_current_time()
+
+	button_status = 'start' if today_coverage_str[-1] != '-' else 'stop'
     
 	return html.Div([
 
@@ -22,10 +24,15 @@ def generate_layout(weekly_stats_obj):
 			children=finishing_time_str
 		),
 
-		html.H4(
-			id='today-coverage',
-			children=today_coverage_str
-		),
+		html.Div(children=[
+
+			html.H4(
+				id='today-coverage',
+				children=today_coverage_str
+			),
+
+			html.Button(children=button_status.capitalize(),value=button_status, id='update-coverage'),
+		]),
 
 		html.H4(
 			id='live-update-text',

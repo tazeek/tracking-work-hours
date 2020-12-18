@@ -51,8 +51,13 @@ class Tracker:
 
 		current_time = datetime.now()
 
-		hour = str(current_time.hour)
+		hour = ''
 		minute = ''
+
+		if current_time.hour < 10:
+			hour = '0'
+
+		hour += str(current_time.hour)
 
 		if current_time.minute < 10:
 			minute = '0'
@@ -87,6 +92,19 @@ class Tracker:
 		file.writelines(days)
 		file.truncate()
 		file.close()
+
+		return None
+
+	def update_today_coverage(self):
+
+		current_coverage = self._days_information_array[self._day_number]['coverage'][-1]
+		current_time = self.get_current_time()
+
+		if current_coverage[-1] != '-':
+			self._days_information_array[self._day_number]['coverage'].append(current_time + '-')
+		else:
+			current_coverage += current_time
+			self._days_information_array[self._day_number]['coverage'][-1] = current_coverage
 
 		return None
 
