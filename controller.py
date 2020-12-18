@@ -33,10 +33,10 @@ def register_callbacks(app, weekly_stats_obj):
 
 	@app.callback(
 		[Output('today-coverage','children'),
-		Output('submit-val','value'),
-		Output('submit-val','children')],
-		[Input('submit-val','n_clicks')],
-		[State('submit-val','value')]
+		Output('update-coverage','value'),
+		Output('update-coverage','children')],
+		[Input('update-coverage','n_clicks')],
+		[State('update-coverage','value')]
 	)
 	def update_today_coverage(clicks, value):
 
