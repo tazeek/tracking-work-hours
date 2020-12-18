@@ -82,12 +82,15 @@ class Tracker:
 
 	def reset_weekly_hours(self):
 		"""Remove the coverage of the current week"""
-		
-		day_stats_array = self._days_information_array
 
-		text_file_data = [days['name'] + "\n" for days in day_stats_array]
+		reset_file_data = [days['name'] + "\n" for days in self._days_information_array]
 
-		return self._update_text_file(text_file_data)
+		for day in self._days_information_array:
+			day['minutes_before_noon'] = 0
+			day['minutes_after_noon'] = 0
+			day['coverage'] = []
+
+		return self._update_text_file(reset_file_data)
 
 	def update_today_coverage(self):
 		"""Update the day coverage when an action (stop or start) has taken place"""
@@ -107,6 +110,8 @@ class Tracker:
 		return self._update_text_file(text_file_data)
 
 	def _update_text_file(self, data):
+
+		print(data)
 
 		with open(self._file_name, 'r+') as file:
 			file.seek(0)

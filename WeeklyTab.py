@@ -131,7 +131,7 @@ class WeeklyTab:
 		overall_hours_pie_fig.update_layout(
 			width=400,
 			height=600,
-			transition={'duration': 1000, 'easing': 'cubic-in-out'}
+			transition={'duration': 2000, 'easing': 'cubic-in-out'}
 		)
 
 		return overall_hours_pie_fig
