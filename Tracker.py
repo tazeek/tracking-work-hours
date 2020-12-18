@@ -108,6 +108,15 @@ class Tracker:
 
 		return None
 
+	def _update_text_file(self, data):
+
+		with open(self._file_name, 'r+'):
+			file.seek(0)
+			file.writelines(data)
+			file.truncate()
+
+		return None
+
 	def _get_day_number(self):
 		day_number = datetime.today().weekday()
 
