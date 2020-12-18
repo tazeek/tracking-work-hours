@@ -27,7 +27,10 @@ def register_callbacks(app, weekly_stats_obj):
 		]
 
 	@dcb.callback(
-		[Output('total-hours-pie','figure'),
+		[
+		Output('live-update-text','children'),
+		Output('today-coverage','children'),
+		Output('total-hours-pie','figure'),
 		Output('overall-week-hours','figure')],
 		[Input('reset-hours','n_clicks')])
 	def reset_hours(n_clicks):
@@ -38,6 +41,8 @@ def register_callbacks(app, weekly_stats_obj):
 		weekly_stats_obj.reset_weekly_hours()
 
 		return [
+			weekly_stats_obj.get_current_time(),
+			weekly_stats_obj.get_today_coverage(),
 			weekly_stats_obj.generate_overall_hours(),
 			weekly_stats_obj.generate_weekly_hours()
 		]
