@@ -32,7 +32,9 @@ def register_callbacks(app, weekly_stats_obj):
 		return weekly_stats_obj.reset_weekly_hours()
 
 	@app.callback(
-		Output('today-coverage','children'),
+		[Output('today-coverage','children'),
+		Output('submit-val','value'),
+		Output('submit-val','children')],
 		[Input('submit-val','n_clicks')],
 		[State('submit-val','value')]
 	)
@@ -41,8 +43,8 @@ def register_callbacks(app, weekly_stats_obj):
 		if clicks is None:
 			raise PreventUpdate
 
-		new_value = 'start' if value == 'stop' else 'start'
+		new_value = 'start' if value == 'stop' else 'stop'
 
 		weekly_stats_obj.update_today_coverage()
 
-		return weekly_stats_obj.get_today_coverage()
+		return [weekly_stats_obj.get_today_coverage(), new_value, new_value.capitalize()]

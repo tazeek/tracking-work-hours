@@ -106,8 +106,6 @@ class Tracker:
 			current_coverage += current_time
 			self._days_information_array[self._day_number]['coverage'][-1] = current_coverage
 
-		print(self._days_information_array)
-
 		return None
 
 	def _get_day_number(self):
