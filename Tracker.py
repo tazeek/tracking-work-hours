@@ -100,8 +100,8 @@ class Tracker:
 		current_coverage = self._days_information_array[self._day_number]['coverage'][-1]
 		current_time = self.get_current_time()
 
-		if current_coverage != '-':
-			self._days_information_array[self._day_number]['coverage'].append(current_time)
+		if current_coverage[-1] != '-':
+			self._days_information_array[self._day_number]['coverage'].append(current_time + '-')
 		else:
 			current_coverage += current_time
 			self._days_information_array[self._day_number]['coverage'][-1] = current_coverage
