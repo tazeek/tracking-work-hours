@@ -32,10 +32,10 @@ def register_callbacks(app, weekly_stats_obj):
 		Output('today-coverage','children'),
 		Output('total-hours-pie','figure'),
 		Output('overall-week-hours','figure')],
-		[Input('reset-hours','n_clicks')])
-	def reset_hours(n_clicks):
+		[Input('reset-hours','submit_n_clicks')])
+	def reset_hours(submit_n_clicks):
 	    
-		if n_clicks is None:
+		if not submit_n_clicks:
 			raise PreventUpdate
 
 		weekly_stats_obj.reset_weekly_hours()
@@ -51,12 +51,12 @@ def register_callbacks(app, weekly_stats_obj):
 		[Output('today-coverage','children'),
 		Output('update-coverage','value'),
 		Output('update-coverage','children')],
-		[Input('update-coverage','n_clicks')],
+		[Input('update-coverage-dialog','submit_n_clicks')],
 		[State('update-coverage','value')]
 	)
-	def update_today_coverage(clicks, value):
+	def update_today_coverage(submit_n_clicks, value):
 
-		if clicks is None:
+		if not submit_n_clicks:
 			raise PreventUpdate
 
 		new_value = 'start' if value == 'stop' else 'stop'

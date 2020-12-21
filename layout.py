@@ -31,7 +31,15 @@ def generate_layout(weekly_stats_obj):
 				children=today_coverage_str
 			),
 
-			html.Button(children=button_status.capitalize(),value=button_status, id='update-coverage'),
+			dcc.ConfirmDialogProvider(
+				children=html.Button(
+					children=button_status.capitalize(),
+					value=button_status,
+					id='update-coverage'
+				),
+				id='update-coverage-dialog',
+				message='Do you want to continue to update today\'s coverage?'
+			)
 		]),
 
 		html.H4(
@@ -39,7 +47,14 @@ def generate_layout(weekly_stats_obj):
 			children=last_updated_str
 		),
 
-		html.Button('Reset Hours', id='reset-hours'),
+
+		dcc.ConfirmDialogProvider(
+			children=html.Button(
+				'Reset Hours',
+			),
+			id='reset-hours',
+			message='Do you want to reset your overall hours?'
+		),
 
 		html.Div(children=[
 
