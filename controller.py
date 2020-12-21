@@ -33,7 +33,7 @@ def register_callbacks(app, weekly_stats_obj):
 		Output('total-hours-pie','figure'),
 		Output('overall-week-hours','figure')],
 		[Input('reset-hours','submit_n_clicks')])
-	def reset_hours(n_clicks):
+	def reset_hours(submit_n_clicks):
 	    
 		if not submit_n_clicks:
 			raise PreventUpdate
