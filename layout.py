@@ -40,8 +40,6 @@ def generate_layout(weekly_stats_obj):
 				id='update-coverage-dialog',
 				message='Do you want to continue to update today\'s coverage?'
 			)
-
-			html.Button(children=button_status.capitalize(),value=button_status, id='update-coverage'),
 		]),
 
 		html.H4(
