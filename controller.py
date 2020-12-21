@@ -26,7 +26,7 @@ def register_callbacks(app, weekly_stats_obj):
 	@app.callback(Output('hidden-div','children'),[Input('reset-hours','submit_n_clicks')])
 	def reset_hours(submit_n_clicks):
 	    
-		if not submit_n_click:
+		if not submit_n_clicks:
 			raise PreventUpdate
 
 		return weekly_stats_obj.reset_weekly_hours()
