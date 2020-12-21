@@ -40,7 +40,7 @@ class WeeklyTab:
 		weekly_hours_fig = go.Figure(
 		    go.Bar(
 		        x=weekly_stats_df['minutes_before_noon'],
-		        y=weekly_stats_df['day'],
+		        y=weekly_stats_df['name'],
 		        orientation='h',
 		        name="Before noon (Total Minutes)",
 		        customdata=weekly_stats_df['coverage'],
@@ -59,7 +59,7 @@ class WeeklyTab:
 		weekly_hours_fig.add_trace(
 			go.Bar(
 				x=weekly_stats_df['minutes_after_noon'],
-				y=weekly_stats_df['day'],
+				y=weekly_stats_df['name'],
 				orientation='h',
 				name="After noon (Total Minutes)",
 				customdata=weekly_stats_df['coverage'],
@@ -131,7 +131,7 @@ class WeeklyTab:
 		overall_hours_pie_fig.update_layout(
 			width=400,
 			height=600,
-			transition={'duration': 1000, 'easing': 'cubic-in-out'}
+			transition={'duration': 2000, 'easing': 'cubic-in-out'}
 		)
 
 		return overall_hours_pie_fig
@@ -141,7 +141,7 @@ class WeeklyTab:
 		weekly_stats_df = pd.DataFrame(self._tracker_obj.get_days_stats())
 		weekly_stats_df['coverage'] = weekly_stats_df['coverage'].str.join(",") 
 
-		columns_list = ['day','coverage']
+		columns_list = ['name','coverage']
 
 		return html.Div([
 				dash_table.DataTable(

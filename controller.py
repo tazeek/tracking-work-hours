@@ -1,9 +1,12 @@
 from dash.dependencies import Output, Input, State
 from dash.exceptions import PreventUpdate
+from dash_extensions.callback import DashCallbackBlueprint
 
 def register_callbacks(app, weekly_stats_obj):
 
-	@app.callback(
+	dcb = DashCallbackBlueprint() 
+
+	@dcb.callback(
 		[
 			Output('live-update-text','children'),
 			Output('total-hours-pie','figure'),
@@ -23,15 +26,28 @@ def register_callbacks(app, weekly_stats_obj):
 			weekly_stats_obj.generate_weekly_hours()
 		]
 
-	@app.callback(Output('hidden-div','children'),[Input('reset-hours','submit_n_clicks')])
-	def reset_hours(submit_n_clicks):
+	@dcb.callback(
+		[
+		Output('live-update-text','children'),
+		Output('today-coverage','children'),
+		Output('total-hours-pie','figure'),
+		Output('overall-week-hours','figure')],
+		[Input('reset-hours','submit_n_clicks')])
+	def reset_hours(n_clicks):
 	    
 		if not submit_n_clicks:
 			raise PreventUpdate
 
-		return weekly_stats_obj.reset_weekly_hours()
+		weekly_stats_obj.reset_weekly_hours()
 
-	@app.callback(
+		return [
+			weekly_stats_obj.get_current_time(),
+			weekly_stats_obj.get_today_coverage(),
+			weekly_stats_obj.generate_overall_hours(),
+			weekly_stats_obj.generate_weekly_hours()
+		]
+
+	@dcb.callback(
 		[Output('today-coverage','children'),
 		Output('update-coverage','value'),
 		Output('update-coverage','children')],
@@ -48,3 +64,5 @@ def register_callbacks(app, weekly_stats_obj):
 		weekly_stats_obj.update_today_coverage()
 
 		return [weekly_stats_obj.get_today_coverage(), new_value, new_value.capitalize()]
+
+	dcb.register(app)
