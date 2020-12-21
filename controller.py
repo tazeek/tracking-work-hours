@@ -60,9 +60,9 @@ def register_callbacks(app, weekly_stats_obj):
 		if not submit_n_clicks:
 			raise PreventUpdate
 
-		new_value = 'start' if value == 'stop' else 'stop'
+		new_value = 'start' if button_value == 'stop' else 'stop'
 
-		weekly_stats_obj.update_today_coverage()
+		weekly_stats_obj.update_today_coverage(input_value)
 
 		return [weekly_stats_obj.get_today_coverage(), new_value, new_value.capitalize()]
 

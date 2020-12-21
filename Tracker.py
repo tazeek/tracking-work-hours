@@ -92,7 +92,7 @@ class Tracker:
 
 		return self._update_text_file(reset_file_data)
 
-	def update_today_coverage(self):
+	def update_today_coverage(self, input_value):
 		"""Update the day coverage when an action (stop or start) has taken place"""
 
 		current_coverage = []
@@ -102,7 +102,7 @@ class Tracker:
 		except IndexError:
 			pass
 			
-		current_time = self.get_current_time()
+		current_time = input_value or self.get_current_time()
 
 		if (len(current_coverage) == 0) or (current_coverage[-1] != '-'):
 			self._days_information_array[self._day_number]['coverage'].append(current_time + '-')
