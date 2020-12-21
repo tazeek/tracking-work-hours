@@ -31,6 +31,16 @@ def generate_layout(weekly_stats_obj):
 				children=today_coverage_str
 			),
 
+			dcc.ConfirmDialogProvider(
+				children=html.Button(
+					children=button_status.capitalize(),
+					value=button_status,
+					id='update-coverage'
+				),
+				id='update-coverage-dialog',
+				message='Do you want to continue to update today\'s coverage?'
+			)
+
 			html.Button(children=button_status.capitalize(),value=button_status, id='update-coverage'),
 		]),
 

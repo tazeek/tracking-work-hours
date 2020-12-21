@@ -51,12 +51,12 @@ def register_callbacks(app, weekly_stats_obj):
 		[Output('today-coverage','children'),
 		Output('update-coverage','value'),
 		Output('update-coverage','children')],
-		[Input('update-coverage','n_clicks')],
+		[Input('update-coverage-dialog','submit_n_clicks')],
 		[State('update-coverage','value')]
 	)
-	def update_today_coverage(clicks, value):
+	def update_today_coverage(submit_n_clicks, value):
 
-		if clicks is None:
+		if not submit_n_clicks:
 			raise PreventUpdate
 
 		new_value = 'start' if value == 'stop' else 'stop'
