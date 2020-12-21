@@ -51,9 +51,9 @@ def register_callbacks(app, weekly_stats_obj):
 		[Output('today-coverage','children'),
 		Output('update-coverage','value'),
 		Output('update-coverage','children')],
-		[Input('update-coverage-dialog','submit_n_clicks'),
-		Input('input-coverage-hours','value')],
-		[State('update-coverage','value')]
+		[Input('update-coverage-dialog','submit_n_clicks')],
+		[State('input-coverage-hours','value'),
+		State('update-coverage','value')]
 	)
 	def update_today_coverage(submit_n_clicks, input_value, button_value):
 
