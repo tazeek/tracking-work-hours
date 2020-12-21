@@ -24,21 +24,34 @@ def generate_layout(weekly_stats_obj):
 			children=finishing_time_str
 		),
 
+
+		html.H4(
+			id='today-coverage',
+			children=today_coverage_str
+		),
+
 		html.Div(children=[
 
-			html.H4(
-				id='today-coverage',
-				children=today_coverage_str
+			html.Div(
+				dcc.Input(
+					id='input-coverage-hours',
+					type='text',
+					placeholder='HH:MM'
+				), 
+				style={'display': 'inline-block'}
 			),
 
-			dcc.ConfirmDialogProvider(
-				children=html.Button(
-					children=button_status.capitalize(),
-					value=button_status,
-					id='update-coverage'
+			html.Div(
+				dcc.ConfirmDialogProvider(
+					children=html.Button(
+						children=button_status.capitalize(),
+						value=button_status,
+						id='update-coverage'
+					),
+					id='update-coverage-dialog',
+					message='Do you want to continue to update today\'s coverage?'
 				),
-				id='update-coverage-dialog',
-				message='Do you want to continue to update today\'s coverage?'
+				style={'display': 'inline-block'}
 			)
 		]),
 
