@@ -50,19 +50,21 @@ def register_callbacks(app, weekly_stats_obj):
 	@dcb.callback(
 		[Output('today-coverage','children'),
 		Output('update-coverage','value'),
-		Output('update-coverage','children')],
+		Output('update-coverage','children'),
+		Output('input-coverage-hours','value')],
 		[Input('update-coverage-dialog','submit_n_clicks')],
-		[State('update-coverage','value')]
+		[State('input-coverage-hours','value'),
+		State('update-coverage','value')]
 	)
-	def update_today_coverage(submit_n_clicks, value):
+	def update_today_coverage(submit_n_clicks, input_value, button_value):
 
 		if not submit_n_clicks:
 			raise PreventUpdate
 
-		new_value = 'start' if value == 'stop' else 'stop'
+		new_value = 'start' if button_value == 'stop' else 'stop'
 
-		weekly_stats_obj.update_today_coverage()
+		weekly_stats_obj.update_today_coverage(input_value)
 
-		return [weekly_stats_obj.get_today_coverage(), new_value, new_value.capitalize()]
+		return [weekly_stats_obj.get_today_coverage(), new_value, new_value.capitalize(), '']
 
 	dcb.register(app)
