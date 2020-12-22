@@ -110,7 +110,9 @@ class Tracker:
 			current_coverage += current_time
 			self._days_information_array[self._day_number]['coverage'][-1] = current_coverage
 
-		text_file_data = [day_data['name'] + ',' + ','.join(day_data['coverage']) + "\n" 
+		text_file_data = [','.join([day_data['name']] + day_data['coverage']) + "\n" 
+			if day_data['coverage'] != ''
+			else day_data['name']
 			for day_data in self._days_information_array]
 
 		return self._update_text_file(text_file_data)
