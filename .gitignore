@@ -6,3 +6,6 @@ folder/
 
 # For Macbook
 .DS_Store
+
+# For pycache
+__pycache__/
