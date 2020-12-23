@@ -1,4 +1,4 @@
-from Tracker import Tracker
+from src.Tracker import Tracker
 
 import plotly.graph_objs as go
 import pandas as pd
