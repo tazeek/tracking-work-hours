@@ -67,4 +67,19 @@ def register_callbacks(app, weekly_stats_obj):
 
 		return [weekly_stats_obj.get_today_coverage(), new_value, new_value.capitalize(), '']
 
+	@dcb.callback(
+		Output('coverage-table-div', 'children'),
+		[
+			Input('coverage-table', 'data'),
+			Input('coverage-table','columns')
+		]
+	)
+	def update_table(rows, columns):
+
+		print(rows)
+		print("\n\n")
+		print(columns)
+
+		return [weekly_stats_obj.generate_weekly_coverage()]
+
 	dcb.register(app)
