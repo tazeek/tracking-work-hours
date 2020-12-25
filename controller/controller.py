@@ -76,7 +76,6 @@ def register_callbacks(app, weekly_stats_obj):
 	)
 	def update_table(time_stamp, coverage_data):
 
-		print("I GET CALLED!\n\n")
 		if time_stamp is None:
 			raise PreventUpdate
 
