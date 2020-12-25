@@ -136,10 +136,16 @@ class WeeklyTab:
 
 		return overall_hours_pie_fig
 
-	def generate_weekly_coverage(self):
+	def get_dataframe_for_datatable(self):
 
 		weekly_stats_df = pd.DataFrame(self._tracker_obj.get_days_stats())
-		weekly_stats_df['coverage'] = weekly_stats_df['coverage'].str.join(",") 
+		weekly_stats_df['coverage'] = weekly_stats_df['coverage'].str.join(",")
+
+		return weekly_stats_df.to_dict('records')
+
+	def generate_weekly_coverage(self): 
+
+		data_records = self.get_dataframe_for_datatable()
 
 		columns_list = ['name','coverage']
 
@@ -147,7 +153,7 @@ class WeeklyTab:
 				dash_table.DataTable(
 				id='coverage-table',
 				columns =[{"name": i, "id": i} for i in columns_list],
-				data = weekly_stats_df.to_dict('records'),
+				data = data_records,
 				style_cell=dict(textAlign='center'),
 				style_header=dict(backgroundColor="paleturquoise"),
 				style_data=dict(backgroundColor="lavender"),
