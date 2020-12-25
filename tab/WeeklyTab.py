@@ -30,6 +30,9 @@ class WeeklyTab:
 	def update_today_coverage(self, input_value):
 		return self._tracker_obj.update_today_coverage(input_value)
 
+	def update_overall_coverage_table(self, coverage_data):
+		return self._tracker_obj.update_overall_coverage(coverage_data)
+
 	def generate_weekly_hours(self):
 		"""Generate bar chart for displaying the coverage of the week"""
 

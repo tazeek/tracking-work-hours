@@ -110,7 +110,10 @@ class Tracker:
 			current_coverage += current_time
 			self._days_information_array[self._day_number]['coverage'][-1] = current_coverage
 
-		text_file_data = self._prepare_data_for_text_file(self._days_information_array)
+		text_file_data = [','.join([day['name']] + day['coverage']) + "\n" 
+			if day['coverage'] != ''
+			else day['name']
+			for day in coverage_list]
 
 		return self._update_text_file(text_file_data)
 
@@ -129,6 +132,16 @@ class Tracker:
 
 		return None
 
+	def update_overall_coverage(self, coverage_data):
+
+		text_file_data = [','.join([day['name'], day['coverage']]) + "\n"
+			if day['coverage'] != ''
+			else day['name']
+			for day in coverage_data
+		]
+
+		return self._update_text_file(text_file_data)
+
 	def _update_text_file(self, data):
 
 		with open(self._file_name, 'r+') as file:
@@ -137,13 +150,6 @@ class Tracker:
 			file.truncate()
 
 		return None
-
-	def _prepare_data_for_text_file(coverage_list):
-
-		return [','.join([day['name']] + day['coverage']) + "\n" 
-			if day['coverage'] != ''
-			else day['name']
-			for day in coverage_list]
 
 	def _get_day_number(self):
 		day_number = datetime.today().weekday()

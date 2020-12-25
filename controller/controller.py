@@ -74,12 +74,15 @@ def register_callbacks(app, weekly_stats_obj):
 		],
 		State('coverage-table','data')
 	)
-	def update_table(time_stamp, columns):
+	def update_table(time_stamp, coverage_data):
 
-		print("\n\n")
-		print(time_stamp)
-		print("\n\n")
-		print(columns)
+		print("I GET CALLED!\n\n")
+		if time_stamp is None:
+			raise PreventUpdate
+
+		print(coverage_data)
+
+		weekly_stats_obj.update_overall_coverage_table(coverage_data)
 
 		return weekly_stats_obj.get_dataframe_for_datatable()
 
