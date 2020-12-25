@@ -89,7 +89,7 @@ def generate_layout(weekly_stats_obj):
 		]),
 
 		html.H4(children='Weekly coverage'),
-		weekly_coverage_table,
+		html.Div(id='coverage-table-div', children=[weekly_coverage_table]),
 
 		dcc.Interval(
 			id='interval-component',

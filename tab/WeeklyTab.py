@@ -150,6 +150,7 @@ class WeeklyTab:
 				data = weekly_stats_df.to_dict('records'),
 				style_cell=dict(textAlign='center'),
 				style_header=dict(backgroundColor="paleturquoise"),
-				style_data=dict(backgroundColor="lavender")
+				style_data=dict(backgroundColor="lavender"),
+				editable=True
 			)
 		])
