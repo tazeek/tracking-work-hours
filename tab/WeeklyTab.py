@@ -145,7 +145,7 @@ class WeeklyTab:
 
 		return html.Div([
 				dash_table.DataTable(
-				id='table',
+				id='coverage-table',
 				columns =[{"name": i, "id": i} for i in columns_list],
 				data = weekly_stats_df.to_dict('records'),
 				style_cell=dict(textAlign='center'),
