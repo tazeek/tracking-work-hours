@@ -67,4 +67,20 @@ def register_callbacks(app, weekly_stats_obj):
 
 		return [weekly_stats_obj.get_today_coverage(), new_value, new_value.capitalize(), '']
 
+	@dcb.callback(
+		Output('coverage-table', 'data'),
+		[
+			Input('coverage-table', 'data_timestamp')
+		],
+		State('coverage-table','data')
+	)
+	def update_table(time_stamp, coverage_data):
+
+		if time_stamp is None:
+			raise PreventUpdate
+
+		weekly_stats_obj.update_overall_coverage_table(coverage_data)
+
+		return weekly_stats_obj.get_dataframe_for_datatable()
+
 	dcb.register(app)

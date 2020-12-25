@@ -110,10 +110,36 @@ class Tracker:
 			current_coverage += current_time
 			self._days_information_array[self._day_number]['coverage'][-1] = current_coverage
 
-		text_file_data = [','.join([day_data['name']] + day_data['coverage']) + "\n" 
-			if day_data['coverage'] != ''
-			else day_data['name']
-			for day_data in self._days_information_array]
+		text_file_data = [','.join([day['name']] + day['coverage']) + "\n" 
+			if day['coverage'] != ''
+			else day['name']
+			for day in coverage_list]
+
+		return self._update_text_file(text_file_data)
+
+	def perform_live_update(self):
+		"""Perform live updates for chart"""
+
+		today_dict = self._days_information_array[self._day_number]
+		total_minutes_before_noon, total_minutes_after_noon = self._perform_noon_time_comparisons(today_dict['coverage'])
+
+		self._remaining_today = self._max_minutes_daily - (total_minutes_before_noon + total_minutes_after_noon)
+
+		today_dict['minutes_before_noon'] = total_minutes_before_noon
+		today_dict['minutes_after_noon'] = total_minutes_after_noon
+
+		self._days_information_array[self._day_number] = today_dict
+
+		return None
+
+	def update_overall_coverage(self, coverage_data):
+		"""Update the text file when the table data has been updated"""
+
+		text_file_data = [','.join([day['name'], day['coverage']]) + "\n"
+			if day['coverage'] != ''
+			else day['name']
+			for day in coverage_data
+		]
 
 		return self._update_text_file(text_file_data)
 
@@ -236,21 +262,6 @@ class Tracker:
 			total_minutes_after_noon += after_noon_minutes
 
 		return total_minutes_before_noon, total_minutes_after_noon
-
-	def perform_live_update(self):
-		"""Perform live updates for chart"""
-
-		today_dict = self._days_information_array[self._day_number]
-		total_minutes_before_noon, total_minutes_after_noon = self._perform_noon_time_comparisons(today_dict['coverage'])
-
-		self._remaining_today = self._max_minutes_daily - (total_minutes_before_noon + total_minutes_after_noon)
-
-		today_dict['minutes_before_noon'] = total_minutes_before_noon
-		today_dict['minutes_after_noon'] = total_minutes_after_noon
-
-		self._days_information_array[self._day_number] = today_dict
-
-		return None
 
 	def _update_time_calculations(self):
 		"""Calculate the total time covered and coverage, day by day """
