@@ -80,6 +80,6 @@ def register_callbacks(app, weekly_stats_obj):
 		print("\n\n")
 		print(columns)
 
-		return [weekly_stats_obj.generate_weekly_coverage()]
+		raise PreventUpdate
 
 	dcb.register(app)
