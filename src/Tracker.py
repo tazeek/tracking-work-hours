@@ -133,6 +133,7 @@ class Tracker:
 		return None
 
 	def update_overall_coverage(self, coverage_data):
+		"""Update the text file when the table data has been updated"""
 
 		text_file_data = [','.join([day['name'], day['coverage']]) + "\n"
 			if day['coverage'] != ''
