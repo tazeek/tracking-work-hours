@@ -79,8 +79,6 @@ def register_callbacks(app, weekly_stats_obj):
 		if time_stamp is None:
 			raise PreventUpdate
 
-		print(coverage_data)
-
 		weekly_stats_obj.update_overall_coverage_table(coverage_data)
 
 		return weekly_stats_obj.get_dataframe_for_datatable()
