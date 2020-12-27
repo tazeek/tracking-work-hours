@@ -2,7 +2,7 @@ import time
 
 def validate_coverage(coverage):
 
-	if coverage == '':
+	if coverage is None:
 		return True
 
 	if len(coverage) != 5:
