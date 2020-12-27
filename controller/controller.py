@@ -9,8 +9,7 @@ def register_callbacks(app, weekly_stats_obj):
 
 	dcb = DashCallbackBlueprint() 
 
-	@dcb.callback
-	(
+	@dcb.callback(
 		[
 			Output('live-update-text','children'),
 			Output('total-hours-pie','figure'),
@@ -30,8 +29,7 @@ def register_callbacks(app, weekly_stats_obj):
 			weekly_stats_obj.generate_weekly_hours()
 		]
 
-	@dcb.callback
-	(
+	@dcb.callback(
 		[
 			Output('live-update-text','children'),
 			Output('today-coverage','children'),
@@ -55,8 +53,7 @@ def register_callbacks(app, weekly_stats_obj):
 			weekly_stats_obj.generate_weekly_hours()
 		]
 
-	@dcb.callback
-	(
+	@dcb.callback(
 		[
 			Output('today-coverage','children'),
 			Output('update-coverage','value'),
