@@ -1,6 +1,9 @@
+from dash import no_update
 from dash.dependencies import Output, Input, State
 from dash.exceptions import PreventUpdate
 from dash_extensions.callback import DashCallbackBlueprint
+
+from src.utility_helper import validate_coverage
 
 def register_callbacks(app, weekly_stats_obj):
 
@@ -28,11 +31,14 @@ def register_callbacks(app, weekly_stats_obj):
 
 	@dcb.callback(
 		[
-		Output('live-update-text','children'),
-		Output('today-coverage','children'),
-		Output('total-hours-pie','figure'),
-		Output('overall-week-hours','figure')],
-		[Input('reset-hours','submit_n_clicks')])
+			Output('live-update-text','children'),
+			Output('today-coverage','children'),
+			Output('total-hours-pie','figure'),
+			Output('overall-week-hours','figure')],
+		[
+			Input('reset-hours','submit_n_clicks')
+		]
+	)
 	def reset_hours(submit_n_clicks):
 	    
 		if not submit_n_clicks:
@@ -48,24 +54,41 @@ def register_callbacks(app, weekly_stats_obj):
 		]
 
 	@dcb.callback(
-		[Output('today-coverage','children'),
-		Output('update-coverage','value'),
-		Output('update-coverage','children'),
-		Output('input-coverage-hours','value')],
-		[Input('update-coverage-dialog','submit_n_clicks')],
-		[State('input-coverage-hours','value'),
-		State('update-coverage','value')]
+		[
+			Output('today-coverage','children'),
+			Output('update-coverage','value'),
+			Output('update-coverage','children'),
+			Output('input-coverage-hours','value'),
+			Output('error-output-update','children')
+		],
+
+		[
+			Input('update-coverage-dialog','submit_n_clicks')
+		],
+		[
+			State('input-coverage-hours','value'),
+			State('update-coverage','value')
+		]
 	)
 	def update_today_coverage(submit_n_clicks, input_value, button_value):
 
 		if not submit_n_clicks:
 			raise PreventUpdate
 
+		valid_input = validate_coverage(input_value)
+
+		if not valid_input:
+			return [
+				no_update, no_update, no_update, 
+				None, 
+				f'Invalid input: {input_value}'
+			]
+
 		new_value = 'start' if button_value == 'stop' else 'stop'
 
 		weekly_stats_obj.update_today_coverage(input_value)
 
-		return [weekly_stats_obj.get_today_coverage(), new_value, new_value.capitalize(), '']
+		return [weekly_stats_obj.get_today_coverage(), new_value, new_value.capitalize(), None]
 
 	@dcb.callback(
 		Output('coverage-table', 'data'),
