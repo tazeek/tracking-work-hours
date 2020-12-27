@@ -152,14 +152,16 @@ class WeeklyTab:
 
 		columns_list = ['name','coverage']
 
-		return html.Div([
+		return html.Div(
+			[
 				dash_table.DataTable(
-				id='coverage-table',
-				columns =[{"name": i, "id": i} for i in columns_list],
-				data = data_records,
-				style_cell=dict(textAlign='center'),
-				style_header=dict(backgroundColor="paleturquoise"),
-				style_data=dict(backgroundColor="lavender"),
-				editable=True
-			)
-		])
+					id='coverage-table',
+					columns =[{"name": i, "id": i} for i in columns_list],
+					data = data_records,
+					style_cell=dict(textAlign='center'),
+					style_header=dict(backgroundColor="paleturquoise"),
+					style_data=dict(backgroundColor="lavender"),
+					editable=True
+				)
+			]
+		)
