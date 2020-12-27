@@ -36,7 +36,7 @@ def generate_layout(weekly_stats_obj):
 				dcc.Input(
 					id='input-coverage-hours',
 					type='text',
-					placeholder='HH:MM'
+					placeholder='HH:MM (Ex. 05:45, 11:45)'
 				), 
 				style={'display': 'inline-block'}
 			),

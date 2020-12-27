@@ -81,14 +81,14 @@ def register_callbacks(app, weekly_stats_obj):
 			return [
 				no_update, no_update, no_update, 
 				'', 
-				f'Invalid input: {input_value}. Must be in HH:MM format'
+				f'Invalid input: {input_value}'
 			]
 
 		new_value = 'start' if button_value == 'stop' else 'stop'
 
 		weekly_stats_obj.update_today_coverage(input_value)
 
-		return [weekly_stats_obj.get_today_coverage(), new_value, new_value.capitalize(), '']
+		return [weekly_stats_obj.get_today_coverage(), new_value, new_value.capitalize(), None]
 
 	@dcb.callback(
 		Output('coverage-table', 'data'),
