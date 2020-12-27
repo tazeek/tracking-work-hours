@@ -2,6 +2,9 @@ import time
 
 def validate_coverage(coverage):
 
+	if coverage == '':
+		return True
+
 	if len(coverage) != 5:
 		return False
 
@@ -10,3 +13,5 @@ def validate_coverage(coverage):
 		return True
 	except ValueError:
 		return False
+
+	return False
