@@ -3,11 +3,14 @@ from dash.dependencies import Output, Input, State
 from dash.exceptions import PreventUpdate
 from dash_extensions.callback import DashCallbackBlueprint
 
+from src.utility_helper import validate_coverage
+
 def register_callbacks(app, weekly_stats_obj):
 
 	dcb = DashCallbackBlueprint() 
 
-	@dcb.callback(
+	@dcb.callback
+	(
 		[
 			Output('live-update-text','children'),
 			Output('total-hours-pie','figure'),
@@ -27,13 +30,17 @@ def register_callbacks(app, weekly_stats_obj):
 			weekly_stats_obj.generate_weekly_hours()
 		]
 
-	@dcb.callback(
+	@dcb.callback
+	(
 		[
-		Output('live-update-text','children'),
-		Output('today-coverage','children'),
-		Output('total-hours-pie','figure'),
-		Output('overall-week-hours','figure')],
-		[Input('reset-hours','submit_n_clicks')])
+			Output('live-update-text','children'),
+			Output('today-coverage','children'),
+			Output('total-hours-pie','figure'),
+			Output('overall-week-hours','figure')],
+		[
+			Input('reset-hours','submit_n_clicks')
+		]
+	)
 	def reset_hours(submit_n_clicks):
 	    
 		if not submit_n_clicks:
@@ -48,23 +55,34 @@ def register_callbacks(app, weekly_stats_obj):
 			weekly_stats_obj.generate_weekly_hours()
 		]
 
-	@dcb.callback(
-		[Output('today-coverage','children'),
-		Output('update-coverage','value'),
-		Output('update-coverage','children'),
-		Output('input-coverage-hours','value'),
-		Output('error-output-update','children')],
-		[Input('update-coverage-dialog','submit_n_clicks')],
-		[State('input-coverage-hours','value'),
-		State('update-coverage','value')]
+	@dcb.callback
+	(
+		[
+			Output('today-coverage','children'),
+			Output('update-coverage','value'),
+			Output('update-coverage','children'),
+			Output('input-coverage-hours','value'),
+			Output('error-output-update','children')
+		],
+
+		[
+			Input('update-coverage-dialog','submit_n_clicks')
+		],
+		[
+			State('input-coverage-hours','value'),
+			State('update-coverage','value')
+		]
 	)
 	def update_today_coverage(submit_n_clicks, input_value, button_value):
 
 		if not submit_n_clicks:
 			raise PreventUpdate
 
+		valid_input = validate_coverage(input_value)
+		print(valid_input)
+
 		if True:
-			return [no_update, no_update, no_update, no_update, 'Invalid input. Must be in HH:MM format']
+			return [no_update, no_update, no_update, '', 'Invalid input. Must be in HH:MM format']
 
 		new_value = 'start' if button_value == 'stop' else 'stop'
 
