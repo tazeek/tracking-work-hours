@@ -113,7 +113,7 @@ class Tracker:
 		text_file_data = [','.join([day['name']] + day['coverage']) + "\n" 
 			if day['coverage'] != ''
 			else day['name']
-			for day in coverage_list]
+			for day in self._days_information_array]
 
 		return self._update_text_file(text_file_data)
 
