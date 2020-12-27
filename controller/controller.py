@@ -51,7 +51,8 @@ def register_callbacks(app, weekly_stats_obj):
 		[Output('today-coverage','children'),
 		Output('update-coverage','value'),
 		Output('update-coverage','children'),
-		Output('input-coverage-hours','value')],
+		Output('input-coverage-hours','value'),
+		Output('error-output-update','children')],
 		[Input('update-coverage-dialog','submit_n_clicks')],
 		[State('input-coverage-hours','value'),
 		State('update-coverage','value')]
@@ -60,6 +61,9 @@ def register_callbacks(app, weekly_stats_obj):
 
 		if not submit_n_clicks:
 			raise PreventUpdate
+
+		if True:
+			return [dash.no_update] * 4, 'Invalid Input!'
 
 		new_value = 'start' if button_value == 'stop' else 'stop'
 
