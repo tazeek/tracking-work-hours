@@ -76,10 +76,13 @@ def register_callbacks(app, weekly_stats_obj):
 			raise PreventUpdate
 
 		valid_input = validate_coverage(input_value)
-		print(valid_input)
 
-		if True:
-			return [no_update, no_update, no_update, '', 'Invalid input. Must be in HH:MM format']
+		if not valid_input:
+			return [
+				no_update, no_update, no_update, 
+				'', 
+				f'Invalid input: {input_value}. Must be in HH:MM format'
+			]
 
 		new_value = 'start' if button_value == 'stop' else 'stop'
 
