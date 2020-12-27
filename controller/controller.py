@@ -1,3 +1,4 @@
+from dash import no_update
 from dash.dependencies import Output, Input, State
 from dash.exceptions import PreventUpdate
 from dash_extensions.callback import DashCallbackBlueprint
@@ -63,7 +64,7 @@ def register_callbacks(app, weekly_stats_obj):
 			raise PreventUpdate
 
 		if True:
-			return [dash.no_update] * 4, 'Invalid Input!'
+			return [no_update, no_update, no_update, no_update, 'Invalid input. Must be in HH:MM format']
 
 		new_value = 'start' if button_value == 'stop' else 'stop'
 
