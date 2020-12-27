@@ -55,6 +55,10 @@ def generate_layout(weekly_stats_obj):
 			)
 		]),
 
+		html.Div(children=[
+			html.P(id='error-output-update', style={'color':'red'})
+		]),
+
 		html.H4(
 			id='live-update-text',
 			children=last_updated_str
