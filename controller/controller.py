@@ -58,6 +58,7 @@ def register_callbacks(app, weekly_stats_obj):
 			Output('today-coverage','children'),
 			Output('update-coverage','value'),
 			Output('update-coverage','children'),
+			Output('coverage-table', 'data'),
 			Output('input-coverage-hours','value'),
 			Output('error-output-update','children')
 		],
@@ -79,7 +80,7 @@ def register_callbacks(app, weekly_stats_obj):
 
 		if not valid_input:
 			return [
-				no_update, no_update, no_update, 
+				no_update, no_update, no_update, no_update,
 				None, 
 				f'Invalid input: {input_value}'
 			]
@@ -88,7 +89,13 @@ def register_callbacks(app, weekly_stats_obj):
 
 		weekly_stats_obj.update_today_coverage(input_value)
 
-		return [weekly_stats_obj.get_today_coverage(), new_value, new_value.capitalize(), None]
+		return [
+			weekly_stats_obj.get_today_coverage(), 
+			new_value, 
+			new_value.capitalize(),
+			weekly_stats_obj.get_records_for_datatable(), 
+			None
+		]
 
 	@dcb.callback(
 		Output('coverage-table', 'data'),
