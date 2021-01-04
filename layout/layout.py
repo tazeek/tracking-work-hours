@@ -17,14 +17,18 @@ def generate_layout(weekly_stats_obj):
 
 		html.Div(children=[
 			html.H1(children='Time Tracking Hour Analyzer'),
+
+			html.Hr(),
+
+			html.H4(
+				id='live-update-text',
+				children=last_updated_str
+			),
+
 			html.Button('Update live', id='update-current', n_clicks=0)
 		]),
 
-		html.H4(
-			id='finishing-time',
-			children=finishing_time_str
-		),
-
+		html.Hr(),
 
 		html.H4(
 			id='today-coverage',
@@ -60,9 +64,11 @@ def generate_layout(weekly_stats_obj):
 			html.P(id='error-output-update', style={'color':'red'})
 		]),
 
+		html.Hr(),
+
 		html.H4(
-			id='live-update-text',
-			children=last_updated_str
+			id='finishing-time',
+			children=finishing_time_str
 		),
 
 
