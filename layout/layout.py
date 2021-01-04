@@ -99,6 +99,8 @@ def generate_layout(weekly_stats_obj):
 			])
 		]),
 
+		html.Hr(),
+
 		html.H4(children='Weekly coverage'),
 		html.Div(id='coverage-table-div', children=[weekly_coverage_table])
 	])
