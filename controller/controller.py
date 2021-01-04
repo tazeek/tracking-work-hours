@@ -16,10 +16,10 @@ def register_callbacks(app, weekly_stats_obj):
 			Output('overall-week-hours','figure')
 		],
 		[
-			Input('interval-component','n_intervals')
+			Input('update-current','n_clicks')
 		]
 	)
-	def update_live_intervals(n):
+	def update_live_intervals(n_clicks):
 
 		weekly_stats_obj.perform_live_update()
 

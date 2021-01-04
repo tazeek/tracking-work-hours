@@ -17,7 +17,7 @@ def generate_layout(weekly_stats_obj):
 
 		html.Div(children=[
 			html.H1(children='Time Tracking Hour Analyzer'),
-			html.Button('Update live', id='submit-val')
+			html.Button('Update live', id='update-current', n_clicks=0)
 		]),
 
 		html.H4(
