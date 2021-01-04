@@ -15,6 +15,11 @@ def generate_layout(weekly_stats_obj):
     
 	return html.Div([
 
+		html.Div(children=[
+			html.H1(children='Time Tracking Hour Analyzer', style={'display': 'inline-block'}),
+
+		])
+
 		html.H1(children='Time Tracking Hour Analyzer'),
 
 		html.H4(
