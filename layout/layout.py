@@ -11,16 +11,14 @@ def generate_layout(weekly_stats_obj):
 	today_coverage_str = weekly_stats_obj.get_today_coverage()
 	last_updated_str = weekly_stats_obj.get_current_time()
 
-	button_status = 'start' if today_coverage_str[-1] != '-' else 'stop'
+	button_status = 'continue' if today_coverage_str[-1] != '-' else 'pause'
     
 	return html.Div([
 
 		html.Div(children=[
-			html.H1(children='Time Tracking Hour Analyzer', style={'display': 'inline-block'}),
-
-		])
-
-		html.H1(children='Time Tracking Hour Analyzer'),
+			html.H1(children='Time Tracking Hour Analyzer'),
+			html.Button('Update live', id='submit-val')
+		]),
 
 		html.H4(
 			id='finishing-time',
