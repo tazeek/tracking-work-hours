@@ -11,19 +11,24 @@ def generate_layout(weekly_stats_obj):
 	today_coverage_str = weekly_stats_obj.get_today_coverage()
 	last_updated_str = weekly_stats_obj.get_current_time()
 
-	button_status = 'start' if today_coverage_str[-1] != '-' else 'stop'
+	button_status = 'continue' if today_coverage_str[-1] != '-' else 'pause'
     
 	return html.Div([
 
-		html.Div(id='hidden-div', style={'display':'none'}),
+		html.Div(children=[
+			html.H1(children='Time Tracking Hour Analyzer'),
 
-		html.H1(children='Time Tracking Hour Analyzer'),
+			html.Hr(),
 
-		html.H4(
-			id='finishing-time',
-			children=finishing_time_str
-		),
+			html.H4(
+				id='live-update-text',
+				children=last_updated_str
+			),
 
+			html.Button('Update live', id='update-current', n_clicks=0)
+		]),
+
+		html.Hr(),
 
 		html.H4(
 			id='today-coverage',
@@ -59,9 +64,11 @@ def generate_layout(weekly_stats_obj):
 			html.P(id='error-output-update', style={'color':'red'})
 		]),
 
+		html.Hr(),
+
 		html.H4(
-			id='live-update-text',
-			children=last_updated_str
+			id='finishing-time',
+			children=finishing_time_str
 		),
 
 
@@ -92,11 +99,8 @@ def generate_layout(weekly_stats_obj):
 			])
 		]),
 
-		html.H4(children='Weekly coverage'),
-		html.Div(id='coverage-table-div', children=[weekly_coverage_table]),
+		html.Hr(),
 
-		dcc.Interval(
-			id='interval-component',
-			interval = 2 * 60 * 1000 # 1000 = 1 second
-			)
+		html.H4(children='Weekly coverage'),
+		html.Div(id='coverage-table-div', children=[weekly_coverage_table])
 	])
