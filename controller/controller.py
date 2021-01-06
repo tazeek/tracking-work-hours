@@ -50,6 +50,17 @@ def register_callbacks(app, weekly_stats_obj):
 		]
 	)
 	def reset_hours(submit_n_clicks):
+		'''Reset everything to 0 when the reset-hours button is clicked
+
+			Input:
+				button event of id: reset-hours
+
+			Output:
+				live-update-text: Update the time of new event
+				today-coverage: Remove today's coverage
+				total-hours-pie: Update the pie chart of hours
+				overall-week-hours: Update the bar chart of noon times
+		'''
 	    
 		if not submit_n_clicks:
 			raise PreventUpdate
