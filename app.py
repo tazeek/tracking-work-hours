@@ -7,8 +7,12 @@ import dash
 
 weekly_stats_obj = WeeklyTab()
 
+def serve_layout():
+
+	return generate_layout(weekly_stats_obj)
+
 app = dash.Dash(__name__)
-app.layout = generate_layout(weekly_stats_obj)
+app.layout = serve_layout
 register_callbacks(app,weekly_stats_obj)
 
 if __name__ == '__main__':
