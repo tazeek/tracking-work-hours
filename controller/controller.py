@@ -44,7 +44,11 @@ def register_callbacks(app, weekly_stats_obj):
 			Output('live-update-text','children'),
 			Output('today-coverage','children'),
 			Output('total-hours-pie','figure'),
-			Output('overall-week-hours','figure')],
+			Output('overall-week-hours','figure'),
+			Output('coverage-table', 'data'),
+			Output('update-coverage','value'),
+			Output('update-coverage','children')
+		],
 		[
 			Input('reset-hours','submit_n_clicks')
 		]
@@ -60,6 +64,9 @@ def register_callbacks(app, weekly_stats_obj):
 				today-coverage: Remove today's coverage
 				total-hours-pie: Update the pie chart of hours
 				overall-week-hours: Update the bar chart of noon times
+				coverage-table: Update the coverage table
+				update-coverage (value): Change value of button to 'start'
+				update-coverage (value): change text of button to 'start'
 		'''
 	    
 		if not submit_n_clicks:
@@ -71,7 +78,10 @@ def register_callbacks(app, weekly_stats_obj):
 			weekly_stats_obj.get_current_time(),
 			weekly_stats_obj.get_today_coverage(),
 			weekly_stats_obj.generate_overall_hours(),
-			weekly_stats_obj.generate_weekly_hours()
+			weekly_stats_obj.generate_weekly_hours(),
+			weekly_stats_obj.get_records_for_datatable(),
+			'start',
+			'start'.capitalize()
 		]
 
 	@dcb.callback(
