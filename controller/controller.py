@@ -86,6 +86,8 @@ def register_callbacks(app, weekly_stats_obj):
 
 	@dcb.callback(
 		[
+			Output('live-update-text','children'),
+			Output('total-hours-pie','figure'),
 			Output('today-coverage','children'),
 			Output('update-coverage','value'),
 			Output('update-coverage','children'),
@@ -139,6 +141,8 @@ def register_callbacks(app, weekly_stats_obj):
 		weekly_stats_obj.update_today_coverage(input_value)
 
 		return [
+			weekly_stats_obj.get_current_time(),
+			weekly_stats_obj.generate_overall_hours(),
 			weekly_stats_obj.get_today_coverage(), 
 			new_value, 
 			new_value.capitalize(),
