@@ -20,6 +20,16 @@ def register_callbacks(app, weekly_stats_obj):
 		]
 	)
 	def update_live_intervals(n_clicks):
+		''' Update the hours whenever the live update button is clicked
+
+			Input:
+				button event of id: update-current
+
+			Output:
+				live-update-text: Update the time of new event
+				total-hours-pie: Update the pie chart of hours
+				overall-week-hours: Update the bar chart of noon times
+		'''
 
 		weekly_stats_obj.perform_live_update()
 
