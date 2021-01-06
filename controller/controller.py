@@ -93,6 +93,24 @@ def register_callbacks(app, weekly_stats_obj):
 		]
 	)
 	def update_today_coverage(submit_n_clicks, input_value, button_value):
+		'''Update today's coverage, based on the input and event type
+
+			Input:
+				Click event of update-coverage-dialog
+
+			State:
+				input-coverage-hours: Take the value of text field input-coverage-hours
+				update-coverage: Take the state of coverage to (either pause or continue)
+
+			Output:
+				today-coverage: Update the current day coverage
+				update-coverage (value): Update the button value
+				update-coverage (children): Update the button text
+				coverage-table: Update the coverage table
+				input-coverage-hours: Update the text box field
+				error-output-update: Show error message for invalid input
+
+		'''
 
 		if not submit_n_clicks:
 			raise PreventUpdate
