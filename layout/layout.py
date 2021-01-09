@@ -28,7 +28,10 @@ def generate_layout(weekly_stats_obj):
 	today_coverage_str = weekly_stats_obj.get_today_coverage()
 	last_updated_str = weekly_stats_obj.get_current_time()
 
-	button_status = 'continue' if today_coverage_str[-1] != '-' else 'pause'
+	button_status = 'continue' 
+
+	if today_coverage_str and today_coverage_str[-1] == '-': 
+		button_status = 'pause'
     
 	return html.Div([
 
