@@ -111,8 +111,8 @@ def generate_layout(weekly_stats_obj):
 
 		html.Br(),
 
-		html.Div(
-			[	
+		html.Div([
+			html.Div([
 				_return_finishing_time_div(finishing_time_str),
 
 				html.Hr(),
@@ -150,9 +150,11 @@ def generate_layout(weekly_stats_obj):
 						dbc.Button('No',id='no-reset')
 					])
 				])
-			],
-			style=SIDEBAR_STYLE
-		),
 
-		_return_minutes_comparison_div(overall_hours_fig)
+			], style=SIDEBAR_STYLE),
+
+			html.Div([
+				_return_minutes_comparison_div(overall_hours_fig)
+			])
+		])	
 	])
