@@ -11,7 +11,11 @@ def serve_layout():
 
 	return generate_layout(weekly_stats_obj)
 
-app = dash.Dash(__name__)
+app = dash.Dash(
+	__name__,
+	title='Work Hours Analytics'
+)
+
 app.layout = serve_layout
 register_callbacks(app,weekly_stats_obj)
 
