@@ -132,9 +132,12 @@ class WeeklyTab:
 		)
 
 		overall_hours_pie_fig.update_layout(
-			width=400,
-			height=600,
-			transition={'duration': 2000, 'easing': 'cubic-in-out'}
+			width=200,
+			height=300,
+			transition={'duration': 2000, 'easing': 'cubic-in-out'},
+			paper_bgcolor='rgba(0,0,0,0)',
+			plot_bgcolor='rgba(0,0,0,0)',
+			margin=dict(t=0, b=0, l=0, r=0)
 		)
 
 		return overall_hours_pie_fig
