@@ -9,6 +9,7 @@ SIDEBAR_STYLE = {
     "width": "20rem",
     "padding": "2rem 1rem",
     "background-color": "#f8f9fa",
+    "display": "inline-block"
 }
 
 CONTENT_STYLE = {
@@ -42,10 +43,6 @@ def generate_layout(weekly_stats_obj):
 			html.Button('Update live', id='update-current', n_clicks=0)
 		]),
 
-		html.Div(children=[
-			html.P(id='error-output-update', style={'color':'red'})
-		]),
-
 		html.Div(
 			[
 				html.Div(
@@ -53,10 +50,14 @@ def generate_layout(weekly_stats_obj):
 					children=finishing_time_str
 				),
 
+				html.Hr(),
+
 				html.Div(
 					id='today-coverage',
 					children=today_coverage_str
 				),
+
+				html.Br(),
 
 				html.Div([
 
@@ -82,6 +83,14 @@ def generate_layout(weekly_stats_obj):
 						style={'display': 'inline-block'}
 					)
 				]),
+
+				html.Br(),
+
+				html.Div(children=[
+					html.P(id='error-output-update', style={'color':'red'})
+				]),
+
+				html.Br(),
 
 				html.Div(className='graph-displayer', children = [
 					dcc.Graph(
@@ -119,7 +128,5 @@ def generate_layout(weekly_stats_obj):
 			])
 		],
 		style=CONTENT_STYLE
-
 		)
-		
 	])
