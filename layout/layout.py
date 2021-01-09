@@ -35,7 +35,7 @@ def generate_layout(weekly_stats_obj):
     
 	return html.Div([
 
-		html.H1(children='Time Tracking Hour Analyzer'),
+		html.H1(children='Working Hours Analyzer'),
 
 		html.Div([
 
