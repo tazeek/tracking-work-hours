@@ -46,7 +46,6 @@ def register_callbacks(app, weekly_stats_obj):
 			Output('total-hours-pie','figure'),
 			Output('overall-week-hours','figure'),
 			Output('coverage-table', 'data'),
-			Output('update-coverage','value'),
 			Output('update-coverage','children')
 		],
 		[
@@ -80,7 +79,6 @@ def register_callbacks(app, weekly_stats_obj):
 			weekly_stats_obj.generate_overall_hours(),
 			weekly_stats_obj.generate_weekly_hours(),
 			weekly_stats_obj.get_records_for_datatable(),
-			'start',
 			'start'.capitalize()
 		]
 
@@ -108,7 +106,6 @@ def register_callbacks(app, weekly_stats_obj):
 			Output('live-update-text','children'),
 			Output('total-hours-pie','figure'),
 			Output('today-coverage','children'),
-			Output('update-coverage','value'),
 			Output('update-coverage','children'),
 			Output('coverage-table', 'data'),
 			Output('input-coverage-hours','value'),
@@ -116,14 +113,14 @@ def register_callbacks(app, weekly_stats_obj):
 		],
 
 		[
-			Input('update-coverage-dialog','submit_n_clicks')
+			Input('update-coverage','n_clicks')
 		],
 		[
 			State('input-coverage-hours','value'),
-			State('update-coverage','value')
+			State('update-coverage','children')
 		]
 	)
-	def update_today_coverage(submit_n_clicks, input_value, button_value):
+	def update_today_coverage(n_clicks, input_value, button_value):
 		'''Update today's coverage, based on the input and event type
 
 			Input:
@@ -135,7 +132,6 @@ def register_callbacks(app, weekly_stats_obj):
 
 			Output:
 				today-coverage: Update the current day coverage
-				update-coverage (value): Update the button value
 				update-coverage (children): Update the button text
 				coverage-table: Update the coverage table
 				input-coverage-hours: Update the text box field
@@ -143,27 +139,26 @@ def register_callbacks(app, weekly_stats_obj):
 
 		'''
 
-		if not submit_n_clicks:
+		if not n_clicks:
 			raise PreventUpdate
 
 		valid_input = validate_coverage(input_value)
 
 		if not valid_input:
 			return [
-				no_update, no_update, no_update, no_update, no_update, no_update,
+				no_update, no_update, no_update, no_update, no_update,
 				'', 
 				f'Invalid input: {input_value}'
 			]
 
-		new_value = 'continue' if button_value == 'pause' else 'pause'
+		new_value = 'start' if button_value.lower() == 'pause' else 'pause'
 
 		weekly_stats_obj.update_today_coverage(input_value)
 
 		return [
 			weekly_stats_obj.get_current_time(),
 			weekly_stats_obj.generate_overall_hours(),
-			weekly_stats_obj.get_today_coverage(), 
-			new_value, 
+			weekly_stats_obj.get_today_coverage(),
 			new_value.capitalize(),
 			weekly_stats_obj.get_records_for_datatable(), 
 			'',

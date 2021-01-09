@@ -28,7 +28,7 @@ def generate_layout(weekly_stats_obj):
 	today_coverage_str = weekly_stats_obj.get_today_coverage()
 	last_updated_str = weekly_stats_obj.get_current_time()
 
-	button_status = 'continue' 
+	button_status = 'start' 
 
 	if today_coverage_str and today_coverage_str[-1] == '-': 
 		button_status = 'pause'
@@ -80,7 +80,7 @@ def generate_layout(weekly_stats_obj):
 				html.Div([
 
 					html.Div(
-						dcc.Input(
+						dbc.Input(
 							id='input-coverage-hours',
 							type='text',
 							placeholder='HH:MM (Ex. 05:45, 11:45)'
@@ -88,18 +88,7 @@ def generate_layout(weekly_stats_obj):
 						style={'display': 'inline-block'}
 					),
 
-					html.Div(
-						dcc.ConfirmDialogProvider(
-							children=html.Button(
-								children=button_status.capitalize(),
-								value=button_status,
-								id='update-coverage'
-							),
-							id='update-coverage-dialog',
-							message='Do you want to continue to update today\'s coverage?'
-						),
-						style={'display': 'inline-block'}
-					)
+					dbc.Button(children=button_status.capitalize(), id='update-coverage', outline=True, color='primary')
 				]),
 
 				html.Br(),
