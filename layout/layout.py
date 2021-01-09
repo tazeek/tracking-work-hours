@@ -40,8 +40,12 @@ def generate_layout(weekly_stats_obj):
 				children=last_updated_str
 			),
 
-			html.Button('Update live', id='update-current', n_clicks=0)
+			html.Br(),
+
+			dbc.Button('Update', id='update-current', outline=True, color='primary',size='sm')
 		]),
+
+		html.Br(),
 
 		html.Div(
 			[
