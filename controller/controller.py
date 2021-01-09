@@ -50,10 +50,10 @@ def register_callbacks(app, weekly_stats_obj):
 			Output('update-coverage','children')
 		],
 		[
-			Input('reset-hours','submit_n_clicks')
+			Input('yes-reset','n_clicks')
 		]
 	)
-	def reset_hours(submit_n_clicks):
+	def reset_hours(n_clicks):
 		'''Reset everything to 0 when the reset-hours button is clicked
 
 			Input:
@@ -68,8 +68,8 @@ def register_callbacks(app, weekly_stats_obj):
 				update-coverage (value): Change value of button to 'start'
 				update-coverage (value): change text of button to 'start'
 		'''
-	    
-		if not submit_n_clicks:
+
+		if not n_clicks:
 			raise PreventUpdate
 
 		weekly_stats_obj.reset_weekly_hours()
@@ -83,6 +83,25 @@ def register_callbacks(app, weekly_stats_obj):
 			'start',
 			'start'.capitalize()
 		]
+
+	@dcb.callback(
+		[
+			Output('reset-hours-modal', 'is_open')
+		],
+		[
+			Input('reset-hours','n_clicks'),
+			Input('yes-reset','n_clicks'),
+			Input('no-reset','n_clicks')
+		],
+		[
+			State('reset-hours-modal', 'is_open')
+		]
+	)
+	def toggle_reset_hours_modal(reset_button_click, confirm_yes, confirm_no, modal_is_open):
+		if reset_button_click or confirm_yes or confirm_no:
+			return not modal_is_open
+
+		return modal_is_open
 
 	@dcb.callback(
 		[
@@ -166,5 +185,7 @@ def register_callbacks(app, weekly_stats_obj):
 		weekly_stats_obj.update_overall_coverage_table(coverage_data)
 
 		return weekly_stats_obj.get_dataframe_for_datatable()
+
+
 
 	dcb.register(app)

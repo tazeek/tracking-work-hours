@@ -35,7 +35,7 @@ def generate_layout(weekly_stats_obj):
 		html.H1(children='Time Tracking Hour Analyzer'),
 
 		html.Div([
-			
+
 			html.Div([
 				html.Strong('Last updated: '),
 				html.Span(
@@ -121,11 +121,15 @@ def generate_layout(weekly_stats_obj):
 
 				html.Br(),
 
-				dcc.ConfirmDialogProvider(
-					children=dbc.Button('Reset', outline=True, color='danger',size='sm'),
-					id='reset-hours',
-					message='Do you want to reset your overall hours?'
-				)
+				dbc.Button('Reset', id='reset-hours'),
+				dbc.Modal(id='reset-hours-modal', children=[
+					dbc.ModalHeader('Reset Weekly Hours'),
+					dbc.ModalBody('Do you want to reset your weekly hours?'),
+					dbc.ModalFooter([
+						dbc.Button('Yes',id='yes-reset'),
+						dbc.Button('No',id='no-reset')
+					])
+				])
 			],
 			style=SIDEBAR_STYLE
 		),
