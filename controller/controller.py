@@ -147,6 +147,7 @@ def register_callbacks(app, weekly_stats_obj):
 			new_value, 
 			new_value.capitalize(),
 			weekly_stats_obj.get_records_for_datatable(), 
+			'',
 			None
 		]
 
