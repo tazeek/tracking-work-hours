@@ -15,6 +15,7 @@ def serve_layout():
 app = dash.Dash(
 	__name__,
 	title='Work Hours Analytics',
+	update_title=None,
 	external_stylesheets=[dbc.themes.MINTY]
 )
 
