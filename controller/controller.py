@@ -131,8 +131,8 @@ def register_callbacks(app, weekly_stats_obj):
 
 		if not valid_input:
 			return [
-				no_update, no_update, no_update, no_update,
-				None, 
+				no_update, no_update, no_update, no_update, no_update, no_update,
+				'', 
 				f'Invalid input: {input_value}'
 			]
 
