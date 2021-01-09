@@ -11,6 +11,23 @@ SIDEBAR_STYLE = {
     "background-color": "#f8f9fa",
 }
 
+def _return_update_areas(last_updated_str):
+
+	return html.Div([
+
+		html.Div([
+			html.Strong('Last updated: '),
+			html.Span(
+				id='live-update-text',
+				children=last_updated_str
+			)
+		]),
+
+		html.Br(),
+
+		dbc.Button('Update', id='update-current', outline=True, color='primary',size='sm')
+	])
+
 def generate_layout(weekly_stats_obj):
 
 	overall_hours_fig = weekly_stats_obj.generate_weekly_hours()
@@ -30,20 +47,7 @@ def generate_layout(weekly_stats_obj):
 
 		html.H1(children='Working Hours Analyzer'),
 
-		html.Div([
-
-			html.Div([
-				html.Strong('Last updated: '),
-				html.Span(
-					id='live-update-text',
-					children=last_updated_str
-				)
-			]),
-
-			html.Br(),
-
-			dbc.Button('Update', id='update-current', outline=True, color='primary',size='sm')
-		]),
+		_return_update_areas(last_updated_str),
 
 		html.Br(),
 
