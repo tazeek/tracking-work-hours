@@ -28,6 +28,19 @@ def _return_update_areas(last_updated_str):
 		dbc.Button('Update', id='update-current', outline=True, color='primary',size='sm')
 	])
 
+def _return_minutes_comparison_div(overall_hours_fig):
+
+	return html.Div(children=[
+
+		html.Div(className='graph-displayer', children = [
+			dcc.Graph(
+			id='overall-week-hours',
+			figure=overall_hours_fig,
+			config={'displayModeBar': False, 'staticPlot': True}
+			)
+		])
+	])
+
 def generate_layout(weekly_stats_obj):
 
 	overall_hours_fig = weekly_stats_obj.generate_weekly_hours()
@@ -127,14 +140,5 @@ def generate_layout(weekly_stats_obj):
 			style=SIDEBAR_STYLE
 		),
 
-		html.Div(children=[
-
-			html.Div(className='graph-displayer', children = [
-				dcc.Graph(
-				id='overall-week-hours',
-				figure=overall_hours_fig,
-				config={'displayModeBar': False, 'staticPlot': True}
-				)
-			])
-		])
+		_return_minutes_comparison_div(overall_hours_fig)
 	])
