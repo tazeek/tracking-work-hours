@@ -118,9 +118,9 @@ class WeeklyTab:
 		overall_hours_pie_fig = go.Figure(go.Pie(
 		    name="",
 		    values = total_calculation_df['amount'],
-		    labels = total_calculation_df['category'],
+		    labels = total_calculation_df['category'].str.capitalize() ,
 		    customdata = total_calculation_df['amount_hrs'],
-		    hovertemplate = "</br>%{label}: %{customdata}"
+		    hovertemplate = "%{label}: %{customdata}"
 		))
 
 		overall_hours_pie_fig.update_traces(
