@@ -19,7 +19,7 @@ def register_callbacks(app, weekly_stats_obj):
 			Input('update-current','n_clicks')
 		]
 	)
-	def update_live_intervals(n_clicks):
+	def update_graphs(n_clicks):
 		''' Update the hours whenever the live update button is clicked
 
 			Input:
