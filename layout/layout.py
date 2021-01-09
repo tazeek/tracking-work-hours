@@ -48,18 +48,25 @@ def generate_layout(weekly_stats_obj):
 		html.Br(),
 
 		html.Div(
-			[
-				html.Div(
-					id='finishing-time',
-					children=finishing_time_str
-				),
+			[	
+				html.Div([
+
+					html.Strong('Finishing time: '),
+					html.Span(
+						id='finishing-time',
+						children=finishing_time_str
+					)
+				]),
 
 				html.Hr(),
 
-				html.Div(
-					id='today-coverage',
-					children=today_coverage_str
-				),
+				html.Div([
+					html.Strong('Today Coverage: '),
+					html.Span(
+						id='today-coverage',
+						children=today_coverage_str
+					)
+				]),
 
 				html.Br(),
 
