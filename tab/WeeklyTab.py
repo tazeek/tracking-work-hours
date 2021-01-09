@@ -16,7 +16,7 @@ class WeeklyTab:
 		return self._tracker_obj.get_finishing_time_today()
 
 	def get_current_time(self):
-		return f'Last updated: {self._tracker_obj.get_current_time()}'
+		return self._tracker_obj.get_current_time()
 
 	def get_today_coverage(self):
 		return self._tracker_obj.get_today_coverage()

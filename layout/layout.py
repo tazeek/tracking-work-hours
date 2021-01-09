@@ -35,10 +35,14 @@ def generate_layout(weekly_stats_obj):
 		html.H1(children='Time Tracking Hour Analyzer'),
 
 		html.Div([
-			html.Div(
-				id='live-update-text',
-				children=last_updated_str
-			),
+			
+			html.Div([
+				html.Strong('Last updated: '),
+				html.Span(
+					id='live-update-text',
+					children=last_updated_str
+				)
+			]),
 
 			html.Br(),
 
@@ -118,9 +122,7 @@ def generate_layout(weekly_stats_obj):
 				html.Br(),
 
 				dcc.ConfirmDialogProvider(
-					children=html.Button(
-						'Reset Hours',
-					),
+					children=dbc.Button('Reset', outline=True, color='danger',size='sm'),
 					id='reset-hours',
 					message='Do you want to reset your overall hours?'
 				)
