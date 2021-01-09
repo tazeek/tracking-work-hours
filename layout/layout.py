@@ -101,9 +101,9 @@ def generate_layout(weekly_stats_obj):
 
 				html.Div(className='graph-displayer', children = [
 					dcc.Graph(
-					id='total-hours-pie',
-					figure=total_hours_fig,
-					config={'displayModeBar': False}
+						id='total-hours-pie',
+						figure=total_hours_fig,
+						config={'displayModeBar': False}
 					)
 				]),
 
@@ -113,7 +113,11 @@ def generate_layout(weekly_stats_obj):
 
 				html.Br(),
 
-				dbc.Button('Reset', id='reset-hours'),
+				html.Div(
+					dbc.Button('Reset', id='reset-hours'),
+					style={'text-align':'center'}
+				),
+				
 				dbc.Modal(id='reset-hours-modal', children=[
 					dbc.ModalHeader('Reset Weekly Hours'),
 					dbc.ModalBody('Do you want to reset your weekly hours?'),
