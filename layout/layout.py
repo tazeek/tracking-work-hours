@@ -9,13 +9,6 @@ SIDEBAR_STYLE = {
     "width": "20rem",
     "padding": "2rem 1rem",
     "background-color": "#f8f9fa",
-    "display": "inline-block"
-}
-
-CONTENT_STYLE = {
-    "margin-left": "18rem",
-    "margin-right": "2rem",
-    "padding": "2rem 1rem",
 }
 
 def generate_layout(weekly_stats_obj):
@@ -139,7 +132,5 @@ def generate_layout(weekly_stats_obj):
 				config={'displayModeBar': False, 'staticPlot': True}
 				)
 			])
-		],
-		style=CONTENT_STYLE
-		)
+		])
 	])
