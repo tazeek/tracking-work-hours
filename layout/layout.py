@@ -3,10 +3,11 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 
 SIDEBAR_STYLE = {
+	"position": "static",
     "top": 0,
     "left": 0,
     "bottom": 0,
-    "width": "20rem",
+    "width": "22rem",
     "padding": "2rem 1rem",
     "background-color": "#f8f9fa",
 }
@@ -112,7 +113,9 @@ def generate_layout(weekly_stats_obj):
 		html.Br(),
 
 		html.Div([
+
 			html.Div([
+
 				_return_finishing_time_div(finishing_time_str),
 
 				html.Hr(),
@@ -155,6 +158,7 @@ def generate_layout(weekly_stats_obj):
 
 			html.Div([
 				_return_minutes_comparison_div(overall_hours_fig)
-			])
-		])	
+			]),
+
+		], style={'display':'flex'})	
 	])
