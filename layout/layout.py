@@ -78,6 +78,16 @@ def _return_update_coverage_div(button_status):
 		dbc.Button(children=button_status.capitalize(), id='update-coverage', outline=True, color='primary')
 	])
 
+def _return_pie_chart_fig(total_hours_fig):
+
+	return html.Div(className='graph-displayer', children = [
+		dcc.Graph(
+			id='total-hours-pie',
+			figure=total_hours_fig,
+			config={'displayModeBar': False}
+		)
+	])
+
 def generate_layout(weekly_stats_obj):
 
 	overall_hours_fig = weekly_stats_obj.generate_weekly_hours()
@@ -115,19 +125,11 @@ def generate_layout(weekly_stats_obj):
 
 				html.Br(),
 
-				html.Div(children=[
-					html.P(id='error-output-update', style={'color':'red'})
-				]),
+				html.Div(html.P(id='error-output-update', style={'color':'red'})),
 
 				html.Br(),
 
-				html.Div(className='graph-displayer', children = [
-					dcc.Graph(
-						id='total-hours-pie',
-						figure=total_hours_fig,
-						config={'displayModeBar': False}
-					)
-				]),
+				_return_pie_chart_fig(total_hours_fig),
 
 				html.Br(),
 
