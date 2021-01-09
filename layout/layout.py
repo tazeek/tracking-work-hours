@@ -41,6 +41,17 @@ def _return_minutes_comparison_div(overall_hours_fig):
 		])
 	])
 
+def _return_finishing_time_div(finishing_time_str):
+
+	return html.Div([
+
+		html.Strong('Finishing time: '),
+		html.Span(
+			id='finishing-time',
+			children=finishing_time_str
+		)
+	])
+
 def generate_layout(weekly_stats_obj):
 
 	overall_hours_fig = weekly_stats_obj.generate_weekly_hours()
@@ -66,14 +77,7 @@ def generate_layout(weekly_stats_obj):
 
 		html.Div(
 			[	
-				html.Div([
-
-					html.Strong('Finishing time: '),
-					html.Span(
-						id='finishing-time',
-						children=finishing_time_str
-					)
-				]),
+				_return_finishing_time_div(finishing_time_str),
 
 				html.Hr(),
 
