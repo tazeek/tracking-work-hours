@@ -1,5 +1,93 @@
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_bootstrap_components as dbc
+
+SIDEBAR_STYLE = {
+	"position": "static",
+    "top": 0,
+    "left": 0,
+    "bottom": 0,
+    "width": "22rem",
+    "padding": "2rem 1rem",
+    "background-color": "#f8f9fa",
+}
+
+def _return_update_areas(last_updated_str):
+
+	return html.Div([
+
+		html.Div([
+			html.Strong('Last updated: '),
+			html.Span(
+				id='live-update-text',
+				children=last_updated_str
+			)
+		]),
+
+		html.Br(),
+
+		dbc.Button('Update', id='update-current', outline=True, color='primary',size='sm')
+	])
+
+def _return_minutes_comparison_div(overall_hours_fig):
+
+	return html.Div(children=[
+
+		html.Div(className='graph-displayer', children = [
+			dcc.Graph(
+			id='overall-week-hours',
+			figure=overall_hours_fig,
+			config={'displayModeBar': False, 'staticPlot': True}
+			)
+		])
+	])
+
+def _return_finishing_time_div(finishing_time_str):
+
+	return html.Div([
+
+		html.Strong('Finishing time: '),
+		html.Span(
+			id='finishing-time',
+			children=finishing_time_str
+		)
+	])
+
+def _return_today_coverage_div(today_coverage_str):
+
+	return html.Div([
+		html.Strong('Today Coverage: '),
+		html.Span(
+			id='today-coverage',
+			children=today_coverage_str
+		)
+	])
+
+def _return_update_coverage_div(button_status):
+
+	return html.Div([
+
+		html.Div(
+			dbc.Input(
+				id='input-coverage-hours',
+				type='text',
+				placeholder='HH:MM (Ex. 05:45, 11:45)'
+			), 
+			style={'display': 'inline-block'}
+		),
+
+		dbc.Button(children=button_status.capitalize(), id='update-coverage', outline=True, color='primary')
+	])
+
+def _return_pie_chart_fig(total_hours_fig):
+
+	return html.Div(className='graph-displayer', children = [
+		dcc.Graph(
+			id='total-hours-pie',
+			figure=total_hours_fig,
+			config={'displayModeBar': False}
+		)
+	])
 
 def generate_layout(weekly_stats_obj):
 
@@ -11,96 +99,66 @@ def generate_layout(weekly_stats_obj):
 	today_coverage_str = weekly_stats_obj.get_today_coverage()
 	last_updated_str = weekly_stats_obj.get_current_time()
 
-	button_status = 'continue' if today_coverage_str[-1] != '-' else 'pause'
+	button_status = 'start' 
+
+	if today_coverage_str and today_coverage_str[-1] == '-': 
+		button_status = 'pause'
     
 	return html.Div([
 
-		html.Div(children=[
-			html.H1(children='Time Tracking Hour Analyzer'),
+		html.H1(children='Working Hours Analyzer'),
 
-			html.Hr(),
+		_return_update_areas(last_updated_str),
 
-			html.H4(
-				id='live-update-text',
-				children=last_updated_str
-			),
+		html.Br(),
 
-			html.Button('Update live', id='update-current', n_clicks=0)
-		]),
+		html.Div([
 
-		html.Hr(),
+			html.Div([
 
-		html.H4(
-			id='today-coverage',
-			children=today_coverage_str
-		),
+				_return_finishing_time_div(finishing_time_str),
 
-		html.Div(children=[
+				html.Hr(),
 
-			html.Div(
-				dcc.Input(
-					id='input-coverage-hours',
-					type='text',
-					placeholder='HH:MM (Ex. 05:45, 11:45)'
-				), 
-				style={'display': 'inline-block'}
-			),
+				_return_today_coverage_div(today_coverage_str),
 
-			html.Div(
-				dcc.ConfirmDialogProvider(
-					children=html.Button(
-						children=button_status.capitalize(),
-						value=button_status,
-						id='update-coverage'
-					),
-					id='update-coverage-dialog',
-					message='Do you want to continue to update today\'s coverage?'
+				html.Br(),
+
+				_return_update_coverage_div(button_status),
+
+				html.Br(),
+
+				html.Div(html.P(id='error-output-update', style={'color':'red'})),
+
+				html.Br(),
+
+				_return_pie_chart_fig(total_hours_fig),
+
+				html.Br(),
+
+				html.Div(id='coverage-table-div', children=[weekly_coverage_table]),
+
+				html.Br(),
+
+				html.Div(
+					dbc.Button('Reset', id='reset-hours'),
+					style={'text-align':'center'}
 				),
-				style={'display': 'inline-block'}
-			)
-		]),
+				
+				dbc.Modal(id='reset-hours-modal', children=[
+					dbc.ModalHeader('Reset Weekly Hours'),
+					dbc.ModalBody('Do you want to reset your weekly hours?'),
+					dbc.ModalFooter([
+						dbc.Button('Yes',id='yes-reset'),
+						dbc.Button('No',id='no-reset')
+					])
+				])
 
-		html.Div(children=[
-			html.P(id='error-output-update', style={'color':'red'})
-		]),
+			], style=SIDEBAR_STYLE),
 
-		html.Hr(),
-
-		html.H4(
-			id='finishing-time',
-			children=finishing_time_str
-		),
-
-
-		dcc.ConfirmDialogProvider(
-			children=html.Button(
-				'Reset Hours',
-			),
-			id='reset-hours',
-			message='Do you want to reset your overall hours?'
-		),
-
-		html.Div(children=[
-
-			html.Div(className='graph-displayer', children = [
-				dcc.Graph(
-				id='overall-week-hours',
-				figure=overall_hours_fig,
-				config={'displayModeBar': False, 'staticPlot': True}
-				)
+			html.Div([
+				_return_minutes_comparison_div(overall_hours_fig)
 			]),
 
-			html.Div(className='graph-displayer', children = [
-				dcc.Graph(
-				id='total-hours-pie',
-				figure=total_hours_fig,
-				config={'displayModeBar': False}
-				)
-			])
-		]),
-
-		html.Hr(),
-
-		html.H4(children='Weekly coverage'),
-		html.Div(id='coverage-table-div', children=[weekly_coverage_table])
+		], style={'display':'flex'})	
 	])

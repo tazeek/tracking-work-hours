@@ -19,7 +19,7 @@ def register_callbacks(app, weekly_stats_obj):
 			Input('update-current','n_clicks')
 		]
 	)
-	def update_live_intervals(n_clicks):
+	def update_graphs(n_clicks):
 		''' Update the hours whenever the live update button is clicked
 
 			Input:
@@ -46,14 +46,13 @@ def register_callbacks(app, weekly_stats_obj):
 			Output('total-hours-pie','figure'),
 			Output('overall-week-hours','figure'),
 			Output('coverage-table', 'data'),
-			Output('update-coverage','value'),
 			Output('update-coverage','children')
 		],
 		[
-			Input('reset-hours','submit_n_clicks')
+			Input('yes-reset','n_clicks')
 		]
 	)
-	def reset_hours(submit_n_clicks):
+	def reset_hours(n_clicks):
 		'''Reset everything to 0 when the reset-hours button is clicked
 
 			Input:
@@ -68,8 +67,8 @@ def register_callbacks(app, weekly_stats_obj):
 				update-coverage (value): Change value of button to 'start'
 				update-coverage (value): change text of button to 'start'
 		'''
-	    
-		if not submit_n_clicks:
+
+		if not n_clicks:
 			raise PreventUpdate
 
 		weekly_stats_obj.reset_weekly_hours()
@@ -80,16 +79,33 @@ def register_callbacks(app, weekly_stats_obj):
 			weekly_stats_obj.generate_overall_hours(),
 			weekly_stats_obj.generate_weekly_hours(),
 			weekly_stats_obj.get_records_for_datatable(),
-			'start',
 			'start'.capitalize()
 		]
+
+	@dcb.callback(
+		[
+			Output('reset-hours-modal', 'is_open')
+		],
+		[
+			Input('reset-hours','n_clicks'),
+			Input('yes-reset','n_clicks'),
+			Input('no-reset','n_clicks')
+		],
+		[
+			State('reset-hours-modal', 'is_open')
+		]
+	)
+	def toggle_reset_hours_modal(reset_button_click, confirm_yes, confirm_no, modal_is_open):
+		if reset_button_click or confirm_yes or confirm_no:
+			return not modal_is_open
+
+		return modal_is_open
 
 	@dcb.callback(
 		[
 			Output('live-update-text','children'),
 			Output('total-hours-pie','figure'),
 			Output('today-coverage','children'),
-			Output('update-coverage','value'),
 			Output('update-coverage','children'),
 			Output('coverage-table', 'data'),
 			Output('input-coverage-hours','value'),
@@ -97,14 +113,14 @@ def register_callbacks(app, weekly_stats_obj):
 		],
 
 		[
-			Input('update-coverage-dialog','submit_n_clicks')
+			Input('update-coverage','n_clicks')
 		],
 		[
 			State('input-coverage-hours','value'),
-			State('update-coverage','value')
+			State('update-coverage','children')
 		]
 	)
-	def update_today_coverage(submit_n_clicks, input_value, button_value):
+	def update_today_coverage(n_clicks, input_value, button_value):
 		'''Update today's coverage, based on the input and event type
 
 			Input:
@@ -116,7 +132,6 @@ def register_callbacks(app, weekly_stats_obj):
 
 			Output:
 				today-coverage: Update the current day coverage
-				update-coverage (value): Update the button value
 				update-coverage (children): Update the button text
 				coverage-table: Update the coverage table
 				input-coverage-hours: Update the text box field
@@ -124,29 +139,29 @@ def register_callbacks(app, weekly_stats_obj):
 
 		'''
 
-		if not submit_n_clicks:
+		if not n_clicks:
 			raise PreventUpdate
 
 		valid_input = validate_coverage(input_value)
 
 		if not valid_input:
 			return [
-				no_update, no_update, no_update, no_update,
-				None, 
+				no_update, no_update, no_update, no_update, no_update,
+				'', 
 				f'Invalid input: {input_value}'
 			]
 
-		new_value = 'continue' if button_value == 'pause' else 'pause'
+		new_value = 'start' if button_value.lower() == 'pause' else 'pause'
 
 		weekly_stats_obj.update_today_coverage(input_value)
 
 		return [
 			weekly_stats_obj.get_current_time(),
 			weekly_stats_obj.generate_overall_hours(),
-			weekly_stats_obj.get_today_coverage(), 
-			new_value, 
+			weekly_stats_obj.get_today_coverage(),
 			new_value.capitalize(),
 			weekly_stats_obj.get_records_for_datatable(), 
+			'',
 			None
 		]
 
@@ -165,5 +180,7 @@ def register_callbacks(app, weekly_stats_obj):
 		weekly_stats_obj.update_overall_coverage_table(coverage_data)
 
 		return weekly_stats_obj.get_dataframe_for_datatable()
+
+
 
 	dcb.register(app)

@@ -71,7 +71,7 @@ class Tracker:
 
 		remaining_today = self._remaining_today
 
-		finishing_time_today = '8 hours has been finished. Leave!!'
+		finishing_time_today = 'Past finishing time'
 
 		if remaining_today > 0:
 

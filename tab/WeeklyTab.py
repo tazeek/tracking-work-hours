@@ -13,13 +13,13 @@ class WeeklyTab:
 		self._tracker_obj = Tracker()
 
 	def get_finishing_time(self):
-		return f'Finishing time: {self._tracker_obj.get_finishing_time_today()}'
+		return self._tracker_obj.get_finishing_time_today()
 
 	def get_current_time(self):
-		return f'Last updated: {self._tracker_obj.get_current_time()}'
+		return self._tracker_obj.get_current_time()
 
 	def get_today_coverage(self):
-		return f'Today\'s coverage: {self._tracker_obj.get_today_coverage()}'
+		return self._tracker_obj.get_today_coverage()
 
 	def perform_live_update(self):
 		return self._tracker_obj.perform_live_update()
@@ -82,7 +82,7 @@ class WeeklyTab:
 		    title_x=0.4,
 		    xaxis_title='Minutes covered',
 		    yaxis=dict(autorange="reversed"),
-		    width=750,
+		    width=800,
 		    height=600,
 		    xaxis=dict(
 		        range=[0,600],
@@ -118,10 +118,9 @@ class WeeklyTab:
 		overall_hours_pie_fig = go.Figure(go.Pie(
 		    name="",
 		    values = total_calculation_df['amount'],
-		    labels = total_calculation_df['category'],
+		    labels = total_calculation_df['category'].str.capitalize() ,
 		    customdata = total_calculation_df['amount_hrs'],
-		    hovertemplate = "</br>Total(hours): %{customdata}"
-
+		    hovertemplate = "%{label}: %{customdata}"
 		))
 
 		overall_hours_pie_fig.update_traces(
@@ -132,9 +131,13 @@ class WeeklyTab:
 		)
 
 		overall_hours_pie_fig.update_layout(
-			width=400,
-			height=600,
-			transition={'duration': 2000, 'easing': 'cubic-in-out'}
+			width=200,
+			height=300,
+			transition={'duration': 2000, 'easing': 'cubic-in-out'},
+			paper_bgcolor='rgba(0,0,0,0)',
+			plot_bgcolor='rgba(0,0,0,0)',
+			margin=dict(t=0, b=0, l=0, r=0),
+			showlegend=False
 		)
 
 		return overall_hours_pie_fig
