@@ -52,6 +52,32 @@ def _return_finishing_time_div(finishing_time_str):
 		)
 	])
 
+def _return_today_coverage_div(today_coverage_str):
+
+	return html.Div([
+		html.Strong('Today Coverage: '),
+		html.Span(
+			id='today-coverage',
+			children=today_coverage_str
+		)
+	])
+
+def _return_update_coverage_div(button_status):
+
+	return html.Div([
+
+		html.Div(
+			dbc.Input(
+				id='input-coverage-hours',
+				type='text',
+				placeholder='HH:MM (Ex. 05:45, 11:45)'
+			), 
+			style={'display': 'inline-block'}
+		),
+
+		dbc.Button(children=button_status.capitalize(), id='update-coverage', outline=True, color='primary')
+	])
+
 def generate_layout(weekly_stats_obj):
 
 	overall_hours_fig = weekly_stats_obj.generate_weekly_hours()
@@ -81,29 +107,11 @@ def generate_layout(weekly_stats_obj):
 
 				html.Hr(),
 
-				html.Div([
-					html.Strong('Today Coverage: '),
-					html.Span(
-						id='today-coverage',
-						children=today_coverage_str
-					)
-				]),
+				_return_today_coverage_div(today_coverage_str),
 
 				html.Br(),
 
-				html.Div([
-
-					html.Div(
-						dbc.Input(
-							id='input-coverage-hours',
-							type='text',
-							placeholder='HH:MM (Ex. 05:45, 11:45)'
-						), 
-						style={'display': 'inline-block'}
-					),
-
-					dbc.Button(children=button_status.capitalize(), id='update-coverage', outline=True, color='primary')
-				]),
+				_return_update_coverage_div(button_status),
 
 				html.Br(),
 
