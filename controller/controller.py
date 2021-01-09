@@ -16,10 +16,20 @@ def register_callbacks(app, weekly_stats_obj):
 			Output('overall-week-hours','figure')
 		],
 		[
-			Input('interval-component','n_intervals')
+			Input('update-current','n_clicks')
 		]
 	)
-	def update_live_intervals(n):
+	def update_live_intervals(n_clicks):
+		''' Update the hours whenever the live update button is clicked
+
+			Input:
+				button event of id: update-current
+
+			Output:
+				live-update-text: Update the time of new event
+				total-hours-pie: Update the pie chart of hours
+				overall-week-hours: Update the bar chart of noon times
+		'''
 
 		weekly_stats_obj.perform_live_update()
 
@@ -34,12 +44,30 @@ def register_callbacks(app, weekly_stats_obj):
 			Output('live-update-text','children'),
 			Output('today-coverage','children'),
 			Output('total-hours-pie','figure'),
-			Output('overall-week-hours','figure')],
+			Output('overall-week-hours','figure'),
+			Output('coverage-table', 'data'),
+			Output('update-coverage','value'),
+			Output('update-coverage','children')
+		],
 		[
 			Input('reset-hours','submit_n_clicks')
 		]
 	)
 	def reset_hours(submit_n_clicks):
+		'''Reset everything to 0 when the reset-hours button is clicked
+
+			Input:
+				button event of id: reset-hours
+
+			Output:
+				live-update-text: Update the time of new event
+				today-coverage: Remove today's coverage
+				total-hours-pie: Update the pie chart of hours
+				overall-week-hours: Update the bar chart of noon times
+				coverage-table: Update the coverage table
+				update-coverage (value): Change value of button to 'start'
+				update-coverage (value): change text of button to 'start'
+		'''
 	    
 		if not submit_n_clicks:
 			raise PreventUpdate
@@ -50,11 +78,16 @@ def register_callbacks(app, weekly_stats_obj):
 			weekly_stats_obj.get_current_time(),
 			weekly_stats_obj.get_today_coverage(),
 			weekly_stats_obj.generate_overall_hours(),
-			weekly_stats_obj.generate_weekly_hours()
+			weekly_stats_obj.generate_weekly_hours(),
+			weekly_stats_obj.get_records_for_datatable(),
+			'start',
+			'start'.capitalize()
 		]
 
 	@dcb.callback(
 		[
+			Output('live-update-text','children'),
+			Output('total-hours-pie','figure'),
 			Output('today-coverage','children'),
 			Output('update-coverage','value'),
 			Output('update-coverage','children'),
@@ -72,6 +105,24 @@ def register_callbacks(app, weekly_stats_obj):
 		]
 	)
 	def update_today_coverage(submit_n_clicks, input_value, button_value):
+		'''Update today's coverage, based on the input and event type
+
+			Input:
+				Click event of update-coverage-dialog
+
+			State:
+				input-coverage-hours: Take the value of text field input-coverage-hours
+				update-coverage: Take the state of coverage to (either pause or continue)
+
+			Output:
+				today-coverage: Update the current day coverage
+				update-coverage (value): Update the button value
+				update-coverage (children): Update the button text
+				coverage-table: Update the coverage table
+				input-coverage-hours: Update the text box field
+				error-output-update: Show error message for invalid input
+
+		'''
 
 		if not submit_n_clicks:
 			raise PreventUpdate
@@ -85,11 +136,13 @@ def register_callbacks(app, weekly_stats_obj):
 				f'Invalid input: {input_value}'
 			]
 
-		new_value = 'start' if button_value == 'stop' else 'stop'
+		new_value = 'continue' if button_value == 'pause' else 'pause'
 
 		weekly_stats_obj.update_today_coverage(input_value)
 
 		return [
+			weekly_stats_obj.get_current_time(),
+			weekly_stats_obj.generate_overall_hours(),
 			weekly_stats_obj.get_today_coverage(), 
 			new_value, 
 			new_value.capitalize(),
