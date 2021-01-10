@@ -21,12 +21,10 @@ def _return_update_areas(last_updated_str):
 			html.Span(
 				id='live-update-text',
 				children=last_updated_str
-			)
-		]),
+			),
 
-		html.Br(),
-
-		dbc.Button('Update', id='update-current', outline=True, color='primary',size='sm')
+			dbc.Button('Update', id='update-current', outline=True, color='primary',size='sm')
+		])
 	])
 
 def _return_minutes_comparison_div(overall_hours_fig):
@@ -139,7 +137,7 @@ def generate_layout(weekly_stats_obj):
 				html.Div([
 
 					html.Div(
-						dbc.Button('View Weekly Coverage', id='view-coverage'),
+						dbc.Button('View Weekly Coverage', id='view-coverage', color='info'),
 						style={'text-align':'center', 'display':'inline-block'}
 					),
 
