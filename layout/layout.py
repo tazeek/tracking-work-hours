@@ -140,10 +140,18 @@ def generate_layout(weekly_stats_obj):
 
 				html.Br(),
 
-				html.Div(
-					dbc.Button('Reset', id='reset-hours'),
-					style={'text-align':'center'}
-				),
+				html.Div([
+
+					html.Div(
+						dbc.Button('View Weekly Coverage', id='view-weekly-coverage'),
+						style={'text-align':'center', 'display':'inline-block'}
+					),
+
+					html.Div(
+						dbc.Button('Reset', id='reset-hours'),
+						style={'text-align':'center', 'display':'inline-block'}
+					),
+				]),
 				
 				dbc.Modal(id='reset-hours-modal', children=[
 					dbc.ModalHeader('Reset Weekly Hours'),
