@@ -103,6 +103,24 @@ def register_callbacks(app, weekly_stats_obj):
 
 	@dcb.callback(
 		[
+			Output('view-coverage-modal','is_open')
+		],
+		[
+			Input('view-coverage','n_clicks'),
+			Input('no-coverage','n_clicks')
+		],
+		[
+			State('view-coverage-modal','is_open')
+		]
+	)
+	def toggle_view_coverage_modal(view_coverage_button_click, close_window, modal_is_open):
+		if view_coverage_button_click or close_window:
+			return not modal_is_open
+
+		return modal_is_open
+
+	@dcb.callback(
+		[
 			Output('live-update-text','children'),
 			Output('total-hours-pie','figure'),
 			Output('today-coverage','children'),

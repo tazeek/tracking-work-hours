@@ -139,7 +139,7 @@ def generate_layout(weekly_stats_obj):
 				html.Div([
 
 					html.Div(
-						dbc.Button('View Weekly Coverage', id='view-weekly-coverage'),
+						dbc.Button('View Weekly Coverage', id='view-coverage'),
 						style={'text-align':'center', 'display':'inline-block'}
 					),
 
@@ -149,13 +149,13 @@ def generate_layout(weekly_stats_obj):
 					),
 				]),
 
-				dbc.Modal(id='view-weekly-hours-modal', children=[
+				dbc.Modal(id='view-coverage-modal', children=[
 					dbc.ModalHeader('Weekly Coverage'),
 					dbc.ModalBody(children=[
 						html.Div(id='coverage-table-div', children=[weekly_coverage_table])
 					]),
 					dbc.ModalFooter([
-						dbc.Button('No', id='no-coverage')
+						dbc.Button('Close', id='no-coverage')
 					])
 				]),
 				
