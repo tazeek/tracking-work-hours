@@ -2,16 +2,6 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 
-SIDEBAR_STYLE = {
-	"position": "static",
-    "top": 0,
-    "left": 0,
-    "bottom": 0,
-    "width": "22rem",
-    "padding": "2rem 1rem",
-    "background-color": "#f8f9fa",
-}
-
 def _return_update_areas(last_updated_str):
 
 	return html.Div([
@@ -112,7 +102,7 @@ def generate_layout(weekly_stats_obj):
 
 		html.Div([
 
-			html.Div([
+			html.Div(className='sidebar', children=[
 
 				_return_finishing_time_div(finishing_time_str),
 
@@ -166,7 +156,7 @@ def generate_layout(weekly_stats_obj):
 					])
 				])
 
-			], style=SIDEBAR_STYLE),
+			]),
 
 			html.Div([
 				_return_minutes_comparison_div(overall_hours_fig)
