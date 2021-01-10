@@ -2,6 +2,6 @@ body {
     font-family: sans-serif;
 }
 
-.graph-displayer {
-	display: inline-block;
+button {
+	margin: 5px;
 }
