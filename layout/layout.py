@@ -136,10 +136,6 @@ def generate_layout(weekly_stats_obj):
 
 				html.Br(),
 
-				html.Div(id='coverage-table-div', children=[weekly_coverage_table]),
-
-				html.Br(),
-
 				html.Div([
 
 					html.Div(
@@ -151,6 +147,16 @@ def generate_layout(weekly_stats_obj):
 						dbc.Button('Reset', id='reset-hours'),
 						style={'text-align':'center', 'display':'inline-block'}
 					),
+				]),
+
+				dbc.Modal(id='view-weekly-hours-modal', children=[
+					dbc.ModalHeader('Weekly Coverage'),
+					dbc.ModalBody(children=[
+						html.Div(id='coverage-table-div', children=[weekly_coverage_table])
+					]),
+					dbc.ModalFooter([
+						dbc.Button('No', id='no-coverage')
+					])
 				]),
 				
 				dbc.Modal(id='reset-hours-modal', children=[
