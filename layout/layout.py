@@ -23,9 +23,9 @@ def _return_minutes_comparison_div(overall_hours_fig):
 
 		html.Div(className='graph-displayer', children = [
 			dcc.Graph(
-			id='overall-week-hours',
-			figure=overall_hours_fig,
-			config={'displayModeBar': False, 'staticPlot': True}
+				id='overall-week-hours',
+				figure=overall_hours_fig,
+				config={'displayModeBar': False, 'staticPlot': True}
 			)
 		])
 	])
@@ -69,13 +69,19 @@ def _return_update_coverage_div(button_status):
 
 def _return_pie_chart_fig(total_hours_fig):
 
-	return html.Div(className='graph-displayer', children = [
-		dcc.Graph(
-			id='total-hours-pie',
-			figure=total_hours_fig,
-			config={'displayModeBar': False}
-		)
-	])
+	return dcc.Loading(
+		id='pie-chart-loading',
+		type='default',
+		children=[
+			html.Div(className='graph-displayer', children=[
+				dcc.Graph(
+					id='total-hours-pie',
+					figure=total_hours_fig,
+					config={'displayModeBar': False}
+				)
+			])
+		]
+	)
 
 def generate_layout(weekly_stats_obj):
 
