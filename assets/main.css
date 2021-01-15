@@ -2,6 +2,15 @@ body {
     font-family: sans-serif;
 }
 
-.graph-displayer {
-	display: inline-block;
+button {
+	margin: 5px;
+}
+
+.sidebar {
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 22rem;
+	padding: 2rem 1rem;
+	background-color: #f8f9fa;
 }

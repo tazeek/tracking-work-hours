@@ -2,16 +2,6 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 
-SIDEBAR_STYLE = {
-	"position": "static",
-    "top": 0,
-    "left": 0,
-    "bottom": 0,
-    "width": "22rem",
-    "padding": "2rem 1rem",
-    "background-color": "#f8f9fa",
-}
-
 def _return_update_areas(last_updated_str):
 
 	return html.Div([
@@ -21,26 +11,31 @@ def _return_update_areas(last_updated_str):
 			html.Span(
 				id='live-update-text',
 				children=last_updated_str
-			)
-		]),
+			),
 
-		html.Br(),
-
-		dbc.Button('Update', id='update-current', outline=True, color='primary',size='sm')
+			dbc.Button('Update', id='update-current', outline=True, color='primary',size='sm')
+		])
 	])
 
 def _return_minutes_comparison_div(overall_hours_fig):
 
-	return html.Div(children=[
+	return dbc.Spinner(
+		id='loading-chart-comparison',
+		color="primary",
+		fullscreen=True,
+		children=[
+			html.Div(children=[
 
-		html.Div(className='graph-displayer', children = [
-			dcc.Graph(
-			id='overall-week-hours',
-			figure=overall_hours_fig,
-			config={'displayModeBar': False, 'staticPlot': True}
-			)
-		])
-	])
+				html.Div(className='graph-displayer', children = [
+					dcc.Graph(
+						id='overall-week-hours',
+						figure=overall_hours_fig,
+						config={'displayModeBar': False, 'staticPlot': True}
+					)
+				])
+			])
+		]
+	)
 
 def _return_finishing_time_div(finishing_time_str):
 
@@ -81,13 +76,20 @@ def _return_update_coverage_div(button_status):
 
 def _return_pie_chart_fig(total_hours_fig):
 
-	return html.Div(className='graph-displayer', children = [
-		dcc.Graph(
-			id='total-hours-pie',
-			figure=total_hours_fig,
-			config={'displayModeBar': False}
-		)
-	])
+	return dbc.Spinner(
+		id='pie-chart-loading',
+		color="primary",
+		fullscreen=True,
+		children=[
+			html.Div(className='graph-displayer', children=[
+				dcc.Graph(
+					id='total-hours-pie',
+					figure=total_hours_fig,
+					config={'displayModeBar': False}
+				)
+			])
+		]
+	)
 
 def generate_layout(weekly_stats_obj):
 
@@ -114,7 +116,7 @@ def generate_layout(weekly_stats_obj):
 
 		html.Div([
 
-			html.Div([
+			html.Div(className='sidebar', children=[
 
 				_return_finishing_time_div(finishing_time_str),
 
@@ -136,14 +138,28 @@ def generate_layout(weekly_stats_obj):
 
 				html.Br(),
 
-				html.Div(id='coverage-table-div', children=[weekly_coverage_table]),
+				html.Div([
 
-				html.Br(),
+					html.Div(
+						dbc.Button('View Weekly Coverage', id='view-coverage', color='info'),
+						style={'text-align':'center', 'display':'inline-block'}
+					),
 
-				html.Div(
-					dbc.Button('Reset', id='reset-hours'),
-					style={'text-align':'center'}
-				),
+					html.Div(
+						dbc.Button('Reset', id='reset-hours'),
+						style={'text-align':'center', 'display':'inline-block'}
+					),
+				]),
+
+				dbc.Modal(id='view-coverage-modal', children=[
+					dbc.ModalHeader('Weekly Coverage'),
+					dbc.ModalBody(children=[
+						html.Div(id='coverage-table-div', children=[weekly_coverage_table])
+					]),
+					dbc.ModalFooter([
+						dbc.Button('Close', id='no-coverage')
+					])
+				]),
 				
 				dbc.Modal(id='reset-hours-modal', children=[
 					dbc.ModalHeader('Reset Weekly Hours'),
@@ -154,7 +170,7 @@ def generate_layout(weekly_stats_obj):
 					])
 				])
 
-			], style=SIDEBAR_STYLE),
+			]),
 
 			html.Div([
 				_return_minutes_comparison_div(overall_hours_fig)
