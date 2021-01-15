@@ -21,6 +21,8 @@ def _return_minutes_comparison_div(overall_hours_fig):
 
 	return dbc.Spinner(
 		id='loading-chart-comparison',
+		color="primary",
+		fullscreen=True,
 		children=[
 			html.Div(children=[
 
@@ -76,6 +78,8 @@ def _return_pie_chart_fig(total_hours_fig):
 
 	return dbc.Spinner(
 		id='pie-chart-loading',
+		color="primary",
+		fullscreen=True,
 		children=[
 			html.Div(className='graph-displayer', children=[
 				dcc.Graph(
