@@ -43,10 +43,12 @@ def generate_layout(weekly_stats_obj):
 
 	today_coverage_str = weekly_stats_obj.get_today_coverage()
 
-	button_status = 'start' 
+	button_status = None
 
 	if today_coverage_str and today_coverage_str[-1] == '-': 
 		button_status = 'pause'
+	else:
+		button_status = 'start'
 
 	sidebar_dict = {
 		'button': button_status,
