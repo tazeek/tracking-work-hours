@@ -4,7 +4,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 
-def _return_update_areas(last_updated_str):
+def _return_header_div(last_updated_str):
 
 	return html.Div([
 
@@ -64,7 +64,7 @@ def generate_layout(weekly_stats_obj):
 
 		html.H1(children='Working Hours Analyzer'),
 
-		_return_header_areas(weekly_stats_obj.get_current_time()),
+		_return_header_div(weekly_stats_obj.get_current_time()),
 
 		html.Br(),
 
