@@ -2,6 +2,22 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 
+def _return_update_coverage_div(button_status):
+
+	return html.Div([
+
+		html.Div(
+			dbc.Input(
+				id='input-coverage-hours',
+				type='text',
+				placeholder='HH:MM (Ex. 05:45, 11:45)'
+			), 
+			style={'display': 'inline-block'}
+		),
+
+		dbc.Button(children=button_status.capitalize(), id='update-coverage', outline=True, color='primary')
+	])
+
 def _return_today_coverage_div(today_coverage_str):
 
 	return html.Div([
@@ -29,6 +45,9 @@ def generate_sidebar():
 		_return_finishing_time_div(finishing_time_str),
 		html.Hr(),
 		_return_today_coverage_div(today_coverage_str),
+		html.Br(),
+		_return_update_coverage_div(button_status),
+		html.Br(),
 	])
 
 html.Div(className='sidebar', children=[
@@ -39,11 +58,11 @@ html.Div(className='sidebar', children=[
 
 				
 
-				html.Br(),
+				
 
-				_return_update_coverage_div(button_status),
+				
 
-				html.Br(),
+				
 
 				html.Div(html.P(id='error-output-update', style={'color':'red'})),
 

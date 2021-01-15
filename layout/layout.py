@@ -39,22 +39,6 @@ def _return_minutes_comparison_div(overall_hours_fig):
 		]
 	)
 
-def _return_update_coverage_div(button_status):
-
-	return html.Div([
-
-		html.Div(
-			dbc.Input(
-				id='input-coverage-hours',
-				type='text',
-				placeholder='HH:MM (Ex. 05:45, 11:45)'
-			), 
-			style={'display': 'inline-block'}
-		),
-
-		dbc.Button(children=button_status.capitalize(), id='update-coverage', outline=True, color='primary')
-	])
-
 def _return_pie_chart_fig(total_hours_fig):
 
 	return dbc.Spinner(
