@@ -2,6 +2,44 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 
+def _generate_reset_event_modal():
+
+	return dbc.Modal(id='reset-hours-modal', children=[
+		dbc.ModalHeader('Reset Weekly Hours'),
+		dbc.ModalBody('Do you want to reset your weekly hours?'),
+		dbc.ModalFooter([
+			dbc.Button('Yes',id='yes-reset'),
+			dbc.Button('No',id='no-reset')
+		])
+	])
+
+def _generate_coverage_modal(weekly_coverage_table):
+
+	return dbc.Modal(id='view-coverage-modal', children=[
+		dbc.ModalHeader('Weekly Coverage'),
+		dbc.ModalBody(children=[
+			html.Div(id='coverage-table-div', children=[weekly_coverage_table])
+		]),
+		dbc.ModalFooter([
+			dbc.Button('Close', id='no-coverage')
+		])
+	]),
+
+def _generate_reset_view_buttons():
+
+	return html.Div([
+
+		html.Div(
+			dbc.Button('View Weekly Coverage', id='view-coverage', color='info'),
+			style={'text-align':'center', 'display':'inline-block'}
+		),
+
+		html.Div(
+			dbc.Button('Reset', id='reset-hours'),
+			style={'text-align':'center', 'display':'inline-block'}
+		),
+	])
+
 def _return_pie_chart_fig(total_hours_fig):
 
 	return dbc.Spinner(
@@ -71,63 +109,10 @@ def generate_sidebar():
 
 		html.Div(html.P(id='error-output-update', style={'color':'red'})),
 		html.Br(),
-		
+
 		_return_pie_chart_fig(total_hours_fig),
 		html.Br(),
+
+		_generate_coverage_modal(),
+		_generate_reset_event_modal()
 	])
-
-html.Div(className='sidebar', children=[
-
-				
-
-				
-
-				
-
-				
-
-				
-
-				
-
-				
-
-				
-
-				
-
-				
-
-				html.Div([
-
-					html.Div(
-						dbc.Button('View Weekly Coverage', id='view-coverage', color='info'),
-						style={'text-align':'center', 'display':'inline-block'}
-					),
-
-					html.Div(
-						dbc.Button('Reset', id='reset-hours'),
-						style={'text-align':'center', 'display':'inline-block'}
-					),
-				]),
-
-				dbc.Modal(id='view-coverage-modal', children=[
-					dbc.ModalHeader('Weekly Coverage'),
-					dbc.ModalBody(children=[
-						html.Div(id='coverage-table-div', children=[weekly_coverage_table])
-					]),
-					dbc.ModalFooter([
-						dbc.Button('Close', id='no-coverage')
-					])
-				]),
-				
-				dbc.Modal(id='reset-hours-modal', children=[
-					dbc.ModalHeader('Reset Weekly Hours'),
-					dbc.ModalBody('Do you want to reset your weekly hours?'),
-					dbc.ModalFooter([
-						dbc.Button('Yes',id='yes-reset'),
-						dbc.Button('No',id='no-reset')
-					])
-				])
-
-			])
