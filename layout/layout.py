@@ -21,23 +21,25 @@ def _return_update_areas(last_updated_str):
 
 def _return_minutes_comparison_div(overall_hours_fig):
 
-	return dbc.Spinner(
-		id='loading-chart-comparison',
-		color="primary",
-		fullscreen=True,
-		children=[
-			html.Div(children=[
+	return html.Div([
+		dbc.Spinner(
+			id='loading-chart-comparison',
+			color="primary",
+			fullscreen=True,
+			children=[
+				html.Div(children=[
 
-				html.Div(className='graph-displayer', children = [
-					dcc.Graph(
-						id='overall-week-hours',
-						figure=overall_hours_fig,
-						config={'displayModeBar': False, 'staticPlot': True}
-					)
+					html.Div(className='graph-displayer', children = [
+						dcc.Graph(
+							id='overall-week-hours',
+							figure=overall_hours_fig,
+							config={'displayModeBar': False, 'staticPlot': True}
+						)
+					])
 				])
-			])
-		]
-	)
+			]
+		)
+	])
 
 def generate_layout(weekly_stats_obj):
 
@@ -62,17 +64,14 @@ def generate_layout(weekly_stats_obj):
 
 		html.H1(children='Working Hours Analyzer'),
 
-		_return_update_areas(weekly_stats_obj.get_current_time()),
+		_return_header_areas(weekly_stats_obj.get_current_time()),
 
 		html.Br(),
 
 		html.Div([
 
 			generate_sidebar(sidebar_dict),
-
-			html.Div([
-				_return_minutes_comparison_div(weekly_stats_obj.generate_weekly_hours())
-			]),
+			_return_minutes_comparison_div(weekly_stats_obj.generate_weekly_hours())
 
 		], style={'display':'flex'})	
 	])
