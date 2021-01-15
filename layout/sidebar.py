@@ -102,5 +102,15 @@ def generate_sidebar(sidebar_dict):
 		html.Br(),
 
 		_generate_reset_view_buttons(),
-		_generate_reset_event_modal()
+		_generate_reset_event_modal(),
+
+		dbc.Modal(id='view-coverage-modal', children=[
+			dbc.ModalHeader('Weekly Coverage'),
+			dbc.ModalBody(children=[
+				html.Div(id='coverage-table-div', children=[sidebar_dict['coverage_table']])
+			]),
+			dbc.ModalFooter([
+				dbc.Button('Close', id='no-coverage')
+			])
+		])
 	])
