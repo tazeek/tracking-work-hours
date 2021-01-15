@@ -41,28 +41,26 @@ def _return_minutes_comparison_div(overall_hours_fig):
 
 def generate_layout(weekly_stats_obj):
 
-	sidebar_dict = {}
-
-	overall_hours_fig = weekly_stats_obj.generate_weekly_hours()
-	sidebar_dict['total_hours'] = weekly_stats_obj.generate_overall_hours()
-	sidebar_dict['coverage_table'] = weekly_stats_obj.generate_weekly_coverage()
-
-	sidebar_dict['finishing_time'] = weekly_stats_obj.get_finishing_time()
-	sidebar_dict['today_coverage'] = weekly_stats_obj.get_today_coverage()
-	last_updated_str = weekly_stats_obj.get_current_time()
+	today_coverage_str = weekly_stats_obj.get_today_coverage()
 
 	button_status = 'start' 
 
 	if today_coverage_str and today_coverage_str[-1] == '-': 
 		button_status = 'pause'
 
-	sidebar_dict['button'] = button_status
+	sidebar_dict = {
+		'button': button_status,
+		'total_hours': weekly_stats_obj.generate_overall_hours(),
+		'coverage_table': weekly_stats_obj.generate_weekly_coverage(),
+		'finishing_time': weekly_stats_obj.get_finishing_time(),
+		'today_coverage': today_coverage_str
+	} 
     
 	return html.Div([
 
 		html.H1(children='Working Hours Analyzer'),
 
-		_return_update_areas(last_updated_str),
+		_return_update_areas(weekly_stats_obj.get_current_time()),
 
 		html.Br(),
 
@@ -71,7 +69,7 @@ def generate_layout(weekly_stats_obj):
 			generate_sidebar(sidebar_dict),
 
 			html.Div([
-				_return_minutes_comparison_div(overall_hours_fig)
+				_return_minutes_comparison_div(weekly_stats_obj.generate_weekly_hours())
 			]),
 
 		], style={'display':'flex'})	
