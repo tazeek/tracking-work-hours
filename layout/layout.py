@@ -19,16 +19,22 @@ def _return_update_areas(last_updated_str):
 
 def _return_minutes_comparison_div(overall_hours_fig):
 
-	return html.Div(children=[
+	return dcc.Loading(
+		id='loading-chart-comparison', 
+		type='default',
+		children=[
+			html.Div(children=[
 
-		html.Div(className='graph-displayer', children = [
-			dcc.Graph(
-				id='overall-week-hours',
-				figure=overall_hours_fig,
-				config={'displayModeBar': False, 'staticPlot': True}
-			)
-		])
-	])
+				html.Div(className='graph-displayer', children = [
+					dcc.Graph(
+						id='overall-week-hours',
+						figure=overall_hours_fig,
+						config={'displayModeBar': False, 'staticPlot': True}
+					)
+				])
+			])
+		]
+	)
 
 def _return_finishing_time_div(finishing_time_str):
 
