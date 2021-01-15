@@ -13,6 +13,18 @@ def _generate_reset_event_modal():
 		])
 	])
 
+def _generate_coverage_table_modal(coverage_table_data):
+
+	return dbc.Modal(id='view-coverage-modal', children=[
+		dbc.ModalHeader('Weekly Coverage'),
+		dbc.ModalBody(children=[
+			html.Div(id='coverage-table-div', children=[coverage_table_data])
+		]),
+		dbc.ModalFooter([
+			dbc.Button('Close', id='no-coverage')
+		])
+	])
+
 def _generate_reset_view_buttons():
 
 	return html.Div([
@@ -103,14 +115,7 @@ def generate_sidebar(sidebar_dict):
 
 		_generate_reset_view_buttons(),
 		_generate_reset_event_modal(),
+		_generate_coverage_table_modal(sidebar_dict['coverage_table'])
 
-		dbc.Modal(id='view-coverage-modal', children=[
-			dbc.ModalHeader('Weekly Coverage'),
-			dbc.ModalBody(children=[
-				html.Div(id='coverage-table-div', children=[sidebar_dict['coverage_table']])
-			]),
-			dbc.ModalFooter([
-				dbc.Button('Close', id='no-coverage')
-			])
-		])
+
 	])
