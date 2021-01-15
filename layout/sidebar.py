@@ -2,6 +2,16 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 
+def _return_today_coverage_div(today_coverage_str):
+
+	return html.Div([
+		html.Strong('Today Coverage: '),
+		html.Span(
+			id='today-coverage',
+			children=today_coverage_str
+		)
+	])
+
 def _return_finishing_time_div(finishing_time_str):
 
 	return html.Div([
@@ -17,15 +27,17 @@ def generate_sidebar():
 
 	return html.Div(className='sidebar', children=[
 		_return_finishing_time_div(finishing_time_str),
+		html.Hr(),
+		_return_today_coverage_div(today_coverage_str),
 	])
 
 html.Div(className='sidebar', children=[
 
 				
 
-				html.Hr(),
+				
 
-				_return_today_coverage_div(today_coverage_str),
+				
 
 				html.Br(),
 

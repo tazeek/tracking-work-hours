@@ -39,27 +39,6 @@ def _return_minutes_comparison_div(overall_hours_fig):
 		]
 	)
 
-def _return_finishing_time_div(finishing_time_str):
-
-	return html.Div([
-
-		html.Strong('Finishing time: '),
-		html.Span(
-			id='finishing-time',
-			children=finishing_time_str
-		)
-	])
-
-def _return_today_coverage_div(today_coverage_str):
-
-	return html.Div([
-		html.Strong('Today Coverage: '),
-		html.Span(
-			id='today-coverage',
-			children=today_coverage_str
-		)
-	])
-
 def _return_update_coverage_div(button_status):
 
 	return html.Div([
