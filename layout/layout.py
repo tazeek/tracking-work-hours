@@ -19,16 +19,23 @@ def _return_update_areas(last_updated_str):
 
 def _return_minutes_comparison_div(overall_hours_fig):
 
-	return html.Div(children=[
+	return dbc.Spinner(
+		id='loading-chart-comparison',
+		color="primary",
+		fullscreen=True,
+		children=[
+			html.Div(children=[
 
-		html.Div(className='graph-displayer', children = [
-			dcc.Graph(
-			id='overall-week-hours',
-			figure=overall_hours_fig,
-			config={'displayModeBar': False, 'staticPlot': True}
-			)
-		])
-	])
+				html.Div(className='graph-displayer', children = [
+					dcc.Graph(
+						id='overall-week-hours',
+						figure=overall_hours_fig,
+						config={'displayModeBar': False, 'staticPlot': True}
+					)
+				])
+			])
+		]
+	)
 
 def _return_finishing_time_div(finishing_time_str):
 
@@ -69,13 +76,20 @@ def _return_update_coverage_div(button_status):
 
 def _return_pie_chart_fig(total_hours_fig):
 
-	return html.Div(className='graph-displayer', children = [
-		dcc.Graph(
-			id='total-hours-pie',
-			figure=total_hours_fig,
-			config={'displayModeBar': False}
-		)
-	])
+	return dbc.Spinner(
+		id='pie-chart-loading',
+		color="primary",
+		fullscreen=True,
+		children=[
+			html.Div(className='graph-displayer', children=[
+				dcc.Graph(
+					id='total-hours-pie',
+					figure=total_hours_fig,
+					config={'displayModeBar': False}
+				)
+			])
+		]
+	)
 
 def generate_layout(weekly_stats_obj):
 
