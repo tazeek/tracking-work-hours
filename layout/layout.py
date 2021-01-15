@@ -55,8 +55,6 @@ def generate_layout(weekly_stats_obj):
 		'finishing_time': weekly_stats_obj.get_finishing_time(),
 		'today_coverage': today_coverage_str
 	} 
-
-	sidebar_area = generate_sidebar(sidebar_dict)
     
 	return html.Div([
 
@@ -68,7 +66,7 @@ def generate_layout(weekly_stats_obj):
 
 		html.Div([
 
-			sidebar_area,
+			generate_sidebar(sidebar_dict),
 
 			html.Div([
 				_return_minutes_comparison_div(weekly_stats_obj.generate_weekly_hours())
