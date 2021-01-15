@@ -94,14 +94,14 @@ def _return_finishing_time_div(finishing_time_str):
 		)
 	])
 
-def generate_sidebar():
+def generate_sidebar(sidebar_dict):
 
 	return html.Div(className='sidebar', children=[
 
-		_return_finishing_time_div(finishing_time_str),
+		_return_finishing_time_div(sidebar_dict['finishing_time']),
 		html.Hr(),
 
-		_return_today_coverage_div(today_coverage_str),
+		_return_today_coverage_div(sidebar_dict['today_coverage']),
 		html.Br(),
 
 		_return_update_coverage_div(button_status),
@@ -113,6 +113,6 @@ def generate_sidebar():
 		_return_pie_chart_fig(total_hours_fig),
 		html.Br(),
 
-		_generate_coverage_modal(),
+		_generate_coverage_modal(weekly_coverage_table),
 		_generate_reset_event_modal()
 	])

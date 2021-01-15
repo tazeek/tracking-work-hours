@@ -41,12 +41,14 @@ def _return_minutes_comparison_div(overall_hours_fig):
 
 def generate_layout(weekly_stats_obj):
 
+	sidebar_dict = {}
+
 	overall_hours_fig = weekly_stats_obj.generate_weekly_hours()
 	total_hours_fig = weekly_stats_obj.generate_overall_hours()
 	weekly_coverage_table = weekly_stats_obj.generate_weekly_coverage()
 
-	finishing_time_str = weekly_stats_obj.get_finishing_time()
-	today_coverage_str = weekly_stats_obj.get_today_coverage()
+	sidebar_dict['finishing_time'] = weekly_stats_obj.get_finishing_time()
+	sidebar_dict['today_coverage'] = weekly_stats_obj.get_today_coverage()
 	last_updated_str = weekly_stats_obj.get_current_time()
 
 	button_status = 'start' 
