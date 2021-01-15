@@ -104,15 +104,15 @@ def generate_sidebar(sidebar_dict):
 		_return_today_coverage_div(sidebar_dict['today_coverage']),
 		html.Br(),
 
-		_return_update_coverage_div(button_status),
+		_return_update_coverage_div(sidebar_dict['button']),
 		html.Br(),
 
 		html.Div(html.P(id='error-output-update', style={'color':'red'})),
 		html.Br(),
 
-		_return_pie_chart_fig(total_hours_fig),
+		_return_pie_chart_fig(sidebar_dict['total_hours']),
 		html.Br(),
 
-		_generate_coverage_modal(weekly_coverage_table),
+		_generate_coverage_modal(sidebar_dict['coverage_table']),
 		_generate_reset_event_modal()
 	])

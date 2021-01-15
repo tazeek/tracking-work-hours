@@ -44,8 +44,8 @@ def generate_layout(weekly_stats_obj):
 	sidebar_dict = {}
 
 	overall_hours_fig = weekly_stats_obj.generate_weekly_hours()
-	total_hours_fig = weekly_stats_obj.generate_overall_hours()
-	weekly_coverage_table = weekly_stats_obj.generate_weekly_coverage()
+	sidebar_dict['total_hours'] = weekly_stats_obj.generate_overall_hours()
+	sidebar_dict['coverage_table'] = weekly_stats_obj.generate_weekly_coverage()
 
 	sidebar_dict['finishing_time'] = weekly_stats_obj.get_finishing_time()
 	sidebar_dict['today_coverage'] = weekly_stats_obj.get_today_coverage()
@@ -55,6 +55,8 @@ def generate_layout(weekly_stats_obj):
 
 	if today_coverage_str and today_coverage_str[-1] == '-': 
 		button_status = 'pause'
+
+	sidebar_dict['button'] = button_status
     
 	return html.Div([
 
@@ -66,7 +68,7 @@ def generate_layout(weekly_stats_obj):
 
 		html.Div([
 
-			generate_sidebar(),
+			generate_sidebar(sidebar_dict),
 
 			html.Div([
 				_return_minutes_comparison_div(overall_hours_fig)
