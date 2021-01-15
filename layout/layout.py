@@ -19,9 +19,8 @@ def _return_update_areas(last_updated_str):
 
 def _return_minutes_comparison_div(overall_hours_fig):
 
-	return dcc.Loading(
-		id='loading-chart-comparison', 
-		type='default',
+	return dbc.Spinner(
+		id='loading-chart-comparison',
 		children=[
 			html.Div(children=[
 
@@ -75,9 +74,8 @@ def _return_update_coverage_div(button_status):
 
 def _return_pie_chart_fig(total_hours_fig):
 
-	return dcc.Loading(
+	return dbc.Spinner(
 		id='pie-chart-loading',
-		type='default',
 		children=[
 			html.Div(className='graph-displayer', children=[
 				dcc.Graph(
