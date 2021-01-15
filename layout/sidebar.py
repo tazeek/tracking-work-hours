@@ -13,30 +13,18 @@ def _generate_reset_event_modal():
 		])
 	])
 
-def _generate_coverage_modal(weekly_coverage_table):
-
-	return dbc.Modal(id='view-coverage-modal', children=[
-		dbc.ModalHeader('Weekly Coverage'),
-		dbc.ModalBody(children=[
-			html.Div(id='coverage-table-div', children=[weekly_coverage_table])
-		]),
-		dbc.ModalFooter([
-			dbc.Button('Close', id='no-coverage')
-		])
-	]),
-
 def _generate_reset_view_buttons():
 
 	return html.Div([
 
 		html.Div(
 			dbc.Button('View Weekly Coverage', id='view-coverage', color='info'),
-			style={'text-align':'center', 'display':'inline-block'}
+			style={'textAlign':'center', 'display':'inline-block'}
 		),
 
 		html.Div(
 			dbc.Button('Reset', id='reset-hours'),
-			style={'text-align':'center', 'display':'inline-block'}
+			style={'textAlign':'center', 'display':'inline-block'}
 		),
 	])
 
@@ -113,6 +101,6 @@ def generate_sidebar(sidebar_dict):
 		_return_pie_chart_fig(sidebar_dict['total_hours']),
 		html.Br(),
 
-		_generate_coverage_modal(sidebar_dict['coverage_table']),
+		_generate_reset_view_buttons(),
 		_generate_reset_event_modal()
 	])

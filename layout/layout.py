@@ -4,6 +4,29 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 
+def _generate_reset_event_modal():
+
+	return dbc.Modal(id='reset-hours-modal', children=[
+		dbc.ModalHeader('Reset Weekly Hours'),
+		dbc.ModalBody('Do you want to reset your weekly hours?'),
+		dbc.ModalFooter([
+			dbc.Button('Yes',id='yes-reset'),
+			dbc.Button('No',id='no-reset')
+		])
+	])
+
+def _generate_coverage_modal(weekly_coverage_table):
+
+	return dbc.Modal(id='view-coverage-modal', children=[
+		dbc.ModalHeader('Weekly Coverage'),
+		dbc.ModalBody(children=[
+			html.Div(id='coverage-table-div', children=[weekly_coverage_table])
+		]),
+		dbc.ModalFooter([
+			dbc.Button('Close', id='no-coverage')
+		])
+	]),
+
 def _return_update_areas(last_updated_str):
 
 	return html.Div([
@@ -55,6 +78,8 @@ def generate_layout(weekly_stats_obj):
 		'finishing_time': weekly_stats_obj.get_finishing_time(),
 		'today_coverage': today_coverage_str
 	} 
+
+	sidebar_area = generate_sidebar(sidebar_dict)
     
 	return html.Div([
 
@@ -66,7 +91,10 @@ def generate_layout(weekly_stats_obj):
 
 		html.Div([
 
-			generate_sidebar(sidebar_dict),
+			sidebar_area,
+
+			#_generate_reset_event_modal(),
+			#_generate_coverage_modal(sidebar_dict['coverage_table']),
 
 			html.Div([
 				_return_minutes_comparison_div(weekly_stats_obj.generate_weekly_hours())
