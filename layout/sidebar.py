@@ -2,6 +2,23 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 
+def _return_pie_chart_fig(total_hours_fig):
+
+	return dbc.Spinner(
+		id='pie-chart-loading',
+		color="primary",
+		fullscreen=True,
+		children=[
+			html.Div(className='graph-displayer', children=[
+				dcc.Graph(
+					id='total-hours-pie',
+					figure=total_hours_fig,
+					config={'displayModeBar': False}
+				)
+			])
+		]
+	)
+
 def _return_update_coverage_div(button_status):
 
 	return html.Div([
@@ -42,11 +59,20 @@ def _return_finishing_time_div(finishing_time_str):
 def generate_sidebar():
 
 	return html.Div(className='sidebar', children=[
+
 		_return_finishing_time_div(finishing_time_str),
 		html.Hr(),
+
 		_return_today_coverage_div(today_coverage_str),
 		html.Br(),
+
 		_return_update_coverage_div(button_status),
+		html.Br(),
+
+		html.Div(html.P(id='error-output-update', style={'color':'red'})),
+		html.Br(),
+		
+		_return_pie_chart_fig(total_hours_fig),
 		html.Br(),
 	])
 
@@ -64,13 +90,13 @@ html.Div(className='sidebar', children=[
 
 				
 
-				html.Div(html.P(id='error-output-update', style={'color':'red'})),
+				
 
-				html.Br(),
+				
 
-				_return_pie_chart_fig(total_hours_fig),
+				
 
-				html.Br(),
+				
 
 				html.Div([
 

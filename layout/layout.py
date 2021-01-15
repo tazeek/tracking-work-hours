@@ -39,23 +39,6 @@ def _return_minutes_comparison_div(overall_hours_fig):
 		]
 	)
 
-def _return_pie_chart_fig(total_hours_fig):
-
-	return dbc.Spinner(
-		id='pie-chart-loading',
-		color="primary",
-		fullscreen=True,
-		children=[
-			html.Div(className='graph-displayer', children=[
-				dcc.Graph(
-					id='total-hours-pie',
-					figure=total_hours_fig,
-					config={'displayModeBar': False}
-				)
-			])
-		]
-	)
-
 def generate_layout(weekly_stats_obj):
 
 	overall_hours_fig = weekly_stats_obj.generate_weekly_hours()
