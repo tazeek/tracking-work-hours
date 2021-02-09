@@ -291,3 +291,6 @@ class Tracker:
 					self._remaining_today = self._max_minutes_daily - day_total
 
 		return None
+	
+	def _load_data(self):
+		...
