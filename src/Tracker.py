@@ -18,6 +18,7 @@ class Tracker:
 		self._day_number = self._get_day_number()
 		self._file_name = 'folder/working_hours.txt'
 
+		self._load_data()
 		self._update_time_calculations()
 
 	def get_max_minutes_daily(self):
@@ -299,6 +300,11 @@ class Tracker:
 		with open(self._file_name) as file:
 			
 			for line in file:
-				print(line)
+
+				line_array = line.replace('\x00','').rstrip().split(',')
+
+				days_stats_dict[line_array[0]] = line_array[1:]
+		
+		print(days_stats_dict)
 		
 		return None
