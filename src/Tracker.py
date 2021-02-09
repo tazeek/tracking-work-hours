@@ -293,4 +293,12 @@ class Tracker:
 		return None
 	
 	def _load_data(self):
-		...
+
+		days_stats_dict = {}
+
+		with open(self._file_name) as file:
+			
+			for line in file:
+				print(line)
+		
+		return None
