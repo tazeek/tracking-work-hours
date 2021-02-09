@@ -18,7 +18,6 @@ class Tracker:
 		self._day_number = self._get_day_number()
 		self._file_name = 'folder/working_hours.txt'
 
-		self._load_data()
 		self._update_time_calculations()
 
 	def get_max_minutes_daily(self):
@@ -267,29 +266,21 @@ class Tracker:
 	def _update_time_calculations(self):
 		"""Calculate the total time covered and coverage, day by day """
 
-		# One line = Day, Time gap #1, Time gap #2, ..., Time gap n
-		with open(self._file_name) as file:
+		day_stats = self._load_data()
 
-			for index, line in enumerate(file):
+		for index, (day, working_period) in enumerate(day_stats.items()):
+			total_minutes_before_noon, total_minutes_after_noon = self._perform_noon_time_comparisons(working_period)
 
-				line_array = line.replace('\x00','').rstrip().split(',')
+			self._days_information_array.append({
+				'name': day,
+				'minutes_before_noon': total_minutes_before_noon,
+				'minutes_after_noon': total_minutes_after_noon,
+				'coverage': working_period
+			})
 
-				day = line_array[0]
-				day_coverage_array = line_array[1:]
+			if index == self._day_number:
 
-				total_minutes_before_noon, total_minutes_after_noon = self._perform_noon_time_comparisons(day_coverage_array)
-				day_total = total_minutes_before_noon + total_minutes_after_noon
-
-				self._days_information_array.append({
-					'name': day,
-					'minutes_before_noon': total_minutes_before_noon,
-					'minutes_after_noon': total_minutes_after_noon,
-					'coverage': day_coverage_array
-				})
-
-				if index == self._day_number:
-
-					self._remaining_today = self._max_minutes_daily - day_total
+				self._remaining_today = self._max_minutes_daily - (total_minutes_before_noon + total_minutes_after_noon)
 
 		return None
 	
@@ -297,6 +288,7 @@ class Tracker:
 
 		days_stats_dict = {}
 
+		# One line = Day, Time gap #1, Time gap #2, ..., Time gap n
 		with open(self._file_name) as file:
 			
 			for line in file:
@@ -305,6 +297,4 @@ class Tracker:
 
 				days_stats_dict[line_array[0]] = line_array[1:]
 		
-		print(days_stats_dict)
-		
-		return None
+		return days_stats_dict
