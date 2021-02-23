@@ -46,7 +46,8 @@ def register_callbacks(app, weekly_stats_obj):
 			Output('total-hours-pie','figure'),
 			Output('overall-week-hours','figure'),
 			Output('coverage-table', 'data'),
-			Output('update-coverage','children')
+			Output('update-coverage','children'),
+			Output('finishing-time', 'children')
 		],
 		[
 			Input('yes-reset','n_clicks')
@@ -79,7 +80,8 @@ def register_callbacks(app, weekly_stats_obj):
 			weekly_stats_obj.generate_overall_hours(),
 			weekly_stats_obj.generate_weekly_hours(),
 			weekly_stats_obj.get_records_for_datatable(),
-			'start'.capitalize()
+			'start'.capitalize(),
+			'-'
 		]
 
 	@dcb.callback(

@@ -27,7 +27,13 @@ class Tracker:
 		return self._days_information_array
 
 	def get_today_coverage(self):
-		return ','.join(self._days_information_array[self._day_number]['coverage'])
+
+		coverage = self._days_information_array[self._day_number]['coverage']
+
+		if not coverage:
+			return '-'
+
+		return ','.join(coverage)
 
 	def get_hours_minutes(self,total_minutes):
 		hours, minutes = divmod(total_minutes, self._total_minutes_hour)
