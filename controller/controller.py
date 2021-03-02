@@ -129,7 +129,8 @@ def register_callbacks(app, weekly_stats_obj):
 			Output('update-coverage','children'),
 			Output('coverage-table', 'data'),
 			Output('input-coverage-hours','value'),
-			Output('error-output-update','children')
+			Output('error-output-update','children'),
+			Output('finishing-time', 'children')
 		],
 
 		[
@@ -182,7 +183,8 @@ def register_callbacks(app, weekly_stats_obj):
 			new_value.capitalize(),
 			weekly_stats_obj.get_records_for_datatable(), 
 			'',
-			None
+			None,
+			weekly_stats_obj.get_finishing_time()
 		]
 
 	@dcb.callback(
