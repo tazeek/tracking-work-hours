@@ -129,7 +129,9 @@ def register_callbacks(app, weekly_stats_obj):
 			Output('update-coverage','children'),
 			Output('coverage-table', 'data'),
 			Output('input-coverage-hours','value'),
-			Output('error-output-update','children')
+			Output('error-output-update','children'),
+			Output('finishing-time', 'children'),
+			Output('overall-week-hours','figure')
 		],
 
 		[
@@ -151,12 +153,15 @@ def register_callbacks(app, weekly_stats_obj):
 				update-coverage: Take the state of coverage to (either pause or continue)
 
 			Output:
+				live-update-text: Update the time to current time
+				total-hours-pie: Update the pie graph
 				today-coverage: Update the current day coverage
 				update-coverage (children): Update the button text
 				coverage-table: Update the coverage table
 				input-coverage-hours: Update the text box field
 				error-output-update: Show error message for invalid input
-
+				finishing-time: Update the finishing time
+				overall-week-hours: Update the bar graph
 		'''
 
 		if not n_clicks:
@@ -182,7 +187,9 @@ def register_callbacks(app, weekly_stats_obj):
 			new_value.capitalize(),
 			weekly_stats_obj.get_records_for_datatable(), 
 			'',
-			None
+			None,
+			weekly_stats_obj.get_finishing_time(),
+			weekly_stats_obj.generate_overall_hours(),
 		]
 
 	@dcb.callback(
@@ -200,7 +207,5 @@ def register_callbacks(app, weekly_stats_obj):
 		weekly_stats_obj.update_overall_coverage_table(coverage_data)
 
 		return weekly_stats_obj.get_dataframe_for_datatable()
-
-
 
 	dcb.register(app)
