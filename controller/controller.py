@@ -13,7 +13,8 @@ def register_callbacks(app, weekly_stats_obj):
 		[
 			Output('live-update-text','children'),
 			Output('total-hours-pie','figure'),
-			Output('overall-week-hours','figure')
+			Output('overall-week-hours','figure'),
+			Output('finishing-time', 'children')
 		],
 		[
 			Input('update-current','n_clicks')
@@ -29,6 +30,7 @@ def register_callbacks(app, weekly_stats_obj):
 				live-update-text: Update the time of new event
 				total-hours-pie: Update the pie chart of hours
 				overall-week-hours: Update the bar chart of noon times
+				finishing-time: Update the finishing time
 		'''
 
 		weekly_stats_obj.perform_live_update()
@@ -36,7 +38,8 @@ def register_callbacks(app, weekly_stats_obj):
 		return [
 			weekly_stats_obj.get_current_time(),
 			weekly_stats_obj.generate_overall_hours(),
-			weekly_stats_obj.generate_weekly_hours()
+			weekly_stats_obj.generate_weekly_hours(),
+			weekly_stats_obj.get_finishing_time()
 		]
 
 	@dcb.callback(
